@@ -4090,7 +4090,7 @@ tbody.collapse.show {
   color: #6c757d;
 }
 
-.nav-link span{
+.nav-link .score{
   font-size: 2em;
 }
 
