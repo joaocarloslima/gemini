@@ -1,2 +1,2 @@
 <?php
-header("Location: modelo/premium/examples/dashboard.html");
+header("Location: dashboard.php");
