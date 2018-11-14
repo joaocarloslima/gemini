@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -40,7 +41,7 @@
           <div class="user-info">
             <a data-toggle="collapse" href="#collapseExample" class="username">
               <span>
-                João Carlos
+                <?php echo $_SESSION["iduser"] ?>
                 <b class="caret"></b>
               </span>
             </a>
