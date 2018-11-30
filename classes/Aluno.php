@@ -1,5 +1,4 @@
 <?php
-require_once("conexao.php");
 require_once("global.php");
 
 class Aluno {

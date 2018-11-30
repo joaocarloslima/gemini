@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 27-Out-2018 às 16:18
+-- Generation Time: 30-Nov-2018 às 14:18
 -- Versão do servidor: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -30,8 +30,32 @@ CREATE TABLE `alunos` (
   `idAluno` int(11) NOT NULL,
   `nome` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `telefone` varchar(20) NOT NULL
+  `senha` varchar(250) NOT NULL,
+  `foto` varchar(200) NOT NULL,
+  `perfilAprendizagem` varchar(200) NOT NULL,
+  `perfilJogador` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `alunos`
+--
+
+INSERT INTO `alunos` (`idAluno`, `nome`, `email`, `senha`, `foto`, `perfilAprendizagem`, `perfilJogador`) VALUES
+(1, 'Joao Carlos Lima', 'joaocarlos@ufabc.com', '827ccb0eea8a706c4c34a16891f84e7b', '', '', ''),
+(2, 'Carlos', 'carlos@ufabc.com', '4587', '', '', ''),
+(3, 'Pedro', 'pedro@ufabc.com', '789', '', '', ''),
+(4, 'Carla', 'carla@ufabc.com', '874', '', '', ''),
+(5, 'Joao Carlos', 'j@b.c', '123456', '', '', ''),
+(6, 'Joao Carlos', 'joaocarlos', '1911d4n1', '', '', ''),
+(7, 'asd', 'joaocarlos@c', '1911d4n1', '', '', ''),
+(8, 'Ana', 'cris@b', 'md5(123456)', '', '', ''),
+(9, 'Silvia', 'silvali@b.c', 'e10adc3949ba59abbe56e057f20f883e', '', '', ''),
+(10, 'Silvia', 'silvali@b.c', 'e10adc3949ba59abbe56e057f20f883e', '', '', ''),
+(11, 'Priscila', 'pri@d', '202cb962ac59075b964b07152d234b70', '', '', ''),
+(12, 'Priscila Vieira', 'priscila@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '', '', ''),
+(13, 'Priscila Vieira', 'priscila@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '', '', ''),
+(14, 'Silvia Regina Santos', 'silvia@etec.so', '827ccb0eea8a706c4c34a16891f84e7b', '', '', ''),
+(15, 'Silvia Regina Gomes', 'silvia@etec.com', '81dc9bdb52d04dc20036dbd8313ed055', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -113,9 +137,44 @@ CREATE TABLE `feedbacks` (
 CREATE TABLE `log` (
   `idLog` int(11) NOT NULL,
   `data` datetime NOT NULL,
-  `agente` varchar(200) NOT NULL,
+  `idAluno` int(11) NOT NULL,
   `acao` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `log`
+--
+
+INSERT INTO `log` (`idLog`, `data`, `idAluno`, `acao`) VALUES
+(1, '0000-00-00 00:00:00', 1, 'login'),
+(2, '2018-11-29 11:28:24', 1, 'login'),
+(3, '2018-11-29 11:35:22', 1, 'logout'),
+(4, '2018-11-29 11:41:11', 1, 'logout'),
+(5, '2018-11-29 11:43:23', 1, 'login'),
+(6, '2018-11-29 11:46:41', 1, 'logout'),
+(7, '2018-11-29 12:02:22', 1, 'logout'),
+(8, '2018-11-29 12:02:53', 1, 'logout'),
+(9, '2018-11-29 12:04:35', 1, 'logout'),
+(10, '2018-11-29 12:04:46', 1, 'login'),
+(11, '2018-11-29 12:05:01', 1, 'logout'),
+(12, '2018-11-29 12:13:36', 15, 'criar conta'),
+(13, '2018-11-29 15:29:21', 15, 'alterar perfil'),
+(14, '2018-11-29 15:30:05', 15, 'alterar perfil'),
+(15, '2018-11-29 15:30:20', 15, 'alterar perfil'),
+(16, '2018-11-29 15:31:25', 15, 'alterar perfil'),
+(17, '2018-11-29 15:31:44', 15, 'alterar perfil'),
+(18, '2018-11-29 15:32:48', 15, 'alterar perfil'),
+(19, '2018-11-29 15:33:01', 15, 'alterar perfil'),
+(20, '2018-11-29 15:33:11', 15, 'alterar perfil'),
+(21, '2018-11-29 15:33:25', 15, 'alterar perfil'),
+(22, '2018-11-29 15:34:25', 15, 'alterar perfil'),
+(23, '2018-11-29 15:34:36', 15, 'alterar perfil'),
+(24, '2018-11-29 15:34:50', 15, 'alterar perfil'),
+(25, '2018-11-29 15:38:04', 15, 'alterar perfil'),
+(26, '2018-11-29 15:41:44', 15, 'alterar perfil'),
+(27, '2018-11-29 15:42:03', 15, 'alterar perfil'),
+(28, '2018-11-29 15:42:37', 15, 'alterar perfil'),
+(29, '2018-11-29 15:44:11', 15, 'alterar perfil');
 
 -- --------------------------------------------------------
 
@@ -169,6 +228,27 @@ CREATE TABLE `professores` (
   `nome` varchar(200) NOT NULL,
   `login` varchar(200) NOT NULL,
   `senha` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `questionario_engajamento`
+--
+
+CREATE TABLE `questionario_engajamento` (
+  `idQuestionario` int(11) NOT NULL,
+  `idAluno` int(11) NOT NULL,
+  `data` datetime NOT NULL,
+  `q1` int(11) NOT NULL,
+  `q2` int(11) NOT NULL,
+  `q3` int(11) NOT NULL,
+  `q4` int(11) NOT NULL,
+  `q5` int(11) NOT NULL,
+  `q6` int(11) NOT NULL,
+  `q7` int(11) NOT NULL,
+  `q8` int(11) NOT NULL,
+  `q9` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -272,6 +352,12 @@ ALTER TABLE `professores`
   ADD PRIMARY KEY (`idProfessor`);
 
 --
+-- Indexes for table `questionario_engajamento`
+--
+ALTER TABLE `questionario_engajamento`
+  ADD PRIMARY KEY (`idQuestionario`);
+
+--
 -- Indexes for table `questoes`
 --
 ALTER TABLE `questoes`
@@ -291,7 +377,7 @@ ALTER TABLE `turmas`
 -- AUTO_INCREMENT for table `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `idAluno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `alunos_fases`
 --
@@ -321,7 +407,7 @@ ALTER TABLE `feedbacks`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `matriculas`
 --
@@ -342,6 +428,11 @@ ALTER TABLE `missoes`
 --
 ALTER TABLE `professores`
   MODIFY `idProfessor` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `questionario_engajamento`
+--
+ALTER TABLE `questionario_engajamento`
+  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `questoes`
 --
