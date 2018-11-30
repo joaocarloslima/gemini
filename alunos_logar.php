@@ -1,13 +1,12 @@
 <?php require_once 'global.php';
+session_start();
 
 $aluno = new Aluno();
-$aluno->nome = $_POST["nome"];
 $aluno->email = $_POST["email"];
 $aluno->senha = $_POST["senha"];
 
 try {
-	$aluno->inserir();
-	session_start('gemini');
+	$aluno->logar();
 	$_SESSION["logado"]=1;
 	$_SESSION["iduser"]=$aluno->id;
 	$primeiro_nome = explode(" ", $aluno->nome);
@@ -15,4 +14,6 @@ try {
 	header("Location: dashboard.php");
 } catch (Exception $e) {
 	Erro::trataErro($e);
+    $_SESSION["danger"] = "<strong>E-mail ou senha inválido.</strong> Tente novamente ou entre em contato com o professor";
+	header("Location: login.php");
 }

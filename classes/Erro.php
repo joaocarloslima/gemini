@@ -8,9 +8,7 @@ class Erro
             echo '<pre>';
             print_r($e);
             echo '</pre>';
-        } else {
-            echo $e->getMessage();
+        	exit;
         }
-        exit;
     }
 }

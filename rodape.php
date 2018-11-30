@@ -28,6 +28,8 @@
     <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
     <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
     <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+    <script src="assets/js/gemini.js"></script>
+
     <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
     <!-- Plugin for the momentJs  -->
     <script src="assets/js/plugins/moment.min.js"></script>
@@ -236,10 +238,10 @@
 
                     });
         });
-  });
-</script>
-<script>
-  $(document).ready(function() {
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
                   // Javascript method's body can be found in assets/js/demos.js
                   md.initDashboardPageCharts();
 
@@ -247,6 +249,7 @@
 
                 });
               </script>
+
             </body>
 
             </html>

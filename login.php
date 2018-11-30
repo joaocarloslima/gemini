@@ -1,3 +1,8 @@
+<?php 
+session_start();
+include "mostrar_alerta.php"; 
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -54,7 +59,7 @@
       <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
       <div class="container">
         <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
-          <form class="form" method="" action="">
+          <form class="form" method="POST" action="alunos_logar.php">
             <div class="card card-login card-hidden">
               <div class="card-header card-header-rose text-center">
                 <h4 class="card-title">Login</h4>
@@ -76,7 +81,7 @@
                         <i class="material-icons">email</i>
                       </span>
                     </div>
-                    <input type="email" class="form-control" placeholder="Email...">
+                    <input type="email" name="email" class="form-control" placeholder="Email..." autocomplete="username">
                   </div>
                 </span>
                 <span class="bmd-form-group">
@@ -86,12 +91,12 @@
                         <i class="material-icons">lock_outline</i>
                       </span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Password...">
+                    <input type="password" name="senha" class="form-control" placeholder="Password..." autocomplete="current-password">
                   </div>
                 </span>
               </div>
               <div class="card-footer justify-content-center">
-                <a href="#pablo" class="btn btn-rose btn-link btn-lg">Vamos lá</a>
+                <button class="btn btn-rose btn-link btn-lg">Vamos lá</button>
               </div>
             </div>
           </form>
@@ -126,6 +131,7 @@
   <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="assets/js/core/popper.min.js" type="text/javascript"></script>
   <script src="assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+  <script src="assets/js/gemini.js" type="text/javascript"></script>
   <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!-- Plugin for the momentJs  -->
   <script src="assets/js/plugins/moment.min.js"></script>
@@ -345,6 +351,12 @@
       }, 700);
     });
   </script>
+
+<?php 
+  mostrarAlerta("danger", "bottom");
+  mostrarAlerta("info", "bottom");
+?>
+
 </body>
 
 </html>

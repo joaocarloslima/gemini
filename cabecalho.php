@@ -1,4 +1,7 @@
-<?php session_start() ?>
+<?php 
+  include "verificar_login.php";
+  include "mostrar_alerta.php";
+?>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -18,6 +21,7 @@
 
   <!-- CSS Files -->
   <link href="assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
 </head>
@@ -41,14 +45,14 @@
           <div class="user-info">
             <a data-toggle="collapse" href="#collapseExample" class="username">
               <span>
-                <?php echo $_SESSION["iduser"] ?>
+                <?php echo $_SESSION["user"] ?>
                 <b class="caret"></b>
               </span>
             </a>
             <div class="collapse" id="collapseExample">
               <ul class="nav">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="perfil.php">
                     <span class="sidebar-mini"> 
                       <i class="material-icons">person</i>
                     </span>
@@ -56,7 +60,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="alunos_logout.php">
                     <span class="sidebar-mini"> 
                       <i class="material-icons">close</i>
                     </span>
