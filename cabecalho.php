@@ -18,8 +18,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-
-  <!-- CSS Files -->
+    <!-- CSS Files -->
   <link href="assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -30,10 +29,10 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="azure" data-background-color="black" data-image="assets/img/sidebar-1.jpg">
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="index.php" class="simple-text logo-mini">
           G
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="index.php" class="simple-text logo-normal">
           Gemini
         </a>
       </div>

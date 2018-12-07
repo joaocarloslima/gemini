@@ -6,6 +6,10 @@ $aluno = new Aluno();
 $aluno->id = $_SESSION['iduser'];
 $aluno->carregar();
 
+$engajamento = new Engajamento();
+$engajamento->idAluno = $aluno->id;
+
+
 ?>
 
 <div class="main-panel">
@@ -133,13 +137,26 @@ $aluno->carregar();
             </div>
             <div class="card-body">
               <h6 class="card-category text-gray">Engajamento</h6>
-              <h4 class="card-title">Seu score é <strong>3.75</strong></h4>
-              <p class="card-description">
-                Essa pontuação indica que você tem um alto nível de engajamento.
-              </p>
-              <p>Vigor: 3</p>
-              <p>Dedicação: 5</p>
-              <p>Absorção: 4</p>
+              <?php if ($engajamento->score()==null) : ?>
+                <p class="card-description">Você ainda não realizou o teste de engajamento. Responda nove perguntas breves para descobrirmos qual é o seu nível de engajamento nesse bimestre.</p>
+              <?php else : ?>
+                <h4 class="card-title">Seu score é <strong><?php echo $engajamento->score();?></strong></h4>
+                <p class="card-description">
+                  Essa pontuação indica que você tem um nível <strong><?php echo $engajamento->status();?></strong> de engajamento.
+                </p>
+                <button class="btn btn-sm <?php echo cor($engajamento->vigor());?>">
+                  <i class="fas <?php echo icone($engajamento->vigor());?>"></i> 
+                  Vigor <?php echo $engajamento->vigor();?>
+                </button>
+                <button class="btn btn-sm <?php echo cor($engajamento->dedicacao());?>">
+                  <i class="fas <?php echo icone($engajamento->dedicacao());?>"></i> 
+                  Dedicação <?php echo $engajamento->dedicacao();?>
+                </button>
+                <button class="btn btn-sm <?php echo cor($engajamento->absorcao());?>">
+                  <i class="fas <?php echo icone($engajamento->absorcao());?>"></i> 
+                  Absorção <?php echo $engajamento->absorcao();?>
+                </button>
+              <?php endif ?>
               <a href="engajamento.php" class="btn btn-rose btn-round" >Responder Teste</a>
             </div>
           </div>
@@ -182,8 +199,25 @@ $aluno->carregar();
     </div>
   </div>
 
-<?php include "rodape.php"; ?>
-<?php 
-  mostrarAlerta("danger", "top");
-  mostrarAlerta("success", "top");
-?>?>
+<?php include "rodape.php";
+ 
+mostrarAlerta("danger", "top");
+mostrarAlerta("success", "top");
+
+function cor($status)
+{
+  if($status=="baixo" || $status=="baixa" || $status=="muito baixo" || $status=="muito baixa" ) return "btn-danger";
+  if($status=="médio" || $status=="média" ) return "btn-warning";
+  return "btn-success";
+}
+
+function icone($status)
+{
+  if($status=="baixo" || $status=="baixa" || $status=="muito baixo" || $status=="muito baixa" ) return "fa-battery-empty";
+  if($status=="médio" || $status=="média" ) return "fa-battery-half";
+  return "fa-battery-full";
+}
+
+?>
+
+
