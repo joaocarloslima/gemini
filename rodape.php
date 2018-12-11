@@ -69,6 +69,9 @@
     <script src="assets/js/material-dashboard.min.js?v=2.0.2" type="text/javascript"></script>
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="assets/demo/demo.js"></script>
+    <!-- Chart JS para gráfico de radar -->
+    <script src="assets/js/plugins/Chart.min.js"></script>
+
     <script>
       $(document).ready(function() {
         $().ready(function() {
@@ -242,14 +245,11 @@
     </script>
     <script>
       $(document).ready(function() {
-                  // Javascript method's body can be found in assets/js/demos.js
-                  md.initDashboardPageCharts();
+        // Javascript method's body can be found in assets/js/demos.js
+        md.initDashboardPageCharts();
+        md.initVectorMap();
 
-                  md.initVectorMap();
-
-                });
-              </script>
-
-            </body>
-
-            </html>
+      });
+    </script>
+</body>
+</html>

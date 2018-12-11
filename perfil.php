@@ -156,6 +156,7 @@ $engajamento->idAluno = $aluno->id;
                   <i class="fas <?php echo icone($engajamento->absorcao());?>"></i> 
                   Absorção <?php echo $engajamento->absorcao();?>
                 </button>
+                <canvas id="graficoEngajamento" width="400" height="400"></canvas>
               <?php endif ?>
               <a href="engajamento.php" class="btn btn-rose btn-round" >Responder Teste</a>
             </div>
@@ -219,5 +220,43 @@ function icone($status)
 }
 
 ?>
+
+<script>
+var ctx = document.getElementById("graficoEngajamento");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Vigor", "Dedicação", "Absorção"],
+        datasets: [{
+            label: 'Score',
+            data: [
+                  <?php echo $engajamento->scoreVigor;?>, 
+                  <?php echo $engajamento->scoreDedicacao;?>, 
+                  <?php echo $engajamento->scoreAbsorcao;?>
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+     options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
 
 

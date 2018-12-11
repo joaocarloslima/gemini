@@ -14,6 +14,9 @@ class Engajamento {
 	public $q7;
 	public $q8;
 	public $q9;
+	public $scoreVigor;
+	public $scoreDedicacao;
+	public $scoreAbsorcao;
 	
 	public function inserir(){
 		$query = "INSERT INTO questionario_engajamento (idAluno, data, q1, q2, q3, q4, q5, q6, q7, q8, q9 ) VALUES (
@@ -85,6 +88,7 @@ class Engajamento {
 	    $lista = $stmt->fetchAll();
 	    if (count($lista)>0){
 			$linha = $lista[0];
+	    	$this->scoreVigor = $linha["score"];
 			$retorno = "";
 	    	if ($linha["score"]<=2) $retorno = "muito baixo";
 	    	else if ($linha["score"]<=3.25) $retorno = "baixo";
@@ -106,6 +110,7 @@ class Engajamento {
 	    $lista = $stmt->fetchAll();
 	    if (count($lista)>0){
 			$linha = $lista[0];
+	    	$this->scoreDedicacao = $linha["score"];
 			$retorno = "";
 	    	if ($linha["score"]<=1.33) $retorno = "muito baixa";
 	    	else if ($linha["score"]<=2.9) $retorno = "baixa";
@@ -127,6 +132,7 @@ class Engajamento {
 	    $lista = $stmt->fetchAll();
 	    if (count($lista)>0){
 			$linha = $lista[0];
+	    	$this->scoreAbsorcao = $linha["score"];
 			$retorno = "";
 	    	if ($linha["score"]<=1.77) $retorno = "muito baixa";
 	    	else if ($linha["score"]<=2.33) $retorno = "baixa";
