@@ -94,15 +94,6 @@
                     </div>
                   </div>
                   <div class="col-md-5 mr-auto">
-                    <div class="social text-center">
-                      <button class="btn btn-just-icon btn-round btn-dribbble">
-                        <i class="fa fa-google"></i>
-                      </button>
-                      <button class="btn btn-just-icon btn-round btn-facebook">
-                        <i class="fa fa-facebook"> </i>
-                      </button>
-                      <h4 class="mt-3"> ou entre com os dados </h4>
-                    </div>
                     <form class="form" method="POST" action="alunos_inserir.php">
                       <div class="form-group has-default">
                         <div class="input-group">
@@ -141,7 +132,7 @@
                             <span class="check"></span>
                           </span>
                           Aceito os
-                          <a href="termos.php">termos e condições</a>.
+                          <a data-toggle="modal" data-target="#modalTermos">termos e condições</a>.
                         </label>
                       </div>
                       <div class="text-center">
@@ -180,6 +171,37 @@
       </footer>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalTermos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Termo de Consentimento Livre e Esclarecido</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Você está sendo convidado a participar como voluntário de uma pesquisa. Este documento, chamado Termo de Consentimento Livre e Esclarecido, visa assegurar seus direitos como participante.</p> 
+          <p>Por favor, leia com atenção e calma, aproveitando para esclarecer suas dúvidas. Se houver perguntas antes ou mesmo depois de concordar você poderá esclarecê-las com o pesquisador. Não haverá nenhum tipo de penalização ou prejuízo se você não aceitar participar ou retirar sua autorização em qualquer momento.</p>
+          <h4>Justificativa e Objetivo</h4>
+          <p>Este trabalho de pesquisa tem por objetivo geral propor e testar um modelo de avaliação da aprendizagem que utilize elementos da gamificação como instrumentos de avaliação da aprendizagem dos alunos.
+          </p>
+          <h4>Procedimentos</h4>
+          <p>Durante o ano letivo serão colhidas informações sobre o seu comportamento durante a utilização dos sistemas. Essas informações serão analisadas estatísticamente para traçar o seu perfil e inferir sobre os benefícios da gamificação como ferramenta de avaliação da aprendizagem.</p>
+          <p>Durante todo o processo você será informado dos resultados preliminares de cada análise gerada e poderá se beneficiar dessas informações.</p>
+          <h4>Benefícios</h4>
+          <p>A utilização do sistema irá permitir um rápido feedback sobre o seu desempenho na disciplina. Você poderá ter acesso aos dados das avaliações de forma rápida e clara.</p>
+          <h4>Sigilo e Privacidade</h4>
+          <p>Você tem a garantia de que sua identidade será mantida em sigilo e nenhuma informação será dada a outras pessoas que não façam parte da equipe de pesquisadores. Na divulgação dos resultados desse estudo, seu nome não será citado.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-rose" data-dismiss="modal">fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>  
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="assets/js/core/popper.min.js" type="text/javascript"></script>

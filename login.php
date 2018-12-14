@@ -63,14 +63,6 @@ include "mostrar_alerta.php";
             <div class="card card-login card-hidden">
               <div class="card-header card-header-rose text-center">
                 <h4 class="card-title">Login</h4>
-                <div class="social-line">
-                  <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                    <i class="fa fa-facebook-square"></i>
-                  </a>
-                  <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
-                    <i class="fa fa-google-plus"></i>
-                  </a>
-                </div>
               </div>
               <div class="card-body ">
                 <p class="card-description text-center">entre com dados de acesso</p>
