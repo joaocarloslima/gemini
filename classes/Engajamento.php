@@ -43,7 +43,7 @@ class Engajamento {
 	    $stmt->bindValue(':q6', $this->q6);
 	    $stmt->bindValue(':q7', $this->q7);
 	    $stmt->bindValue(':q8', $this->q8);
-	    $stmt->bindValue(':q9', $this->q8);
+	    $stmt->bindValue(':q9', $this->q9);
 
 		if(!$stmt->execute()) throw new Exception("Erro ao gravar questionário");
 		else {

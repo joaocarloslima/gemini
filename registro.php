@@ -88,7 +88,7 @@
                       <div class="description">
                         <h4 class="info-title">Ranking</h4>
                         <p class="description">
-                          Acumule pontos para chegar ao topo do ranking. Consulte a evolução ao longo do tempo.
+                          Acumule pontos para chegar ao topo do ranking. Consulte a evolução ao longo do tempo de estudo.
                         </p>
                       </div>
                     </div>
