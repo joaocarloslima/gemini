@@ -97,6 +97,7 @@ $perfiljogadorstr = $perfiljogador->perfil();
               <h6 class="card-category text-gray">Engajamento</h6>
               <?php if ($engajamento->score()==null) : ?>
                 <p class="card-description">Você ainda não realizou o teste de engajamento. Responda nove perguntas breves para descobrirmos qual é o seu nível de engajamento nesse bimestre.</p>
+                <a href="engajamento.php" class="btn btn-rose btn-round" >Responder Teste</a>
                 <?php else : ?>
                   <h4 class="card-title">Seu score é <strong><?php echo $engajamento->score();?></strong></h4>
                   <p class="card-description">
@@ -116,7 +117,6 @@ $perfiljogadorstr = $perfiljogador->perfil();
                   </button>
                   <canvas id="graficoEngajamento" width="400" height="400"></canvas>
                 <?php endif ?>
-                <a href="engajamento.php" class="btn btn-rose btn-round" >Responder Teste</a>
               </div>
             </div>
           </div>

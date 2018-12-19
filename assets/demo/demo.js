@@ -711,12 +711,15 @@ demo = {
 
   },
 
-  showSwal: function(type) {
-    if (type == 'basic') {
+  showSwal: function(type, value=0) {
+    if (type == 'XP') {
       swal({
-        title: "Here's a message!",
+        title: "Parabéns",
+        html: 'Você ganhou <b>' + value + ' XP </b>' +
+          'por completar essa atividade.',
         buttonsStyling: false,
-        confirmButtonClass: "btn btn-success"
+        confirmButtonClass: "btn btn-success",
+        type: "success"
       }).catch(swal.noop)
 
     } else if (type == 'title-and-text') {

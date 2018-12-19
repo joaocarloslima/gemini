@@ -7,7 +7,7 @@ $aluno->senha = $_POST["senha"];
 
 try {
 	$aluno->inserir();
-	session_start('gemini');
+	session_start();
 	$_SESSION["logadogemini"]=1;
 	$_SESSION["iduser"]=$aluno->id;
 	$primeiro_nome = explode(" ", $aluno->nome);

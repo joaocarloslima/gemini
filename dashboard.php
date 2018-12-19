@@ -1,4 +1,9 @@
-<?php include "cabecalho.php" ?>
+<?php 
+require_once("global.php");
+include "cabecalho.php";
+
+$tempoDeEstudo = new TempoDeEstudo($_SESSION["iduser"]);
+?>
 
 <div class="main-panel">
   <!-- Navbar -->
@@ -74,11 +79,11 @@
           <div class="col-md-4">
             <div class="card card-chart">
               <div class="card-header card-header-rose" data-header-animation="false">
-                <div class="ct-chart" id="websiteViewsChart"></div>
+                <div class="ct-chart" id="graficoTempoDeEstudo"></div>
               </div>
               <div class="card-body">
                 <h4 class="card-title">Tempo de Estudo</h4>
-                <p class="card-category">Últimas duas semanas</p>
+                <p class="card-category">Últimos 7 dias</p>
               </div>
             </div>
           </div>
@@ -278,3 +283,32 @@
     </div>
 
 <?php include "rodape.php" ?>
+
+<script type="text/javascript">
+  $( document ).ready(function() {
+    dataDailySalesChart = {
+        labels: <?= $tempoDeEstudo->getDias() ?>,
+        series: [
+          <?= $tempoDeEstudo->getTempos() ?>
+        ]
+      };
+
+      optionsDailySalesChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        low: 0,
+        high: <?= $tempoDeEstudo->getMaior() + 10 ?>, 
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+      }
+
+      var animationHeaderChart = new Chartist.Bar('#graficoTempoDeEstudo', dataDailySalesChart, optionsDailySalesChart);
+      md.startAnimationForBarChart(animationHeaderChart);
+
+});
+</script>

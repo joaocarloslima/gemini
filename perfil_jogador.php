@@ -124,7 +124,7 @@ $perguntas = [
                     </div>
                   </div>
                 <?php endforeach ?>
-                <button type="submit" class="btn btn-success pull-right">Enviar Resposta</button>
+                <button id="btnEnviar" class="btn btn-success pull-right">Enviar Resposta</button>
                 <div class="clearfix"></div>
               </form>
             </div>
@@ -137,22 +137,41 @@ $perguntas = [
 
   <?php include 'rodape.php'; ?>
 
- <?php
+  <script type="text/javascript">
+    var btnEnviar = document.querySelector("#btnEnviar");
+    var form = document.querySelector("form");
+    btnEnviar.addEventListener("click", function(e){
+      e.preventDefault();
+      swal({
+        title: "Parabéns",
+        html: '<i class="fas fa-star"></i> Você ganhou 10 XP ' +
+        'por completar essa atividade.<br>',
+        buttonsStyling: false,
+        confirmButtonClass: "btn btn-success",
+        type: "success"
+      }).then(function() {
+        form.submit();
+      }).catch(swal.noop); 
 
-function gerarStars ($indice){
-  echo "<div class='cont'>";
-  echo "  <div class='stars'>";
-  echo "    <input class='star star-5' id='star-5-$indice' type='radio' name='r$indice' value='5' required/>";
-  echo "    <label class='star star-5' for='star-5-$indice'></label>";
-  echo "    <input class='star star-4' id='star-4-$indice' type='radio' name='r$indice' value='4' />";
-  echo "    <label class='star star-4' for='star-4-$indice'></label>";
-  echo "    <input class='star star-3' id='star-3-$indice' type='radio' name='r$indice' value='3' />";
-  echo "    <label class='star star-3' for='star-3-$indice'></label>";
-  echo "    <input class='star star-2' id='star-2-$indice' type='radio' name='r$indice' value='2' />";
-  echo "    <label class='star star-2' for='star-2-$indice'></label>";
-  echo "    <input class='star star-1' id='star-1-$indice' type='radio' name='r$indice' value='1' />";
-  echo "    <label class='star star-1' for='star-1-$indice'></label>";
-  echo "  </div>";
-  echo "</div>";
+    });
+  </script>
 
-}
+  <?php
+
+  function gerarStars ($indice){
+    echo "<div class='cont'>";
+    echo "  <div class='stars'>";
+    echo "    <input class='star star-5' id='star-5-$indice' type='radio' name='r$indice' value='5' required/>";
+    echo "    <label class='star star-5' for='star-5-$indice'></label>";
+    echo "    <input class='star star-4' id='star-4-$indice' type='radio' name='r$indice' value='4' />";
+    echo "    <label class='star star-4' for='star-4-$indice'></label>";
+    echo "    <input class='star star-3' id='star-3-$indice' type='radio' name='r$indice' value='3' />";
+    echo "    <label class='star star-3' for='star-3-$indice'></label>";
+    echo "    <input class='star star-2' id='star-2-$indice' type='radio' name='r$indice' value='2' />";
+    echo "    <label class='star star-2' for='star-2-$indice'></label>";
+    echo "    <input class='star star-1' id='star-1-$indice' type='radio' name='r$indice' value='1' />";
+    echo "    <label class='star star-1' for='star-1-$indice'></label>";
+    echo "  </div>";
+    echo "</div>";
+
+  }

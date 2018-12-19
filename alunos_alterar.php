@@ -1,5 +1,5 @@
 <?php require_once 'global.php';
-session_start('gemini');
+session_start();
 
 $aluno = new Aluno();
 $aluno->id = $_SESSION["iduser"];
