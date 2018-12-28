@@ -4,6 +4,7 @@ $aluno = new Aluno();
 $aluno->nome = $_POST["nome"];
 $aluno->email = $_POST["email"];
 $aluno->senha = $_POST["senha"];
+$aluno->idTurma = $_POST["turma"];
 
 try {
 	$aluno->inserir();

@@ -6,17 +6,25 @@ class Aluno {
 	public $nome;
 	public $email;
 	public $senha;
+	public $idTurma;
 	
 	public function inserir(){
-		$query = "INSERT INTO alunos (nome, email, senha) VALUES (
+		$erro = false;
+		$conexao = Conexao::pegarConexao();
+		$queryAluno = "INSERT INTO alunos (nome, email, senha) VALUES (
 			'$this->nome',
 			'$this->email',
 			md5('$this->senha')
 		)";
-		$conexao = Conexao::pegarConexao();
-		if(!$conexao->exec($query)) throw new Exception("Erro ao inserir aluno");
-		else {
-			$this->id = $conexao->lastInsertId();
+		if(!$conexao->exec($queryAluno)) $erro = true;
+		$this->id = $conexao->lastInsertId();
+		
+		$queryMatricula = "INSERT INTO matriculas (idAluno, idTurma) VALUES ($this->id, $this->idTurma)";
+		if(!$conexao->exec($queryMatricula)) $erro = true;
+
+		if ($erro){
+			throw new Exception("Erro ao inserir aluno");
+		}else{
 			Log::gravarLog($this->id, "criar conta");
 		}
 	}

@@ -125,6 +125,24 @@
                           <input type="password" name="senha" placeholder="Senha..." class="form-control" required="">
                         </div>
                       </div>
+                      <div class="checkbox-radios">
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="turma" value="2" checked=""> 1D - Química
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="turma" value="1"> 1C - Adm
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>                      
                       <div class="form-check">
                         <label class="form-check-label">
                           <input class="form-check-input" type="checkbox" value="" checked="" required>
