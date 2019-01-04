@@ -13,50 +13,94 @@ class Missao {
 	public $imagem;
 	public $listaCompleta ;
 
+	public function carregar(){
+		$query = "SELECT missoes.*, turmas.sigla FROM missoes INNER JOIN turmas on turmas.idTurma=missoes.idTurma WHERE idMissao=:id";
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+		$stmt->bindValue(":id", $this->id);
+		$stmt->execute();
+		$linha = $stmt->fetch();
+		$this->nome = $linha['nome'];
+		$this->descricao = $linha['descricao'];
+		$this->levelminimo = $linha['levelMinimo'];
+		$this->liberada = $linha['liberada'];
+		$this->ordem = $linha['ordem'];
+		$this->idTurma = $linha['idTurma'];
+		$this->turma = $linha['sigla'];
+		$this->idTurma = $linha['idTurma'];
+		$this->imagem = $linha['imagem'];
+	}
+
 	//buscar todos as missoes
 	public function buscarTodas(){ 
-	    $query = "SELECT missoes.*, turmas.sigla FROM missoes INNER JOIN turmas on turmas.idTurma=missoes.idTurma";
-	    $conexao = Conexao::pegarConexao();
-	    $stmt = $conexao->prepare($query);
-	    $stmt->execute();
-	    $missoes = array();
-	    while ($linha = $stmt->fetch()){
-	    	$missao = new Missao();
-		    $missao->id = $linha['idMissao'];
-		    $missao->nome = $linha['nome'];
-		    $missao->descricao = $linha['descricao'];
-		    $missao->levelminimo = $linha['levelMinimo'];
-		    $missao->liberada = $linha['liberada'];
-		    $missao->ordem = $linha['ordem'];
-		    $missao->idTurma = $linha['idTurma'];
-		    $missao->turma = $linha['sigla'];
-		    $missao->idTurma = $linha['idTurma'];
-		    $missao->imagem = $linha['imagem'];
-		    array_push($missoes, $missao);
-	    }
-	    $this->listaCompleta = $missoes;
+		$query = "SELECT missoes.*, turmas.sigla FROM missoes INNER JOIN turmas on turmas.idTurma=missoes.idTurma";
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+		$stmt->execute();
+		$missoes = array();
+		while ($linha = $stmt->fetch()){
+			$missao = new Missao();
+			$missao->id = $linha['idMissao'];
+			$missao->nome = $linha['nome'];
+			$missao->descricao = $linha['descricao'];
+			$missao->levelminimo = $linha['levelMinimo'];
+			$missao->liberada = $linha['liberada'];
+			$missao->ordem = $linha['ordem'];
+			$missao->idTurma = $linha['idTurma'];
+			$missao->turma = $linha['sigla'];
+			$missao->idTurma = $linha['idTurma'];
+			$missao->imagem = $linha['imagem'];
+			array_push($missoes, $missao);
+		}
+		$this->listaCompleta = $missoes;
 	}
 
 	public function inserir(){
 		$conexao = Conexao::pegarConexao();
 		$query = "INSERT INTO missoes (nome, descricao, levelMinimo, liberada, idTurma, imagem) VALUES (
-			'$this->nome',
-			'$this->descricao',
-			'$this->levelminimo',
-			'$this->liberada',
-			'$this->idTurma',
-			'$this->imagem'
-		)";
-		if(!$conexao->exec($query)) throw new Exception("Erro ao inserir missao");
-		else $this->id =  $conexao->lastInsertId();
-	}
+		'$this->nome',
+		'$this->descricao',
+		'$this->levelminimo',
+		'$this->liberada',
+		'$this->idTurma',
+		'$this->imagem'
+	)";
+	if(!$conexao->exec($query)) throw new Exception("Erro ao inserir missao");
+	else $this->id =  $conexao->lastInsertId();
+}
 
-	public function apagar(){
-		$query = "DELETE FROM missoes WHERE idMissao=:id";
-		$conexao = Conexao::pegarConexao();
-	    $stmt = $conexao->prepare($query);
-	    $stmt->bindValue(':id', $this->id);
-		if(!$stmt->execute()) throw new Exception("Erro ao apagar missao");
+public function apagar(){
+	$query = "DELETE FROM missoes WHERE idMissao=:id";
+	$conexao = Conexao::pegarConexao();
+	$stmt = $conexao->prepare($query);
+	$stmt->bindValue(':id', $this->id);
+	if(!$stmt->execute()) throw new Exception("Erro ao apagar missao");
+}
+
+public function trocarLiberada(){
+	$query = "UPDATE missoes SET liberada = NOT liberada WHERE idMissao=:id";
+	$conexao = Conexao::pegarConexao();
+	$stmt = $conexao->prepare($query);
+	$stmt->bindValue(':id', $this->id);
+	if(!$stmt->execute()) throw new Exception("Erro ao mudar status missao");
+}
+
+public function duplicar(){
+	//copiar a missao
+	$idMissaoOriginal = $this->id;
+	$this->carregar();
+	$this->inserir();
+	
+	//copiar as fases
+	$fases = new Fase();
+	$fases->buscarFasesDaMissao($idMissaoOriginal);
+	foreach ($fases->listaCompleta as $fase) {
+		try{
+			$fase->duplicar($this->id);
+		}catch(Exception $e){
+			throw new Exception("Erro ao duplicar fase da missao");
+		}
 	}
+}
 
 }

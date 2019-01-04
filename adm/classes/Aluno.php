@@ -10,5 +10,6 @@ class Aluno {
 	public $turma;
 	public $perfilAprendizagem;
 	public $perfilJogador;
+	public $engajamento;
 
 }

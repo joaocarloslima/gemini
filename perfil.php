@@ -13,6 +13,10 @@ $perfiljogador = new perfiljogador();
 $perfiljogador->idAluno = $aluno->id;
 $perfiljogadorstr = $perfiljogador->perfil();
 
+$perfilaprendizagem = new perfilAprendizagem();
+$perfilaprendizagem->idAluno = $aluno->id;
+$perfilaprendizagemstr = $perfilaprendizagem->perfil();
+
 ?>
 
 <div class="main-panel">
@@ -129,187 +133,241 @@ $perfiljogadorstr = $perfiljogador->perfil();
               </div>
               <div class="card-body">
                 <h6 class="card-category text-gray">Perfil de Aprendizagem</h6>
-                <h4 class="card-title">Seu perfil é <strong>Visual</strong></h4>
-                <p class="card-description">
-                  Isso indica que você consegue aprender através de representações gráficas e modelos visuais. Tente estudar através de mapas mentais e gráficos.
-                </p>
-                <button class="btn btn-default btn-round" disabled>Teste indisponível</button>
-              </div>
-            </div>
-          </div>        
-          <div class="col-lg-6 col-xl-3">
-            <div class="card card-profile">
-              <div class="card-avatar">
-                <a href="#pablo">
-                  <img class="img" src="assets/img/gamer.jpg">
-                </a>
-              </div>
-              <div class="card-body">
-                <h6 class="card-category text-gray">Perfil de Jogador</h6>
-                <?php if ($perfiljogador->empreendedor()==null) : ?>
-                  <p class="card-description">Você ainda não realizou o teste de perfil de jogador. Avalie algumas afirmações para entender melhor o que motiva você em um jogo.</p>
-                  <a href="perfil_jogador.php" class="btn btn-rose btn-round">Responder Teste</a>
+                <?php if ($perfilaprendizagem->score("A")==null) : ?>
+                  <p class="card-description">Você ainda não realizou o teste de perfil de aprendizagem. Responda algumas questões para descobrir as melhores estratégias para o seu aprendizado.</p>
+                  <a href="perfil_aprendizagem.php" class="btn btn-rose btn-round">Responder Teste</a>
 
                   <?php else : ?>
 
-                    <h4 class="card-title">Seu perfil é <strong><?php echo $perfiljogador->perfil();?></strong></h4>
+                    <h4 class="card-title">Seu perfil é <strong><?= $perfilaprendizagemstr?></strong></h4>
                     <p class="card-description">
-                      <?php echo $perfiljogador->descricao($perfiljogador->perfil());?>
+                      <?= $perfilaprendizagem->descricao($perfilaprendizagemstr)?>
                     </p>
-                    <canvas id="graficoJogador" width="400" height="400"></canvas>
-                  <?php endif ?>  
+                    <canvas id="graficoAprendizagem" width="400" height="400"></canvas>
 
+                  <?php endif ?>
                 </div>
               </div>
-            </div>
+            </div>        
             <div class="col-lg-6 col-xl-3">
-              <div class="card">
-                <div class="card-header card-header-icon card-header-rose">
-                  <div class="card-icon">
-                    <i class="material-icons">perm_identity</i>
-                  </div>
-                  <h4 class="card-title">Dados de Acesso</h4>
+              <div class="card card-profile">
+                <div class="card-avatar">
+                  <a href="#pablo">
+                    <img class="img" src="assets/img/gamer.jpg">
+                  </a>
                 </div>
                 <div class="card-body">
-                  <form action="alunos_alterar.php" method="POST">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Nome Completo</label>
-                          <input type="text" class="form-control" value="<?php echo $aluno->nome?>" required="on" name="nome">
+                  <h6 class="card-category text-gray">Perfil de Jogador</h6>
+                  <?php if ($perfiljogador->empreendedor()==null) : ?>
+                    <p class="card-description">Você ainda não realizou o teste de perfil de jogador. Avalie algumas afirmações para entender melhor o que motiva você em um jogo.</p>
+                    <a href="perfil_jogador.php" class="btn btn-rose btn-round">Responder Teste</a>
+
+                    <?php else : ?>
+
+                      <h4 class="card-title">Seu perfil é <strong><?php echo $perfiljogador->perfil();?></strong></h4>
+                      <p class="card-description">
+                        <?php echo $perfiljogador->descricao($perfiljogador->perfil());?>
+                      </p>
+                      <canvas id="graficoJogador" width="400" height="400"></canvas>
+                    <?php endif ?>  
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-xl-3">
+                <div class="card">
+                  <div class="card-header card-header-icon card-header-rose">
+                    <div class="card-icon">
+                      <i class="material-icons">perm_identity</i>
+                    </div>
+                    <h4 class="card-title">Dados de Acesso</h4>
+                  </div>
+                  <div class="card-body">
+                    <form action="alunos_alterar.php" method="POST">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Nome Completo</label>
+                            <input type="text" class="form-control" value="<?php echo $aluno->nome?>" required="on" name="nome">
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Email</label>
-                          <input type="email" class="form-control" value="<?php echo $aluno->email?>" required="on" name="email">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Email</label>
+                            <input type="email" class="form-control" value="<?php echo $aluno->email?>" required="on" name="email">
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group bmd-form-group">
-                          <label class="bmd-label-floating">Nova Senha</label>
-                          <input type="password" class="form-control" autocomplete="new-password"name="senha">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">Nova Senha</label>
+                            <input type="password" class="form-control" autocomplete="new-password"name="senha">
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <p>mudar foto...</p>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p>mudar foto...</p>
+                        </div>
                       </div>
-                    </div>
-                    <button type="submit" class="btn btn-rose pull-right">Gravar Dados</button>
-                    <div class="clearfix"></div>
-                  </form>
+                      <button type="submit" class="btn btn-rose pull-right">Gravar Dados</button>
+                      <div class="clearfix"></div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <?php include "rodape.php";
+        <?php include "rodape.php";
 
-      mostrarAlerta("danger", "top");
-      mostrarAlerta("success", "top");
+        mostrarAlerta("danger", "top");
+        mostrarAlerta("success", "top");
 
-      function cor($status)
-      {
-        if($status=="baixo" || $status=="baixa" || $status=="muito baixo" || $status=="muito baixa" ) return "btn-danger";
-        if($status=="médio" || $status=="média" ) return "btn-warning";
-        return "btn-success";
-      }
+        function cor($status)
+        {
+          if($status=="baixo" || $status=="baixa" || $status=="muito baixo" || $status=="muito baixa" ) return "btn-danger";
+          if($status=="médio" || $status=="média" ) return "btn-warning";
+          return "btn-success";
+        }
 
-      function icone($status)
-      {
-        if($status=="baixo" || $status=="baixa" || $status=="muito baixo" || $status=="muito baixa" ) return "fa-battery-empty";
-        if($status=="médio" || $status=="média" ) return "fa-battery-half";
-        return "fa-battery-full";
-      }
+        function icone($status)
+        {
+          if($status=="baixo" || $status=="baixa" || $status=="muito baixo" || $status=="muito baixa" ) return "fa-battery-empty";
+          if($status=="médio" || $status=="média" ) return "fa-battery-half";
+          return "fa-battery-full";
+        }
 
-      ?>
+        ?>
 
-      <script>
-        var ctx = document.getElementById("graficoEngajamento");
-        var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ["Vigor", "Dedicação", "Absorção"],
-            datasets: [{
-              label: 'Score',
-              data: [
-              <?php echo $engajamento->scoreVigor;?>, 
-              <?php echo $engajamento->scoreDedicacao;?>, 
-              <?php echo $engajamento->scoreAbsorcao;?>
-              ],
-              backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)'
-              ],
-              borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)'
-              ],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero:true
-                }
+        <script>
+        <?php if ($engajamento->score()!=null) : ?>
+
+          var ctx = document.getElementById("graficoEngajamento");
+          var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ["Vigor", "Dedicação", "Absorção"],
+              datasets: [{
+                label: 'Score',
+                data: [
+                <?php echo $engajamento->scoreVigor;?>, 
+                <?php echo $engajamento->scoreDedicacao;?>, 
+                <?php echo $engajamento->scoreAbsorcao;?>
+                ],
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
               }]
             },
-            legend:{
-              display: false
+            options: {
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero:true
+                  }
+                }]
+              },
+              legend:{
+                display: false
+              }
             }
-          }
-        });
+          });
+        <?php endif ?>
 
-        var ctx = document.getElementById("graficoJogador");
-        var options = {
-          scale: {
-            ticks: {
-              beginAtZero: true
+         <?php if ($perfiljogador->empreendedor()!=null) : ?>
+
+              var ctx = document.getElementById("graficoJogador");
+              var options = {
+                scale: {
+                  ticks: {
+                    beginAtZero: true
+                  },
+                  legend: {
+                    display: false
+                  }
+                }
+              };
+              var myChart2 = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                  labels: ["Empreendedor", "Disruptor", "Espírito Livre", "Filantropo", "Jogador", "Socializador"],
+                  datasets: [{
+                    label: 'Score',
+                    data: [
+                    <?php echo $perfiljogador->scoreEmpreendedor;?>,
+                    <?php echo $perfiljogador->scoreDisruptor;?>,
+                    <?php echo $perfiljogador->scoreEspiritoLivre;?>,
+                    <?php echo $perfiljogador->scoreFilantropo;?>,
+                    <?php echo $perfiljogador->scoreJogador;?>,
+                    <?php echo $perfiljogador->scoreSocializador;?>
+                    ],
+                    backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                options: options
+
+              });
+            <?php endif ?>
+
+         <?php if ($perfilaprendizagem->score("A")!=null) : ?>
+
+          var ctx = document.getElementById("graficoAprendizagem");
+          var options = {
+            scale: {
+              ticks: {
+                beginAtZero: true
+              },
+              legend: {
+                display: false
+              }
+            }
+          };
+          var myChart2 = new Chart(ctx, {
+            type: 'radar',
+            data: {
+              labels: ["Visual", "Auditivo", "Leitor Escritor", "Cinestésico"],
+              datasets: [{
+                label: 'Score',
+                data: [
+                <?php echo $perfilaprendizagem->score("V");?>,
+                <?php echo $perfilaprendizagem->score("A");?>,
+                <?php echo $perfilaprendizagem->score("R");?>,
+                <?php echo $perfilaprendizagem->score("K");?>
+                ],
+                backgroundColor: [
+                'rgba(255, 20, 0, 0.2)'
+                ],
+                borderColor: [
+                'rgba(255, 20, 0, 1)'
+                ],
+                borderWidth: 1
+              }]
             },
-            legend: {
-              display: false
-            }
-          }
-        };
-        var myChart2 = new Chart(ctx, {
-          type: 'radar',
-          data: {
-            labels: ["Empreendedor", "Disruptor", "Espírito Livre", "Filantropo", "Jogador", "Socializador"],
-            datasets: [{
-              label: 'Score',
-              data: [
-              <?php echo $perfiljogador->scoreEmpreendedor;?>,
-              <?php echo $perfiljogador->scoreDisruptor;?>,
-              <?php echo $perfiljogador->scoreEspiritoLivre;?>,
-              <?php echo $perfiljogador->scoreFilantropo;?>,
-              <?php echo $perfiljogador->scoreJogador;?>,
-              <?php echo $perfiljogador->scoreSocializador;?>
-              ],
-              backgroundColor: [
-              'rgba(54, 162, 235, 0.2)'
-              ],
-              borderColor: [
-              'rgba(54, 162, 235, 1)'
-              ],
-              borderWidth: 1
-            }]
-          },
-          options: options
+            options: options
 
-        });
+          });
 
-      </script>
+        <?php endif ?>
+
+        </script>
 
 

@@ -121,13 +121,17 @@ $missoes->buscarTodas();
                           <img class="photo" src="<?= $missao->imagem ?>" />
                         </td>
                         <td><?= $missao->nome ?></td>
-                        <td><?= substr($missao->descricao,0,30)."..." ?></td>
-                        <td><?= $missao->liberada==0?"<i class='fas fa-lock text-danger'></i>":"<i class='fas fa-lock-open text-success'></i>" ?></td>
-                        <td><?= $missao->levelminimo ?></td>
-                        <td><?= $missao->turma ?></td>
+                        <td><?= (strlen($missao->descricao)>30)?substr($missao->descricao,0,30)."...":$missao->descricao ?></td>
+                        <td class="text-center">
+                          <a  href="#" class="btn-liberada" data-id="<?= $missao->id?>">
+                            <?= $missao->liberada==0?"<i class='fas fa-lock text-danger'></i>":"<i class='fas fa-lock-open text-success'></i>" ?>
+                          </a>
+                        </td>
+                        <td class="text-center"><?= $missao->levelminimo ?></td>
+                        <td class="text-center"><?= $missao->turma ?></td>
                         <td class="text-right">
                           <a href="fases.php?idmissao=<?= $missao->id ?>" class="btn btn-link btn-info btn-just-icon"><i class="fas fa-tasks"></i></a>
-                          <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
+                          <a href="missao_duplicar.php?idmissao=<?= $missao->id?>" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">library_add</i></a>
                           <button class="btn btn-link btn-danger btn-just-icon" data-toggle="modal" data-target="#modalexcluir" onclick="trocarId(<?= $missao->id?>)">
                             <i class="material-icons">close</i>
                           </button>
@@ -148,7 +152,7 @@ $missoes->buscarTodas();
       <!-- end row -->
     </div>
 
-  <?php include "rodape.php" ?>
+    <?php include "rodape.php" ?>
 
   </div>
 </div>
@@ -273,45 +277,45 @@ $missoes->buscarTodas();
           <input type="hidden" name="id" id="idmissaoexcluir">
           <button type="submit" class="btn btn-danger">Apagar</button>
         </form>
-          
+
       </div>
     </div>
   </div>
 </div>
-  <script>
-    function trocarId($id){
-      var campo = document.querySelector("#idmissaoexcluir");
-      campo.value = $id;
-    }
+<script>
+  function trocarId($id){
+    var campo = document.querySelector("#idmissaoexcluir");
+    campo.value = $id;
+  }
 
-    $(document).ready(function() {
-      $('#datatables').DataTable({
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-        [10, 25, 50, -1],
-        [10, 25, 50, "todos"]
-        ],
-        "columnDefs": [
-        { "orderable": false, "targets": [0,3,6] }
-        ],
-        language: {
-          search: "_INPUT_",
-          searchPlaceholder: "buscar...",
-          "lengthMenu": "Mostrar _MENU_ registros por página",
-          "zeroRecords": "Nenhum registro encontrado",
-          "info": "Mostrando página _PAGE_ de _PAGES_",
-          "infoEmpty": "Nenhum registro",
-          "infoFiltered": "(filtrado de _MAX_ registros)",
-          "paginate": {
-            "next": "próxima",
-            "last": "última",
-            "first": "primeira",
-            "previous": "anterior"
-          }
+  $(document).ready(function() {
+    $('#datatables').DataTable({
+      "pagingType": "full_numbers",
+      "lengthMenu": [
+      [10, 25, 50, -1],
+      [10, 25, 50, "todos"]
+      ],
+      "columnDefs": [
+      { "orderable": false, "targets": [0,3,6] }
+      ],
+      language: {
+        search: "_INPUT_",
+        searchPlaceholder: "buscar...",
+        "lengthMenu": "Mostrar _MENU_ registros por página",
+        "zeroRecords": "Nenhum registro encontrado",
+        "info": "Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "Nenhum registro",
+        "infoFiltered": "(filtrado de _MAX_ registros)",
+        "paginate": {
+          "next": "próxima",
+          "last": "última",
+          "first": "primeira",
+          "previous": "anterior"
         }
-      });
+      }
+    });
 
-      var table = $('#datatable').DataTable();
+    var table = $('#datatable').DataTable();
 
       // Edit record
       table.on('click', '.edit', function() {
@@ -331,6 +335,35 @@ $missoes->buscarTodas();
       table.on('click', '.like', function() {
         alert('You clicked on Like button');
       });
+    });
+
+    //tratamento dos botoes de libaracao que mudam o status via ajax
+    var botoesLiberar = document.querySelectorAll(".btn-liberada");
+    botoesLiberar.forEach(function(botao){
+      botao.addEventListener("click", function(event){
+        event.preventDefault();
+        var idMissao = this.getAttribute("data-id");
+        $.ajax({
+          method: "POST",
+          url: "missao_atualizar.php",
+          data: { id: idMissao, acao: "swapliberada" }
+        })
+        .done(function(msg){
+          var icone = botao.querySelector("i");
+          if (icone.classList.contains('fa-lock')){
+            icone.classList.remove('fa-lock');
+            icone.classList.remove('text-danger');
+            icone.classList.add('fa-lock-open');
+            icone.classList.add('text-success');
+          }else{
+            icone.classList.remove('fa-lock-open');
+            icone.classList.remove('text-success');
+            icone.classList.add('fa-lock');
+            icone.classList.add('text-danger');
+          }
+        });
+      });
+
     });
   </script>
 

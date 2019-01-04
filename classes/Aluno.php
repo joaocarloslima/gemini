@@ -86,5 +86,38 @@ class Aluno {
 		session_destroy();
 	}
 
+	//atualizar engajamento
+	public function atualizarEngajamento($score){
+		$query = "UPDATE alunos SET engajamento=:score WHERE idAluno=:id";
+		$conexao = Conexao::pegarConexao();
+	    $stmt = $conexao->prepare($query);
+	    $stmt->bindValue(':id', $this->id);
+	    $stmt->bindValue(':score', $score);
+
+		if(!$stmt->execute()) throw new Exception("Erro ao alterar engajamento");
+	}
+
+	//atualizar perfil de jogador
+	public function atualizarPerfilJogador($perfil){
+		$query = "UPDATE alunos SET perfilJogador=:perfil WHERE idAluno=:id";
+		$conexao = Conexao::pegarConexao();
+	    $stmt = $conexao->prepare($query);
+	    $stmt->bindValue(':id', $this->id);
+	    $stmt->bindValue(':perfil', $perfil);
+
+		if(!$stmt->execute()) throw new Exception("Erro ao alterar perfil de jogador");
+	}
+
+	//atualizar perfil de aprendizagem
+	public function atualizarPerfilAprendizagem($perfil){
+		$query = "UPDATE alunos SET perfilAprendizagem=:perfil WHERE idAluno=:id";
+		$conexao = Conexao::pegarConexao();
+	    $stmt = $conexao->prepare($query);
+	    $stmt->bindValue(':id', $this->id);
+	    $stmt->bindValue(':perfil', $perfil);
+
+		if(!$stmt->execute()) throw new Exception("Erro ao alterar perfil de aprendizagem");
+	}
+
 }
 

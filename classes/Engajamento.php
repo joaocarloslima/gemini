@@ -47,6 +47,10 @@ class Engajamento {
 
 		if(!$stmt->execute()) throw new Exception("Erro ao gravar questionário");
 		else {
+			//gravar o score na tabela do aluno
+			$aluno = new Aluno();
+			$aluno->id = $this->idAluno;
+			$aluno->atualizarEngajamento( $this->score() );
 			Log::gravarLog($this->idAluno, "responder questionario engajamento");
 		}
 	}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28-Dez-2018 às 20:48
+-- Generation Time: 04-Jan-2019 às 20:00
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -35,16 +35,18 @@ CREATE TABLE `alunos` (
   `senha` varchar(250) NOT NULL,
   `foto` varchar(200) NOT NULL,
   `perfilAprendizagem` varchar(200) NOT NULL,
-  `perfilJogador` varchar(200) NOT NULL
+  `perfilJogador` varchar(200) NOT NULL,
+  `engajamento` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `alunos`
 --
 
-INSERT INTO `alunos` (`idAluno`, `nome`, `email`, `senha`, `foto`, `perfilAprendizagem`, `perfilJogador`) VALUES
-(17, 'Leticia Oliveira', 'leoliveira@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '', '', ''),
-(20, 'Marcela Leal', 'marcela@gmail.com', '202cb962ac59075b964b07152d234b70', '', '', '');
+INSERT INTO `alunos` (`idAluno`, `nome`, `email`, `senha`, `foto`, `perfilAprendizagem`, `perfilJogador`, `engajamento`) VALUES
+(17, 'Leticia Oliveira', 'leoliveira@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '', 'Visual', 'Empreendedor', '4.00'),
+(20, 'Marcela Leal', 'marcela@gmail.com', '202cb962ac59075b964b07152d234b70', '', 'Leitor Escritor', 'Empreendedor', '4.00'),
+(21, 'Joao Carlos Lima', 'joaocarloslima@me.com', '202cb962ac59075b964b07152d234b70', '', 'Leitor Escritor', 'EspÃ­rito Livre', '1.78');
 
 -- --------------------------------------------------------
 
@@ -57,9 +59,16 @@ CREATE TABLE `alunos_fases` (
   `idAluno` int(11) NOT NULL,
   `idFase` int(11) NOT NULL,
   `iniciadoEm` datetime NOT NULL,
-  `finalizadoEm` datetime NOT NULL,
-  `xp` int(11) NOT NULL
+  `finalizadoEm` datetime DEFAULT NULL,
+  `xp` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `alunos_fases`
+--
+
+INSERT INTO `alunos_fases` (`idAlunosFases`, `idAluno`, `idFase`, `iniciadoEm`, `finalizadoEm`, `xp`) VALUES
+(1, 20, 3, '2019-01-04 08:00:00', '2019-01-04 16:59:16', 1);
 
 -- --------------------------------------------------------
 
@@ -109,7 +118,9 @@ CREATE TABLE `fases` (
 --
 
 INSERT INTO `fases` (`idFase`, `nome`, `descricao`, `tipo`, `prazo`, `xp`, `idMissao`) VALUES
-(1, 'Introdução à informática', 'Responda esse questionário para verificar seu nível de conhecimento.', 'Quiz', '2019-02-21 12:00:00', 0, 1);
+(1, 'Questionario de Perfil de Aprendizagem', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0),
+(2, 'Questionario de Perfil de Jogador', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0),
+(3, 'Questionario de Engajamento', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0);
 
 -- --------------------------------------------------------
 
@@ -245,7 +256,35 @@ INSERT INTO `log` (`idLog`, `data`, `idAluno`, `acao`) VALUES
 (102, '2018-12-28 13:29:03', 20, 'responder questionario engajamento'),
 (103, '2018-12-28 13:29:14', 20, 'alterar perfil'),
 (104, '2018-12-28 13:29:39', 20, 'logout'),
-(105, '2018-12-28 14:09:19', 20, 'login');
+(105, '2018-12-28 14:09:19', 20, 'login'),
+(106, '2019-01-02 13:00:18', 21, 'criar conta'),
+(107, '2019-01-02 13:07:54', 21, 'responder questionario engajamento'),
+(108, '2019-01-02 13:09:57', 21, 'logout'),
+(109, '2019-01-02 13:10:01', 20, 'login'),
+(110, '2019-01-02 13:10:31', 20, 'responder questionario engajamento'),
+(111, '2019-01-02 13:10:44', 20, 'logout'),
+(112, '2019-01-02 13:10:52', 21, 'login'),
+(113, '2019-01-02 13:11:16', 21, 'responder questionario engajamento'),
+(114, '2019-01-02 13:17:58', 21, 'responder questionario jogador'),
+(115, '2019-01-02 13:18:40', 21, 'logout'),
+(116, '2019-01-02 13:18:51', 20, 'login'),
+(117, '2019-01-02 13:19:38', 20, 'responder questionario jogador'),
+(118, '2019-01-02 15:38:51', 20, 'responder questionario aprendizagem'),
+(119, '2019-01-02 16:00:54', 20, 'responder questionario aprendizagem'),
+(120, '2019-01-02 16:25:29', 20, 'responder questionario aprendizagem'),
+(121, '2019-01-02 16:32:41', 20, 'logout'),
+(122, '2019-01-02 16:32:49', 21, 'login'),
+(123, '2019-01-02 16:35:16', 21, 'responder questionario aprendizagem'),
+(124, '2019-01-02 16:36:18', 21, 'logout'),
+(125, '2019-01-02 16:36:26', 17, 'login'),
+(126, '2019-01-02 16:36:36', 17, 'responder questionario engajamento'),
+(127, '2019-01-02 16:36:49', 17, 'responder questionario aprendizagem'),
+(128, '2019-01-02 16:37:39', 17, 'responder questionario jogador'),
+(129, '2019-01-02 16:43:37', 17, 'responder questionario jogador'),
+(130, '2019-01-04 16:14:30', 1, 'logout'),
+(131, '2019-01-04 16:14:43', 20, 'login'),
+(132, '2019-01-04 16:54:31', 20, 'responder questionario engajamento'),
+(133, '2019-01-04 16:59:18', 20, 'responder questionario engajamento');
 
 -- --------------------------------------------------------
 
@@ -265,7 +304,8 @@ CREATE TABLE `matriculas` (
 
 INSERT INTO `matriculas` (`idMatricula`, `idAluno`, `idTurma`) VALUES
 (1, 17, 1),
-(2, 20, 2);
+(2, 20, 2),
+(3, 21, 2);
 
 -- --------------------------------------------------------
 
@@ -303,26 +343,19 @@ CREATE TABLE `missoes` (
 --
 
 INSERT INTO `missoes` (`idMissao`, `nome`, `descricao`, `liberada`, `ordem`, `idTurma`, `levelMinimo`, `imagem`) VALUES
-(1, 'Descoberta do Novo Mundo', 'Nessa missão você irá entrar em contato com os conceitos iniciais de informática e será desafiado e descobrir como funciona cada parte de um computador. Você também irá aprender a concertar pequenos defeitos do dia-a-dia.', 0, 1, 1, 0, ''),
-(2, 'Descoberta do Novo Mundo', 'Nessa missão você irá entrar em contato com os conceitos iniciais de informática e será desafiado e descobrir como funciona cada parte de um computador. Você também irá aprender a concertar pequenos defeitos do dia-a-dia.', 0, 1, 2, 0, ''),
 (3, 'De volta ao fundo do mar', 'Que aventura maluquinha essa sua nÃ£o', 0, 0, 1, 0, ''),
-(4, 'tes', 'tse', 0, 0, 2, 0, ''),
+(4, 'tes', 'tse', 1, 0, 2, 0, ''),
 (5, 'tes', 'tse', 0, 0, 2, 0, ''),
 (6, 'tesas', 'tse', 0, 0, 2, 0, ''),
 (7, 'Essa Ã© pra valer', 'NÃ£o liberada', 0, 0, 2, 0, ''),
-(8, 'Liberada', 'Liberou geral', 1, 0, 2, 0, ''),
+(8, 'Liberada', 'Liberou geral', 0, 0, 2, 0, ''),
 (9, 'Impossivel', 'Teste d', 0, 0, 1, 0, ''),
 (12, 'ChefÃ£o', 'top demais', 1, 0, 1, 10, ''),
 (13, 'Everest', 'sobe desgraÃ§a', 0, 0, 2, 1, ''),
 (14, 'Arrumar a casa', 'Tenho toque', 0, 0, 2, 1, ''),
 (15, 'Vestibulho', 'inscricao', 0, 0, 2, 1, ''),
 (16, 'vest', 'ves', 0, 0, 2, 1, ''),
-(17, 'va', 'va', 1, 0, 2, 0, ''),
-(18, 's', 'a', 1, 0, 2, 1, 'assets/img/missoes/img_missao.jpeg'),
-(19, 'montanha', 'montain view', 0, 0, 1, 1, 'assets/img/missoes/img_missao.jpeg'),
-(20, 'mont', 'MA', 0, 0, 2, 1, 'assets/img/missoes/img_missao.jpeg'),
-(21, 'time', 'time', 0, 0, 2, 2, 'assets/img/missoes/img_missao1546019301.jpg'),
-(22, 'asdf', '5sdfasdf', 1, 0, 2, 4, 'assets/img/missoes/img_missao1546019321.jpeg');
+(44, 'De volta ao fundo do mar', 'Que aventura maluquinha essa sua nÃ£o', 0, 0, 1, 0, '');
 
 -- --------------------------------------------------------
 
@@ -343,6 +376,43 @@ CREATE TABLE `professores` (
 
 INSERT INTO `professores` (`idProfessor`, `nome`, `login`, `senha`) VALUES
 (1, 'Joao Carlos Lima', 'joaocarloslima', '202cb962ac59075b964b07152d234b70');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `questionario_aprendizagem`
+--
+
+CREATE TABLE `questionario_aprendizagem` (
+  `idQuestionario` int(11) NOT NULL,
+  `idAluno` int(11) NOT NULL,
+  `data` datetime NOT NULL,
+  `q1` varchar(1) NOT NULL,
+  `q2` varchar(1) NOT NULL,
+  `q3` varchar(1) NOT NULL,
+  `q4` varchar(1) NOT NULL,
+  `q5` varchar(1) NOT NULL,
+  `q6` varchar(1) NOT NULL,
+  `q7` varchar(1) NOT NULL,
+  `q8` varchar(1) NOT NULL,
+  `q9` varchar(1) NOT NULL,
+  `q10` varchar(1) NOT NULL,
+  `q11` varchar(1) NOT NULL,
+  `q12` varchar(1) NOT NULL,
+  `q13` varchar(1) NOT NULL,
+  `q14` varchar(1) NOT NULL,
+  `q15` varchar(1) NOT NULL,
+  `q16` varchar(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `questionario_aprendizagem`
+--
+
+INSERT INTO `questionario_aprendizagem` (`idQuestionario`, `idAluno`, `data`, `q1`, `q2`, `q3`, `q4`, `q5`, `q6`, `q7`, `q8`, `q9`, `q10`, `q11`, `q12`, `q13`, `q14`, `q15`, `q16`) VALUES
+(3, 20, '2019-01-02 16:25:29', 'V', 'A', 'R', 'V', 'R', 'A', 'K', 'A', 'A', 'R', 'K', 'R', 'V', 'K', 'V', 'A'),
+(4, 21, '2019-01-02 16:35:16', 'A', 'A', 'V', 'R', 'R', 'A', 'A', 'V', 'V', 'R', 'R', 'A', 'V', 'R', 'R', 'V'),
+(5, 17, '2019-01-02 16:36:49', 'V', 'K', 'V', 'V', 'R', 'V', 'V', 'K', 'V', 'R', 'V', 'K', 'K', 'R', 'R', 'K');
 
 -- --------------------------------------------------------
 
@@ -370,7 +440,9 @@ CREATE TABLE `questionario_engajamento` (
 --
 
 INSERT INTO `questionario_engajamento` (`idQuestionario`, `idAluno`, `data`, `q1`, `q2`, `q3`, `q4`, `q5`, `q6`, `q7`, `q8`, `q9`) VALUES
-(1, 20, '2018-12-28 13:29:03', 4, 4, 4, 4, 4, 4, 4, 4, 4);
+(5, 21, '2019-01-02 13:11:16', 1, 1, 1, 1, 3, 2, 2, 4, 1),
+(6, 17, '2019-01-02 16:36:36', 4, 4, 4, 4, 4, 4, 4, 4, 4),
+(8, 20, '2019-01-04 16:59:18', 4, 4, 4, 4, 4, 4, 4, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -407,6 +479,15 @@ CREATE TABLE `questionario_jogador` (
   `q23` int(11) NOT NULL,
   `q24` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `questionario_jogador`
+--
+
+INSERT INTO `questionario_jogador` (`idQuestionario`, `idAluno`, `data`, `q01`, `q02`, `q03`, `q04`, `q05`, `q06`, `q07`, `q08`, `q09`, `q10`, `q11`, `q12`, `q13`, `q14`, `q15`, `q16`, `q17`, `q18`, `q19`, `q20`, `q21`, `q22`, `q23`, `q24`) VALUES
+(1, 21, '2019-01-02 13:17:58', 4, 4, 4, 2, 2, 2, 5, 5, 5, 4, 4, 4, 4, 1, 5, 2, 1, 5, 1, 1, 1, 1, 5, 4),
+(2, 20, '2019-01-02 13:19:38', 5, 5, 5, 5, 5, 1, 1, 1, 1, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3),
+(4, 17, '2019-01-02 16:43:37', 4, 4, 3, 3, 3, 3, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 3, 2, 3, 3, 3, 3, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -463,7 +544,17 @@ INSERT INTO `tempo_acesso` (`idAcesso`, `idAluno`, `data`, `dataLogin`, `dataLog
 (24, 17, '2018-12-28', '2018-12-28 11:37:14', '2018-12-28 11:38:03'),
 (25, 20, '2018-12-28', '2018-12-28 11:42:39', '2018-12-28 11:45:40'),
 (26, 20, '2018-12-28', '2018-12-28 13:28:46', '2018-12-28 13:29:39'),
-(27, 20, '2018-12-28', '2018-12-28 14:09:19', '2018-12-28 14:09:19');
+(27, 20, '2018-12-28', '2018-12-28 14:09:19', '2018-12-28 14:09:19'),
+(28, 21, '2019-01-02', '2019-01-02 13:00:18', '2019-01-02 13:18:40'),
+(29, 20, '2019-01-02', '2019-01-02 13:10:01', '2019-01-02 13:19:38'),
+(30, 20, '2019-01-02', '2019-01-02 15:38:51', '2019-01-02 15:38:51'),
+(31, 20, '2019-01-02', '2019-01-02 16:00:54', '2019-01-02 16:00:54'),
+(32, 20, '2019-01-02', '2019-01-02 16:25:29', '2019-01-02 16:32:41'),
+(33, 21, '2019-01-02', '2019-01-02 16:32:49', '2019-01-02 16:36:18'),
+(34, 17, '2019-01-02', '2019-01-02 16:36:26', '2019-01-02 16:43:37'),
+(35, 1, '2019-01-04', '2019-01-04 16:14:30', '2019-01-04 16:14:30'),
+(36, 20, '2019-01-04', '2019-01-04 16:14:43', '2019-01-04 16:14:43'),
+(37, 20, '2019-01-04', '2019-01-04 16:54:31', '2019-01-04 16:59:18');
 
 -- --------------------------------------------------------
 
@@ -499,13 +590,17 @@ ALTER TABLE `alunos`
 -- Indexes for table `alunos_fases`
 --
 ALTER TABLE `alunos_fases`
-  ADD PRIMARY KEY (`idAlunosFases`);
+  ADD PRIMARY KEY (`idAlunosFases`),
+  ADD KEY `idAluno` (`idAluno`),
+  ADD KEY `idFase` (`idFase`);
 
 --
 -- Indexes for table `alunos_medalhas`
 --
 ALTER TABLE `alunos_medalhas`
-  ADD PRIMARY KEY (`idAlunosMedalhas`);
+  ADD PRIMARY KEY (`idAlunosMedalhas`),
+  ADD KEY `idAluno` (`idAluno`),
+  ADD KEY `idMedalha` (`idMedalha`);
 
 --
 -- Indexes for table `conquistas`
@@ -517,37 +612,44 @@ ALTER TABLE `conquistas`
 -- Indexes for table `fases`
 --
 ALTER TABLE `fases`
-  ADD PRIMARY KEY (`idFase`);
+  ADD PRIMARY KEY (`idFase`),
+  ADD KEY `idMissao` (`idMissao`);
 
 --
 -- Indexes for table `feedbacks`
 --
 ALTER TABLE `feedbacks`
-  ADD PRIMARY KEY (`idFeedback`);
+  ADD PRIMARY KEY (`idFeedback`),
+  ADD KEY `idAlunoFase` (`idAlunoFase`);
 
 --
 -- Indexes for table `log`
 --
 ALTER TABLE `log`
-  ADD PRIMARY KEY (`idLog`);
+  ADD PRIMARY KEY (`idLog`),
+  ADD KEY `idAluno` (`idAluno`);
 
 --
 -- Indexes for table `matriculas`
 --
 ALTER TABLE `matriculas`
-  ADD PRIMARY KEY (`idMatricula`);
+  ADD PRIMARY KEY (`idMatricula`),
+  ADD KEY `idAluno` (`idAluno`),
+  ADD KEY `idTurma` (`idTurma`);
 
 --
 -- Indexes for table `medalhas`
 --
 ALTER TABLE `medalhas`
-  ADD PRIMARY KEY (`idMedalha`);
+  ADD PRIMARY KEY (`idMedalha`),
+  ADD KEY `idFase` (`idFase`);
 
 --
 -- Indexes for table `missoes`
 --
 ALTER TABLE `missoes`
-  ADD PRIMARY KEY (`idMissao`);
+  ADD PRIMARY KEY (`idMissao`),
+  ADD KEY `idTurma` (`idTurma`);
 
 --
 -- Indexes for table `professores`
@@ -556,29 +658,39 @@ ALTER TABLE `professores`
   ADD PRIMARY KEY (`idProfessor`);
 
 --
+-- Indexes for table `questionario_aprendizagem`
+--
+ALTER TABLE `questionario_aprendizagem`
+  ADD PRIMARY KEY (`idQuestionario`);
+
+--
 -- Indexes for table `questionario_engajamento`
 --
 ALTER TABLE `questionario_engajamento`
-  ADD PRIMARY KEY (`idQuestionario`);
+  ADD PRIMARY KEY (`idQuestionario`),
+  ADD KEY `idAluno` (`idAluno`);
 
 --
 -- Indexes for table `questionario_jogador`
 --
 ALTER TABLE `questionario_jogador`
-  ADD PRIMARY KEY (`idQuestionario`);
+  ADD PRIMARY KEY (`idQuestionario`),
+  ADD KEY `idAluno` (`idAluno`);
 
 --
 -- Indexes for table `questoes`
 --
 ALTER TABLE `questoes`
-  ADD PRIMARY KEY (`idQuestao`);
+  ADD PRIMARY KEY (`idQuestao`),
+  ADD KEY `idFase` (`idFase`);
 
 --
 -- Indexes for table `tempo_acesso`
 --
 ALTER TABLE `tempo_acesso`
   ADD PRIMARY KEY (`idAcesso`),
-  ADD KEY `data` (`data`);
+  ADD KEY `data` (`data`),
+  ADD KEY `idAluno` (`idAluno`);
 
 --
 -- Indexes for table `turmas`
@@ -594,13 +706,13 @@ ALTER TABLE `turmas`
 -- AUTO_INCREMENT for table `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `idAluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idAluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `alunos_fases`
 --
 ALTER TABLE `alunos_fases`
-  MODIFY `idAlunosFases` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAlunosFases` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `alunos_medalhas`
@@ -618,7 +730,7 @@ ALTER TABLE `conquistas`
 -- AUTO_INCREMENT for table `fases`
 --
 ALTER TABLE `fases`
-  MODIFY `idFase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idFase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `feedbacks`
@@ -630,13 +742,13 @@ ALTER TABLE `feedbacks`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `matriculas`
 --
 ALTER TABLE `matriculas`
-  MODIFY `idMatricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idMatricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `medalhas`
@@ -648,7 +760,7 @@ ALTER TABLE `medalhas`
 -- AUTO_INCREMENT for table `missoes`
 --
 ALTER TABLE `missoes`
-  MODIFY `idMissao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idMissao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `professores`
@@ -657,16 +769,22 @@ ALTER TABLE `professores`
   MODIFY `idProfessor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `questionario_aprendizagem`
+--
+ALTER TABLE `questionario_aprendizagem`
+  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `questionario_engajamento`
 --
 ALTER TABLE `questionario_engajamento`
-  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `questionario_jogador`
 --
 ALTER TABLE `questionario_jogador`
-  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `questoes`
@@ -678,7 +796,7 @@ ALTER TABLE `questoes`
 -- AUTO_INCREMENT for table `tempo_acesso`
 --
 ALTER TABLE `tempo_acesso`
-  MODIFY `idAcesso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idAcesso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `turmas`

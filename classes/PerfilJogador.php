@@ -96,6 +96,9 @@ class PerfilJogador {
 
 		if(!$stmt->execute()) throw new Exception("Erro ao gravar questionário");
 		else {
+			$aluno = new Aluno();
+			$aluno->id = $this->idAluno;
+			$aluno->atualizarPerfilJogador( $this->perfil() );
 			Log::gravarLog($this->idAluno, "responder questionario jogador");
 		}
 	}

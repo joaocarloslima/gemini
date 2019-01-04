@@ -192,16 +192,31 @@
     var form = document.querySelector("form");
     btnEnviar.addEventListener("click", function(e){
       e.preventDefault();
-      swal({
-        title: "Parabéns",
-        html: '<i class="fas fa-star"></i> Você ganhou 10 XP ' +
-        'por completar essa atividade.<br>',
-        buttonsStyling: false,
-        confirmButtonClass: "btn btn-success",
-        type: "success"
-      }).then(function() {
-        form.submit();
-      }).catch(swal.noop); 
+      $.ajax({
+        method: "POST",
+        url: "concluir_fase.php",
+        data: { idFase: 3, desempenho: 1 }
+      })
+      .done(function(msg){
+        if (msg=="sucesso"){
+          swal({
+            title: "Parabéns",
+            html: '<i class="fas fa-star"></i> Você ganhou 10 XP ' +
+            'por completar essa atividade.<br>',
+            buttonsStyling: false,
+            confirmButtonClass: "btn btn-success",
+            type: "success"
+          }).then(function() {
+            form.submit();
+          }).catch(swal.noop); 
+        }else{
+          alert("deu ruim" + msg);
+        }
+      })
+      .fail(function(jqXHR, textStatus, msg){
+        alert(msg);
+      });
+
 
     });
 

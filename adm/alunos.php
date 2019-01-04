@@ -130,7 +130,7 @@ $alunos->buscarTodos();
                         <td>0</td>
                         <td>0</td>
                         <td>0</td>
-                        <td>0</td>
+                        <td class="text-center"><?= $aluno->engajamento ?></td>
                         <td><?= $aluno->perfilJogador ?></td>
                         <td><?= $aluno->perfilAprendizagem ?></td>
                         <td class="text-right">

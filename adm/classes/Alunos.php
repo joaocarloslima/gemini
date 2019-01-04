@@ -23,6 +23,7 @@ class Alunos {
 		    $aluno->turma = $linha['sigla'];
 		    $aluno->perfilAprendizagem = $linha['perfilAprendizagem'];
 		    $aluno->perfilJogador = $linha['perfilJogador'];
+		    $aluno->engajamento = $linha['engajamento'];
 		    array_push($alunos, $aluno);
 	    }
 	    $this->lista = $alunos;
