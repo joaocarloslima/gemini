@@ -1,10 +1,13 @@
 <?php 
-require_once("global.php");
 include "cabecalho.php";
 
 $tempoDeEstudo = new TempoDeEstudo($_SESSION["iduser"]);
-?>
+$missao = new Missao();
+$missoes = $missao->buscarMissoesDoAluno($_SESSION["iduser"]);
+$level = 1; //para testar o filtro de missoes antes de implementar o controle de levels
 
+?>
+<link rel="stylesheet" type="text/css" href="adm/assets/css/missoes.css">
 <div class="main-panel">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -24,51 +27,8 @@ $tempoDeEstudo = new TempoDeEstudo($_SESSION["iduser"]);
         <span class="navbar-toggler-icon icon-bar"></span>
         <span class="navbar-toggler-icon icon-bar"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">74</span>
-              <i class="fas fa-star"></i>
-              <p class="d-lg-none d-md-block">
-                XP
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">4</span>
-              <i class="material-icons">signal_cellular_alt</i>
-              <p class="d-lg-none d-md-block">
-                Level
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">12</span>
-              <i class="fa fa-medal"></i>
-              <p class="d-lg-none d-md-block">
-                Medalha
-              </p>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">notifications</i>
-              <span class="notification">3</span>
-              <p class="d-lg-none d-md-block">
-                avisos
-              </p>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Nova missão liberada</a>
-              <a class="dropdown-item" href="#">Novo feedback na tarefa 3</a>
-              <a class="dropdown-item" href="#">Questionário 3 disponível</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <?php include "barra_status.php"; ?>
+
     </div>
   </nav>
   <!-- End Navbar -->
@@ -119,7 +79,7 @@ $tempoDeEstudo = new TempoDeEstudo($_SESSION["iduser"]);
                     <i class="fas fa-star"></i>
                   </div>
                   <p class="card-category">Pontos de Exp.</p>
-                  <h3 class="card-title">74</h3>
+                  <h3 class="card-title"><?= $controleFase->getXPDoAluno(); ?></h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -181,134 +141,86 @@ $tempoDeEstudo = new TempoDeEstudo($_SESSION["iduser"]);
           <h3>Missões Disponíveis</h3>
           <br>
           <div class="row">
-            <div class="col-md-4">
-              <div class="card card-product">
+            <?php 
+            $n_cards = (count($missoes)>3)?3:count($missoes);
+            for($i=0;$i<$n_cards;$i++) :
+             $missao = $missoes[$i];
+             ?>            
+             <div class="col-md-4">
+              <div class="card card-product <?= ($missao->levelminimo>$level)?'card-desabilitado':''?>">
                 <div class="card-header card-header-image" data-header-animation="false">
-                  <img class="img" src="assets/img/card-2.jpg">
+                  <img class="img" src="adm/<?= $missao->imagem ?>">
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#pablo">Missão 1: Trabalho Acadêmico</a>
-                  </h4>
+                  <h4 class="card-title"><a href="#pablo">Missão: <?= $missao->nome ?></a></h4>
                   <div class="card-description">
-                    A divulgação de uma pesquisa é parte fundamento do seu desenvolvimento. Para isso, é importante seguir certas normas e padrões. Nessa missão você deve formatar um trabalho acadêmico seguindo as normas da ABNT.
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
+                    <?php 
+                      if ($missao->levelminimo>$level) {
+                        echo "<h3>Disponível no <strong>Nível $missao->levelminimo</strong></h3>.";
+                      }else{ 
+                        echo $missao->descricao;
+                      }
+                   ?> 
+                 </div>
+
+               </div>
+               <div class="card-footer">
+                <?php if ($missao->levelminimo>$level) : ?>
+                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Missão indisponível">
+                      <i class="fa fa-lock"></i>
+                    </button>
+                <?php else : ?>
+                  <div class="">
                     <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Pontos de Experiência">
-                      <i class="fa fa-star"></i> 15
+                      <i class="fa fa-star"></i> <?= $missao->xp ?>
                     </button>
                   </div>
                   <div class="stats">
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Medalhas">
-                      <i class="fa fa-medal"></i> 4
-                    </button>
-                  </div>
-                  <div class="stats">
-                    <a class="btn btn-default btn-link" rel="tooltip" data-placement="bottom"">
+                    <a class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Acessar a missão">
                       <i class="fa fa-rocket"></i> acessar 
                     </a>
                   </div>
+                <?php endif ?>
                 </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-product">
-                <div class="card-header card-header-image" data-header-animation="false">
-                  <img class="img" src="assets/img/card-3.jpg">
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#pablo">Missão 1: Trabalho Acadêmico</a>
-                  </h4>
-                  <div class="card-description">
-                    A divulgação de uma pesquisa é parte fundamento do seu desenvolvimento. Para isso, é importante seguir certas normas e padrões. Nessa missão você deve formatar um trabalho acadêmico seguindo as normas da ABNT.
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Pontos de Experiência">
-                      <i class="fa fa-star"></i> 15
-                    </button>
-                  </div>
-                  <div class="stats">
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Medalhas">
-                      <i class="fa fa-medal"></i> 4
-                    </button>
-                  </div>
-                  <div class="stats">
-                    <a class="btn btn-default btn-link" rel="tooltip" data-placement="bottom"">
-                      <i class="fa fa-rocket"></i> acessar 
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card card-product">
-                <div class="card-header card-header-image" data-header-animation="false">
-                  <img class="img" src="assets/img/card-1.jpg">
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title">
-                    <a href="#pablo">Missão 1: Trabalho Acadêmico</a>
-                  </h4>
-                  <div class="card-description">
-                    A divulgação de uma pesquisa é parte fundamento do seu desenvolvimento. Para isso, é importante seguir certas normas e padrões. Nessa missão você deve formatar um trabalho acadêmico seguindo as normas da ABNT.
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Pontos de Experiência">
-                      <i class="fa fa-star"></i> 15
-                    </button>
-                  </div>
-                  <div class="stats">
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Medalhas">
-                      <i class="fa fa-medal"></i> 4
-                    </button>
-                  </div>
-                  <div class="stats">
-                    <a class="btn btn-default btn-link" rel="tooltip" data-placement="bottom"">
-                      <i class="fa fa-rocket"></i> acessar 
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
+        <?php endfor ?>
+
+      </div>
+      <div class="row">
+        <a href="missoes.php" class="btn btn-rose">Ver todas as missões</a>
       </div>
     </div>
+  </div>
+</div>
 
 <?php include "rodape.php" ?>
 
 <script type="text/javascript">
   $( document ).ready(function() {
     dataDailySalesChart = {
-        labels: <?= $tempoDeEstudo->getDias() ?>,
-        series: [
-          <?= $tempoDeEstudo->getTempos() ?>
-        ]
-      };
+      labels: <?= $tempoDeEstudo->getDias() ?>,
+      series: [
+      <?= $tempoDeEstudo->getTempos() ?>
+      ]
+    };
 
-      optionsDailySalesChart = {
-        lineSmooth: Chartist.Interpolation.cardinal({
-          tension: 0
-        }),
-        low: 0,
-        high: <?= $tempoDeEstudo->getMaior() + 10 ?>, 
-        chartPadding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
-        },
-      }
+    optionsDailySalesChart = {
+      lineSmooth: Chartist.Interpolation.cardinal({
+        tension: 0
+      }),
+      low: 0,
+      high: <?= $tempoDeEstudo->getMaior() + 10 ?>, 
+      chartPadding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      },
+    }
 
-      var animationHeaderChart = new Chartist.Bar('#graficoTempoDeEstudo', dataDailySalesChart, optionsDailySalesChart);
-      md.startAnimationForBarChart(animationHeaderChart);
+    var animationHeaderChart = new Chartist.Bar('#graficoTempoDeEstudo', dataDailySalesChart, optionsDailySalesChart);
+    md.startAnimationForBarChart(animationHeaderChart);
 
-});
+  });
 </script>

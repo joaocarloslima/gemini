@@ -71,8 +71,16 @@ public function duplicar($idMissao){
 	//duplicar a fase
 	$this->idMissao = $idMissao;
 	$idNovaFase = $this->inserir();
-	
 	//copiar as questoes e as medalhas
 }
+
+public function apagar(){
+	$query = "DELETE FROM fases WHERE idFase=:id";
+	$conexao = Conexao::pegarConexao();
+	$stmt = $conexao->prepare($query);
+	$stmt->bindValue(':id', $this->id);
+	if(!$stmt->execute()) throw new Exception("Erro ao apagar fase");
+}
+
 
 }

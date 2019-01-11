@@ -101,10 +101,20 @@ $perguntas = [
 ];
 
 shuffle($perguntas);
+
+$controleFase = new controleFase();
+$controleFase->idFase = 1;
+$controleFase->idAluno = $_SESSION["iduser"];
+try{
+  $controleFase->iniciar();
+}catch(Exception $e){
+  Erro::trataErro($e);
+  $_SESSION["danger"] = "<strong>Ops.</strong> Erro ao iniciar fase";
+}
+
 ?>
 
 <link href="assets/css/stars.css" rel="stylesheet" />
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
 
 <div class="main-panel">
@@ -126,51 +136,8 @@ shuffle($perguntas);
         <span class="navbar-toggler-icon icon-bar"></span>
         <span class="navbar-toggler-icon icon-bar"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">74</span>
-              <i class="fas fa-star"></i>
-              <p class="d-lg-none d-md-block">
-                XP
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">4</span>
-              <i class="material-icons">signal_cellular_alt</i>
-              <p class="d-lg-none d-md-block">
-                Level
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">12</span>
-              <i class="fas fa-medal"></i>
-              <p class="d-lg-none d-md-block">
-                Medalha
-              </p>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">notifications</i>
-              <span class="notification">3</span>
-              <p class="d-lg-none d-md-block">
-                avisos
-              </p>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Nova missão liberada</a>
-              <a class="dropdown-item" href="#">Novo feedback na tarefa 3</a>
-              <a class="dropdown-item" href="#">Questionário 3 disponível</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <?php include "barra_status.php"; ?>
+
     </div>
   </nav>
   <!-- End Navbar -->
@@ -245,16 +212,30 @@ shuffle($perguntas);
     var form = document.querySelector("form");
     btnEnviar.addEventListener("click", function(e){
       e.preventDefault();
-      swal({
-        title: "Parabéns",
-        html: '<i class="fas fa-star"></i> Você ganhou 10 XP ' +
-        'por completar essa atividade.<br>',
-        buttonsStyling: false,
-        confirmButtonClass: "btn btn-success",
-        type: "success"
-      }).then(function() {
-        form.submit();
-      }).catch(swal.noop); 
+      $.ajax({
+        method: "POST",
+        url: "concluir_fase.php",
+        data: { idFase: 1, desempenho: 1 }
+      })
+      .done(function(msg){
+        if (msg=="sucesso"){
+          swal({
+            title: "Parabéns",
+            html: '<i class="fas fa-star"></i> Você ganhou 10 XP ' +
+            'por completar essa atividade.<br>',
+            buttonsStyling: false,
+            confirmButtonClass: "btn btn-success",
+            type: "success"
+          }).then(function() {
+            form.submit();
+          }).catch(swal.noop); 
+        }else{
+          alert("deu ruim" + msg);
+        }
+      })
+      .fail(function(jqXHR, textStatus, msg){
+        alert(msg);
+      });
 
     });
   </script>

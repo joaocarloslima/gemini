@@ -38,51 +38,8 @@ $perfilaprendizagemstr = $perfilaprendizagem->perfil();
         <span class="navbar-toggler-icon icon-bar"></span>
         <span class="navbar-toggler-icon icon-bar"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">74</span>
-              <i class="fas fa-star"></i>
-              <p class="d-lg-none d-md-block">
-                XP
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">4</span>
-              <i class="material-icons">signal_cellular_alt</i>
-              <p class="d-lg-none d-md-block">
-                Level
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span class="score">12</span>
-              <i class="fa fa-medal"></i>
-              <p class="d-lg-none d-md-block">
-                Medalha
-              </p>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">notifications</i>
-              <span class="notification">3</span>
-              <p class="d-lg-none d-md-block">
-                avisos
-              </p>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Nova missão liberada</a>
-              <a class="dropdown-item" href="#">Novo feedback na tarefa 3</a>
-              <a class="dropdown-item" href="#">Questionário 3 disponível</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <?php include "barra_status.php"; ?>
+
     </div>
   </nav>
   <!-- End Navbar -->
@@ -208,14 +165,30 @@ $perfilaprendizagemstr = $perfilaprendizagem->perfil();
                           </div>
                         </div>
                       </div>
+                      <button type="submit" class="btn btn-rose pull-right">Gravar Dados</button>
+                    </form>
+                    <form action="alunos_foto.php" method="POST" enctype="multipart/form-data">
                       <div class="row">
-                        <div class="col-md-12">
-                          <p>mudar foto...</p>
+                        <div class="col-md-12 col-sm-12">
+                          <h4 class="title">Trocar Foto</h4>
+                          <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail img-circle">
+                              <img src="<?= $aluno->foto ?>" alt="...">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                            <div>
+                              <span class="btn btn-rose btn-round btn-file">
+                                <span class="fileinput-new">Escolher foto</span>
+                                <span class="fileinput-exists">trocar</span>
+                                <input type="file" name="foto">
+                              </span>
+                              <button class="btn btn-success btn-round fileinput-exists" class="fileinput-exists">salvar</button>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-rose pull-right">Gravar Dados</button>
-                      <div class="clearfix"></div>
                     </form>
+                    <div class="clearfix"></div>
                   </div>
                 </div>
               </div>
@@ -245,128 +218,128 @@ $perfilaprendizagemstr = $perfilaprendizagem->perfil();
         ?>
 
         <script>
-        <?php if ($engajamento->score()!=null) : ?>
+          <?php if ($engajamento->score()!=null) : ?>
 
-          var ctx = document.getElementById("graficoEngajamento");
-          var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: ["Vigor", "Dedicação", "Absorção"],
-              datasets: [{
-                label: 'Score',
-                data: [
-                <?php echo $engajamento->scoreVigor;?>, 
-                <?php echo $engajamento->scoreDedicacao;?>, 
-                <?php echo $engajamento->scoreAbsorcao;?>
-                ],
-                backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    beginAtZero:true
-                  }
+            var ctx = document.getElementById("graficoEngajamento");
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: ["Vigor", "Dedicação", "Absorção"],
+                datasets: [{
+                  label: 'Score',
+                  data: [
+                  <?php echo $engajamento->scoreVigor;?>, 
+                  <?php echo $engajamento->scoreDedicacao;?>, 
+                  <?php echo $engajamento->scoreAbsorcao;?>
+                  ],
+                  backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)'
+                  ],
+                  borderWidth: 1
                 }]
               },
-              legend:{
-                display: false
-              }
-            }
-          });
-        <?php endif ?>
-
-         <?php if ($perfiljogador->empreendedor()!=null) : ?>
-
-              var ctx = document.getElementById("graficoJogador");
-              var options = {
-                scale: {
-                  ticks: {
-                    beginAtZero: true
-                  },
-                  legend: {
-                    display: false
-                  }
-                }
-              };
-              var myChart2 = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                  labels: ["Empreendedor", "Disruptor", "Espírito Livre", "Filantropo", "Jogador", "Socializador"],
-                  datasets: [{
-                    label: 'Score',
-                    data: [
-                    <?php echo $perfiljogador->scoreEmpreendedor;?>,
-                    <?php echo $perfiljogador->scoreDisruptor;?>,
-                    <?php echo $perfiljogador->scoreEspiritoLivre;?>,
-                    <?php echo $perfiljogador->scoreFilantropo;?>,
-                    <?php echo $perfiljogador->scoreJogador;?>,
-                    <?php echo $perfiljogador->scoreSocializador;?>
-                    ],
-                    backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                    'rgba(54, 162, 235, 1)'
-                    ],
-                    borderWidth: 1
+              options: {
+                scales: {
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                    }
                   }]
                 },
-                options: options
-
-              });
-            <?php endif ?>
-
-         <?php if ($perfilaprendizagem->score("A")!=null) : ?>
-
-          var ctx = document.getElementById("graficoAprendizagem");
-          var options = {
-            scale: {
-              ticks: {
-                beginAtZero: true
-              },
-              legend: {
-                display: false
+                legend:{
+                  display: false
+                }
               }
-            }
-          };
-          var myChart2 = new Chart(ctx, {
-            type: 'radar',
-            data: {
-              labels: ["Visual", "Auditivo", "Leitor Escritor", "Cinestésico"],
-              datasets: [{
-                label: 'Score',
-                data: [
-                <?php echo $perfilaprendizagem->score("V");?>,
-                <?php echo $perfilaprendizagem->score("A");?>,
-                <?php echo $perfilaprendizagem->score("R");?>,
-                <?php echo $perfilaprendizagem->score("K");?>
-                ],
-                backgroundColor: [
-                'rgba(255, 20, 0, 0.2)'
-                ],
-                borderColor: [
-                'rgba(255, 20, 0, 1)'
-                ],
-                borderWidth: 1
-              }]
-            },
-            options: options
+            });
+          <?php endif ?>
 
-          });
+          <?php if ($perfiljogador->empreendedor()!=null) : ?>
 
-        <?php endif ?>
+            var ctx = document.getElementById("graficoJogador");
+            var options = {
+              scale: {
+                ticks: {
+                  beginAtZero: true
+                },
+                legend: {
+                  display: false
+                }
+              }
+            };
+            var myChart2 = new Chart(ctx, {
+              type: 'radar',
+              data: {
+                labels: ["Empreendedor", "Disruptor", "Espírito Livre", "Filantropo", "Jogador", "Socializador"],
+                datasets: [{
+                  label: 'Score',
+                  data: [
+                  <?php echo $perfiljogador->scoreEmpreendedor;?>,
+                  <?php echo $perfiljogador->scoreDisruptor;?>,
+                  <?php echo $perfiljogador->scoreEspiritoLivre;?>,
+                  <?php echo $perfiljogador->scoreFilantropo;?>,
+                  <?php echo $perfiljogador->scoreJogador;?>,
+                  <?php echo $perfiljogador->scoreSocializador;?>
+                  ],
+                  backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(54, 162, 235, 1)'
+                  ],
+                  borderWidth: 1
+                }]
+              },
+              options: options
+
+            });
+          <?php endif ?>
+
+          <?php if ($perfilaprendizagem->score("A")!=null) : ?>
+
+            var ctx = document.getElementById("graficoAprendizagem");
+            var options = {
+              scale: {
+                ticks: {
+                  beginAtZero: true
+                },
+                legend: {
+                  display: false
+                }
+              }
+            };
+            var myChart2 = new Chart(ctx, {
+              type: 'radar',
+              data: {
+                labels: ["Visual", "Auditivo", "Leitor Escritor", "Cinestésico"],
+                datasets: [{
+                  label: 'Score',
+                  data: [
+                  <?php echo $perfilaprendizagem->score("V");?>,
+                  <?php echo $perfilaprendizagem->score("A");?>,
+                  <?php echo $perfilaprendizagem->score("R");?>,
+                  <?php echo $perfilaprendizagem->score("K");?>
+                  ],
+                  backgroundColor: [
+                  'rgba(255, 20, 0, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(255, 20, 0, 1)'
+                  ],
+                  borderWidth: 1
+                }]
+              },
+              options: options
+
+            });
+
+          <?php endif ?>
 
         </script>
 

@@ -11,6 +11,7 @@ class Missao {
 	public $turma;
 	public $levelminimo;
 	public $imagem;
+	public $xp;
 	public $listaCompleta ;
 
 	public function carregar(){
@@ -53,6 +54,31 @@ class Missao {
 			array_push($missoes, $missao);
 		}
 		$this->listaCompleta = $missoes;
+	}
+
+	//buscar as missoes de um aluno pelo idAluno
+	public function buscarMissoesDoAluno($idAluno){ 
+		$query = "SELECT missoes.*, (SELECT sum(fases.xp) from fases where fases.idMissao=missoes.idMissao) as xp, turmas.sigla FROM missoes INNER JOIN turmas on turmas.idTurma=missoes.idTurma WHERE liberada=1 ORDER BY nome";
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+		$stmt->execute();
+		$missoes = array();
+		while ($linha = $stmt->fetch()){
+			$missao = new Missao();
+			$missao->id = $linha['idMissao'];
+			$missao->nome = $linha['nome'];
+			$missao->descricao = $linha['descricao'];
+			$missao->levelminimo = $linha['levelMinimo'];
+			$missao->liberada = $linha['liberada'];
+			$missao->ordem = $linha['ordem'];
+			$missao->idTurma = $linha['idTurma'];
+			$missao->turma = $linha['sigla'];
+			$missao->idTurma = $linha['idTurma'];
+			$missao->imagem = $linha['imagem'];
+			$missao->xp = $linha['xp'];
+			array_push($missoes, $missao);
+		}
+		return $missoes;
 	}
 
 	public function inserir(){

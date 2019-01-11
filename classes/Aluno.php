@@ -7,6 +7,7 @@ class Aluno {
 	public $email;
 	public $senha;
 	public $idTurma;
+	public $foto;
 	
 	public function inserir(){
 		$erro = false;
@@ -48,9 +49,22 @@ class Aluno {
 		}
 	}
 
+	//trocar referencia para a foto do aluno
+	public function trocarFoto(){
+		$query = "UPDATE alunos SET foto=:foto WHERE idAluno=:id";
+		$conexao = Conexao::pegarConexao();
+	    $stmt = $conexao->prepare($query);
+	    $stmt->bindValue(':id', $this->id);
+	    $stmt->bindValue(':foto', $this->foto);
+		if(!$stmt->execute()) throw new Exception("Erro ao alterar dados");
+		else {
+			Log::gravarLog($this->id, "alterar foto de perfil");
+		}
+	}
+
 	//carregar os dados do aluno através do id
 	public function carregar(){ 
-	    $query = "SELECT nome, email, senha FROM alunos WHERE idAluno = :id";
+	    $query = "SELECT nome, email, senha, foto FROM alunos WHERE idAluno = :id";
 	    $conexao = Conexao::pegarConexao();
 	    $stmt = $conexao->prepare($query);
 	    $stmt->bindValue(':id', $this->id);
@@ -59,6 +73,7 @@ class Aluno {
 	    $this->nome = $linha['nome'];
 	    $this->email = $linha['email'];
 	    $this->senha = $linha['senha'];
+	    $this->foto = $linha['foto'];
 	}
 
 	//carrega os dados através do email e senha

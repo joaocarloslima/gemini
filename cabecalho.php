@@ -1,6 +1,12 @@
 <?php 
   include "verificar_login.php";
   include "mostrar_alerta.php";
+  require_once "global.php";
+
+  $aluno = new Aluno();
+  $aluno->id = $_SESSION["iduser"];
+  $aluno->carregar();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -39,7 +45,7 @@
       <div class="sidebar-wrapper">
         <div class="user">
           <div class="photo">
-            <img src="assets/img/default-avatar.png" />
+            <img src="<?= $aluno->foto ?>" />
           </div>
           <div class="user-info">
             <a data-toggle="collapse" href="#collapseExample" class="username">

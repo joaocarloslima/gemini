@@ -123,7 +123,7 @@ $alunos->buscarTodos();
                     <?php foreach ($alunos->lista as $aluno) : ?>
                       <tr>
                         <td>
-                          <img class="photo" src="assets/img/default-avatar.png" />
+                          <img class="photo" src="../<?= $aluno->foto?>" />
                         </td>
                         <td><?= $aluno->nome ?></td>
                         <td><?= $aluno->turma ?></td>
