@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 04-Jan-2019 às 20:00
+-- Generation Time: 24-Jan-2019 às 21:33
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -33,7 +33,7 @@ CREATE TABLE `alunos` (
   `nome` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `senha` varchar(250) NOT NULL,
-  `foto` varchar(200) NOT NULL,
+  `foto` varchar(200) NOT NULL DEFAULT 'assets/img/default-avatar.png',
   `perfilAprendizagem` varchar(200) NOT NULL,
   `perfilJogador` varchar(200) NOT NULL,
   `engajamento` decimal(5,2) NOT NULL
@@ -45,8 +45,9 @@ CREATE TABLE `alunos` (
 
 INSERT INTO `alunos` (`idAluno`, `nome`, `email`, `senha`, `foto`, `perfilAprendizagem`, `perfilJogador`, `engajamento`) VALUES
 (17, 'Leticia Oliveira', 'leoliveira@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '', 'Visual', 'Empreendedor', '4.00'),
-(20, 'Marcela Leal', 'marcela@gmail.com', '202cb962ac59075b964b07152d234b70', '', 'Leitor Escritor', 'Empreendedor', '4.00'),
-(21, 'Joao Carlos Lima', 'joaocarloslima@me.com', '202cb962ac59075b964b07152d234b70', '', 'Leitor Escritor', 'EspÃ­rito Livre', '1.78');
+(20, 'Marcela Leal', 'marcela@gmail.com', '202cb962ac59075b964b07152d234b70', 'assets/img/alunos/foto_aluno1548272146.jpg', 'Leitor Escritor', 'Filantropo', '4.00'),
+(21, 'Joao Carlos Lima', 'joaocarloslima@me.com', '202cb962ac59075b964b07152d234b70', 'assets/img/alunos/foto_aluno1547042415.jpg', 'Auditivo', 'EspÃ­rito Livre', '1.78'),
+(23, 'Karina Oliveira Carneiro Lima', 'karina@gmail.com', '202cb962ac59075b964b07152d234b70', 'assets/img/alunos/foto_aluno1547042640.jpg', 'Leitor Escritor', '', '0.00');
 
 -- --------------------------------------------------------
 
@@ -60,15 +61,29 @@ CREATE TABLE `alunos_fases` (
   `idFase` int(11) NOT NULL,
   `iniciadoEm` datetime NOT NULL,
   `finalizadoEm` datetime DEFAULT NULL,
-  `xp` int(11) DEFAULT NULL
+  `xp` int(11) DEFAULT NULL,
+  `resposta` text NOT NULL,
+  `anexo` varchar(250) NOT NULL,
+  `feedback` text,
+  `feedbackVisualizadoEm` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `alunos_fases`
 --
 
-INSERT INTO `alunos_fases` (`idAlunosFases`, `idAluno`, `idFase`, `iniciadoEm`, `finalizadoEm`, `xp`) VALUES
-(1, 20, 3, '2019-01-04 08:00:00', '2019-01-04 16:59:16', 1);
+INSERT INTO `alunos_fases` (`idAlunosFases`, `idAluno`, `idFase`, `iniciadoEm`, `finalizadoEm`, `xp`, `resposta`, `anexo`, `feedback`, `feedbackVisualizadoEm`) VALUES
+(6, 20, 3, '2019-01-08 10:19:22', '2019-01-09 10:57:50', 10, '', '', NULL, NULL),
+(7, 20, 1, '2019-01-09 10:49:05', '2019-01-09 10:51:25', 10, '', '', NULL, NULL),
+(8, 20, 2, '2019-01-09 10:56:13', '2019-01-09 10:59:13', 10, '', '', NULL, NULL),
+(9, 21, 1, '2019-01-09 11:13:28', '2019-01-09 11:13:55', 10, '', '', NULL, NULL),
+(14, 23, 10, '2019-01-22 19:36:29', '2019-01-22 19:36:37', NULL, 'Pobremas resolvidos', '', NULL, NULL),
+(15, 23, 12, '2019-01-22 20:13:04', '2019-01-22 20:13:18', NULL, 'tirei 120', '', NULL, NULL),
+(16, 23, 13, '2019-01-22 20:14:18', '2019-01-22 20:14:23', NULL, 'JÃ¡ fiz', '', NULL, NULL),
+(17, 23, 14, '2019-01-23 16:54:45', '2019-01-23 16:54:51', 23, 'ok', '', 'muito bem', '2019-01-24 11:00:00'),
+(18, 20, 13, '2019-01-23 17:32:01', '2019-01-23 17:32:21', NULL, 'Eu fiz, segue anexo', 'atividades/atividade1548271941.pdf', NULL, NULL),
+(19, 20, 14, '2019-01-23 17:32:30', '2019-01-23 17:32:38', 5, 'tem print nÃ£o', '', 'sem print fica difÃ­cil avaliar.', NULL),
+(20, 20, 16, '2019-01-23 17:32:46', '2019-01-23 17:32:54', 13, 'Sou muito mala e sou direta', '', 'top mesmo', NULL);
 
 -- --------------------------------------------------------
 
@@ -110,30 +125,27 @@ CREATE TABLE `fases` (
   `tipo` varchar(200) NOT NULL,
   `prazo` datetime NOT NULL,
   `xp` int(11) NOT NULL,
-  `idMissao` int(11) NOT NULL
+  `idMissao` int(11) NOT NULL,
+  `anexo` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `fases`
 --
 
-INSERT INTO `fases` (`idFase`, `nome`, `descricao`, `tipo`, `prazo`, `xp`, `idMissao`) VALUES
-(1, 'Questionario de Perfil de Aprendizagem', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0),
-(2, 'Questionario de Perfil de Jogador', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0),
-(3, 'Questionario de Engajamento', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `feedbacks`
---
-
-CREATE TABLE `feedbacks` (
-  `idFeedback` int(11) NOT NULL,
-  `idAlunoFase` int(11) NOT NULL,
-  `feedback` text NOT NULL,
-  `visualizadoEm` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `fases` (`idFase`, `nome`, `descricao`, `tipo`, `prazo`, `xp`, `idMissao`, `anexo`) VALUES
+(1, 'Questionario de Perfil de Aprendizagem', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0, ''),
+(2, 'Questionario de Perfil de Jogador', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0, ''),
+(3, 'Questionario de Engajamento', '', 'Estrutural', '0000-00-00 00:00:00', 10, 0, ''),
+(6, 'Seminário', 'seminário', 'Atividade', '2019-01-29 00:00:00', 20, 48, ''),
+(7, 'Questionario', 'Esse questionÃ¡rio Ã© top da balada', 'QuestionÃ¡rio', '2019-02-06 12:00:00', 55, 46, ''),
+(8, 'AnÃ¡lise de problemas comuns', 'FaÃ§a uma anÃ¡lise de 5 defeitos que foram reportados a vocÃª nos Ãºltimos anos, relacionando com possÃ­veis soluÃ§Ãµes.', '1', '2019-01-12 12:00:00', 8, 0, ''),
+(10, 'AnÃ¡lise de Problemas', 'FaÃ§a uma anÃ¡lise de 5 defeitos que foram reportados a vocÃª nos Ãºltimos anos, relacionando com possÃ­veis soluÃ§Ãµes.', 'Atividade', '2018-01-12 12:00:00', 15, 47, ''),
+(11, 'QuestionÃ¡rio sobre hardware', 'Teste seus conhecimentos sobre o que hÃ¡ de mais moderno em peÃ§as de computadores.', 'QuestionÃ¡rio', '2019-01-20 09:00:00', 10, 47, ''),
+(12, 'Simulador de Defeitos', 'Resolva problemas em um ambiente virtual e ganha peÃ§as para montar o seu computador. Quanto mais pontos fizer maior serÃ¡ sua nota.', 'Atividade', '2019-01-25 20:30:00', 20, 47, ''),
+(13, 'ExercÃ­cio Etiquetas', 'Atividade de criaÃ§Ã£o de etiquetas', 'Atividade', '2019-02-15 10:30:00', 15, 46, 'anexos/arquivo1547501614.pdf'),
+(14, 'Simulador', 'Resolva e envie o print', 'Atividade', '2018-01-20 12:00:00', 23, 46, 'anexos/arquivo1547496787.pdf'),
+(16, 'ExercÃ­cio Mala Direta', 'Construa uma mala direta para a o envio de convites para a reuniÃ£o de pais da ETEC IrmÃ£ Agostina', 'Atividade', '2019-01-22 10:30:00', 13, 46, 'anexos/arquivo1548164142.pdf');
 
 -- --------------------------------------------------------
 
@@ -284,7 +296,84 @@ INSERT INTO `log` (`idLog`, `data`, `idAluno`, `acao`) VALUES
 (130, '2019-01-04 16:14:30', 1, 'logout'),
 (131, '2019-01-04 16:14:43', 20, 'login'),
 (132, '2019-01-04 16:54:31', 20, 'responder questionario engajamento'),
-(133, '2019-01-04 16:59:18', 20, 'responder questionario engajamento');
+(133, '2019-01-04 16:59:18', 20, 'responder questionario engajamento'),
+(134, '2019-01-08 09:44:41', 20, 'login'),
+(135, '2019-01-08 10:09:34', 20, 'iniciou fase '),
+(136, '2019-01-08 10:11:43', 20, 'iniciou fase '),
+(137, '2019-01-08 10:16:36', 20, 'concluiu fase '),
+(138, '2019-01-08 10:16:37', 20, 'responder questionario engajamento'),
+(139, '2019-01-08 10:19:04', 20, 'concluiu fase '),
+(140, '2019-01-08 10:19:06', 20, 'responder questionario engajamento'),
+(141, '2019-01-08 10:19:22', 20, 'iniciou fase '),
+(142, '2019-01-08 10:19:31', 20, 'concluiu fase '),
+(143, '2019-01-08 10:19:32', 20, 'responder questionario engajamento'),
+(144, '2019-01-09 10:43:33', 20, 'login'),
+(145, '2019-01-09 10:49:05', 20, 'iniciou fase '),
+(146, '2019-01-09 10:51:25', 20, 'concluiu fase '),
+(147, '2019-01-09 10:51:35', 20, 'responder questionario aprendizagem'),
+(148, '2019-01-09 10:56:13', 20, 'iniciou fase '),
+(149, '2019-01-09 10:57:50', 20, 'concluiu fase '),
+(150, '2019-01-09 10:57:51', 20, 'responder questionario jogador'),
+(151, '2019-01-09 10:59:13', 20, 'concluiu fase '),
+(152, '2019-01-09 10:59:14', 20, 'responder questionario jogador'),
+(153, '2019-01-09 11:10:00', 20, 'logout'),
+(154, '2019-01-09 11:10:07', 21, 'login'),
+(155, '2019-01-09 11:13:28', 21, 'iniciou fase '),
+(156, '2019-01-09 11:13:55', 21, 'concluiu fase '),
+(157, '2019-01-09 11:13:56', 21, 'responder questionario aprendizagem'),
+(158, '2019-01-09 11:43:41', 21, 'alterar perfil'),
+(159, '2019-01-09 11:49:25', 21, 'alterar foto de perfil'),
+(160, '2019-01-09 11:50:40', 21, 'alterar foto de perfil'),
+(161, '2019-01-09 11:51:16', 21, 'alterar foto de perfil'),
+(162, '2019-01-09 11:52:08', 21, 'alterar foto de perfil'),
+(163, '2019-01-09 11:53:13', 21, 'alterar foto de perfil'),
+(164, '2019-01-09 11:58:56', 21, 'alterar foto de perfil'),
+(165, '2019-01-09 12:00:15', 21, 'alterar foto de perfil'),
+(166, '2019-01-09 12:00:55', 21, 'logout'),
+(167, '2019-01-09 12:01:21', 22, 'criar conta'),
+(168, '2019-01-09 12:03:33', 22, 'logout'),
+(169, '2019-01-09 12:03:51', 23, 'criar conta'),
+(170, '2019-01-09 12:04:00', 23, 'alterar foto de perfil'),
+(171, '2019-01-10 17:29:20', 23, 'iniciou fase '),
+(172, '2019-01-10 17:30:13', 23, 'iniciou fase '),
+(173, '2019-01-10 17:30:26', 23, 'iniciou fase '),
+(174, '2019-01-10 17:35:01', 23, 'concluiu fase '),
+(175, '2019-01-10 17:35:03', 23, 'responder questionario aprendizagem'),
+(176, '2019-01-11 09:20:26', 23, 'logout'),
+(177, '2019-01-11 09:20:37', 23, 'login'),
+(178, '2019-01-11 17:06:55', 23, 'login'),
+(179, '2019-01-22 11:18:10', 23, 'login'),
+(180, '2019-01-22 11:18:23', 23, 'logout'),
+(181, '2019-01-22 11:55:27', 23, 'login'),
+(182, '2019-01-22 15:13:46', 23, 'alterar perfil'),
+(183, '2019-01-22 18:48:08', 23, 'iniciou fase '),
+(184, '2019-01-22 19:15:39', 23, 'concluiu atividade '),
+(185, '2019-01-22 19:19:33', 23, 'concluiu atividade '),
+(186, '2019-01-22 19:20:52', 23, 'concluiu atividade '),
+(187, '2019-01-22 19:21:18', 23, 'concluiu atividade '),
+(188, '2019-01-22 19:21:51', 23, 'concluiu atividade '),
+(189, '2019-01-22 19:23:08', 23, 'concluiu atividade '),
+(190, '2019-01-22 19:24:48', 23, 'concluiu atividade '),
+(191, '2019-01-22 19:36:29', 23, 'iniciou fase '),
+(192, '2019-01-22 19:36:37', 23, 'concluiu atividade '),
+(193, '2019-01-22 20:13:04', 23, 'iniciou fase '),
+(194, '2019-01-22 20:13:18', 23, 'concluiu atividade '),
+(195, '2019-01-22 20:14:19', 23, 'iniciou fase '),
+(196, '2019-01-22 20:14:23', 23, 'concluiu atividade '),
+(197, '2019-01-23 16:53:58', 23, 'login'),
+(198, '2019-01-23 16:54:45', 23, 'iniciou fase '),
+(199, '2019-01-23 16:54:52', 23, 'concluiu atividade '),
+(200, '2019-01-23 17:31:37', 23, 'logout'),
+(201, '2019-01-23 17:31:46', 20, 'login'),
+(202, '2019-01-23 17:32:01', 20, 'iniciou fase '),
+(203, '2019-01-23 17:32:22', 20, 'concluiu atividade '),
+(204, '2019-01-23 17:32:31', 20, 'iniciou fase '),
+(205, '2019-01-23 17:32:38', 20, 'concluiu atividade '),
+(206, '2019-01-23 17:32:46', 20, 'iniciou fase '),
+(207, '2019-01-23 17:32:54', 20, 'concluiu atividade '),
+(208, '2019-01-23 17:35:46', 20, 'alterar foto de perfil'),
+(209, '2019-01-23 20:04:22', 1, 'logout'),
+(210, '2019-01-23 20:04:31', 23, 'login');
 
 -- --------------------------------------------------------
 
@@ -305,7 +394,9 @@ CREATE TABLE `matriculas` (
 INSERT INTO `matriculas` (`idMatricula`, `idAluno`, `idTurma`) VALUES
 (1, 17, 1),
 (2, 20, 2),
-(3, 21, 2);
+(3, 21, 2),
+(4, 22, 2),
+(5, 23, 2);
 
 -- --------------------------------------------------------
 
@@ -343,19 +434,10 @@ CREATE TABLE `missoes` (
 --
 
 INSERT INTO `missoes` (`idMissao`, `nome`, `descricao`, `liberada`, `ordem`, `idTurma`, `levelMinimo`, `imagem`) VALUES
-(3, 'De volta ao fundo do mar', 'Que aventura maluquinha essa sua nÃ£o', 0, 0, 1, 0, ''),
-(4, 'tes', 'tse', 1, 0, 2, 0, ''),
-(5, 'tes', 'tse', 0, 0, 2, 0, ''),
-(6, 'tesas', 'tse', 0, 0, 2, 0, ''),
-(7, 'Essa Ã© pra valer', 'NÃ£o liberada', 0, 0, 2, 0, ''),
-(8, 'Liberada', 'Liberou geral', 0, 0, 2, 0, ''),
-(9, 'Impossivel', 'Teste d', 0, 0, 1, 0, ''),
-(12, 'ChefÃ£o', 'top demais', 1, 0, 1, 10, ''),
-(13, 'Everest', 'sobe desgraÃ§a', 0, 0, 2, 1, ''),
-(14, 'Arrumar a casa', 'Tenho toque', 0, 0, 2, 1, ''),
-(15, 'Vestibulho', 'inscricao', 0, 0, 2, 1, ''),
-(16, 'vest', 'ves', 0, 0, 2, 1, ''),
-(44, 'De volta ao fundo do mar', 'Que aventura maluquinha essa sua nÃ£o', 0, 0, 1, 0, '');
+(46, 'Trabalho AcadÃªmico', 'A divulgaÃ§Ã£o de uma pesquisa Ã© parte fundamento do seu desenvolvimento. Para isso, Ã© importante seguir certas normas e padrÃµes. Nessa missÃ£o vocÃª deve formatar um trabalho acadÃªmico seguindo as normas da ABNT', 1, 0, 2, 1, 'assets/img/missoes/img_missao1547150037.jpg'),
+(47, 'Hardware BÃ¡sico e ManutenÃ§Ã£o', 'Conhecer as partes do computador Ã© fundamental para entender o seu funcionamento e eventualmente resolver problemas de funcionamento. Nessa missÃ£o vocÃª deverÃ¡ usar suas habilidades para concertar um computador.', 1, 0, 2, 1, 'assets/img/missoes/img_missao1547150171.jpg'),
+(48, 'Power Point', 'Uma imagem vale mais que mil palavras. Uma boa apresentaÃ§Ã£o pode fazer toda a diferenÃ§a e valorizar imensamente o seu conteÃºdo. Aprenda a criar apresentaÃ§Ã£o profissionais que irÃ£o deixar a sua audiÃªncia de queixo caÃ­do. Aprenda com grandes lendas dos palcos as melhores tÃ©cnicas para encantar o pÃºblico.', 1, 0, 2, 2, 'assets/img/missoes/img_missao1547150312.jpg'),
+(49, 'PortifÃ³lio de Produtos', 'Mostre ao mundo todo o seu potencial criando um portfÃ³lio online com todos os seus trabalhos e projetos desenvolvidos', 1, 0, 2, 2, 'assets/img/missoes/img_missao1547206263.jpg');
 
 -- --------------------------------------------------------
 
@@ -410,9 +492,9 @@ CREATE TABLE `questionario_aprendizagem` (
 --
 
 INSERT INTO `questionario_aprendizagem` (`idQuestionario`, `idAluno`, `data`, `q1`, `q2`, `q3`, `q4`, `q5`, `q6`, `q7`, `q8`, `q9`, `q10`, `q11`, `q12`, `q13`, `q14`, `q15`, `q16`) VALUES
-(3, 20, '2019-01-02 16:25:29', 'V', 'A', 'R', 'V', 'R', 'A', 'K', 'A', 'A', 'R', 'K', 'R', 'V', 'K', 'V', 'A'),
-(4, 21, '2019-01-02 16:35:16', 'A', 'A', 'V', 'R', 'R', 'A', 'A', 'V', 'V', 'R', 'R', 'A', 'V', 'R', 'R', 'V'),
-(5, 17, '2019-01-02 16:36:49', 'V', 'K', 'V', 'V', 'R', 'V', 'V', 'K', 'V', 'R', 'V', 'K', 'K', 'R', 'R', 'K');
+(6, 20, '2019-01-09 10:51:34', 'R', 'R', 'R', 'R', 'V', 'K', 'V', 'K', 'R', 'R', 'A', 'K', 'R', 'K', 'A', 'A'),
+(7, 21, '2019-01-09 11:13:56', 'A', 'V', 'K', 'A', 'A', 'A', 'A', 'A', 'K', 'V', 'R', 'A', 'V', 'K', 'V', 'R'),
+(8, 23, '2019-01-10 17:35:02', 'R', 'K', 'K', 'R', 'R', 'V', 'R', 'R', 'V', 'A', 'V', 'K', 'R', 'R', 'A', 'A');
 
 -- --------------------------------------------------------
 
@@ -442,7 +524,7 @@ CREATE TABLE `questionario_engajamento` (
 INSERT INTO `questionario_engajamento` (`idQuestionario`, `idAluno`, `data`, `q1`, `q2`, `q3`, `q4`, `q5`, `q6`, `q7`, `q8`, `q9`) VALUES
 (5, 21, '2019-01-02 13:11:16', 1, 1, 1, 1, 3, 2, 2, 4, 1),
 (6, 17, '2019-01-02 16:36:36', 4, 4, 4, 4, 4, 4, 4, 4, 4),
-(8, 20, '2019-01-04 16:59:18', 4, 4, 4, 4, 4, 4, 4, 4, 4);
+(11, 20, '2019-01-08 10:19:32', 4, 4, 4, 4, 4, 4, 4, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -486,8 +568,8 @@ CREATE TABLE `questionario_jogador` (
 
 INSERT INTO `questionario_jogador` (`idQuestionario`, `idAluno`, `data`, `q01`, `q02`, `q03`, `q04`, `q05`, `q06`, `q07`, `q08`, `q09`, `q10`, `q11`, `q12`, `q13`, `q14`, `q15`, `q16`, `q17`, `q18`, `q19`, `q20`, `q21`, `q22`, `q23`, `q24`) VALUES
 (1, 21, '2019-01-02 13:17:58', 4, 4, 4, 2, 2, 2, 5, 5, 5, 4, 4, 4, 4, 1, 5, 2, 1, 5, 1, 1, 1, 1, 5, 4),
-(2, 20, '2019-01-02 13:19:38', 5, 5, 5, 5, 5, 1, 1, 1, 1, 3, 3, 3, 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3),
-(4, 17, '2019-01-02 16:43:37', 4, 4, 3, 3, 3, 3, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 3, 2, 3, 3, 3, 3, 3, 3);
+(4, 17, '2019-01-02 16:43:37', 4, 4, 3, 3, 3, 3, 2, 1, 1, 1, 2, 2, 1, 1, 1, 1, 3, 2, 3, 3, 3, 3, 3, 3),
+(6, 20, '2019-01-09 10:59:14', 1, 2, 2, 3, 3, 3, 3, 1, 1, 5, 5, 2, 5, 3, 5, 5, 4, 4, 4, 4, 3, 1, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -554,7 +636,29 @@ INSERT INTO `tempo_acesso` (`idAcesso`, `idAluno`, `data`, `dataLogin`, `dataLog
 (34, 17, '2019-01-02', '2019-01-02 16:36:26', '2019-01-02 16:43:37'),
 (35, 1, '2019-01-04', '2019-01-04 16:14:30', '2019-01-04 16:14:30'),
 (36, 20, '2019-01-04', '2019-01-04 16:14:43', '2019-01-04 16:14:43'),
-(37, 20, '2019-01-04', '2019-01-04 16:54:31', '2019-01-04 16:59:18');
+(37, 20, '2019-01-04', '2019-01-04 16:54:31', '2019-01-04 16:59:18'),
+(38, 20, '2019-01-08', '2019-01-08 09:44:41', '2019-01-08 09:44:41'),
+(39, 20, '2019-01-08', '2019-01-08 10:09:34', '2019-01-08 10:19:32'),
+(40, 20, '2019-01-09', '2019-01-09 10:43:33', '2019-01-09 11:10:00'),
+(41, 21, '2019-01-09', '2019-01-09 11:10:07', '2019-01-09 11:13:56'),
+(42, 21, '2019-01-09', '2019-01-09 11:43:41', '2019-01-09 12:00:55'),
+(43, 22, '2019-01-09', '2019-01-09 12:01:21', '2019-01-09 12:03:33'),
+(44, 23, '2019-01-09', '2019-01-09 12:03:51', '2019-01-09 12:04:00'),
+(45, 23, '2019-01-10', '2019-01-10 17:29:20', '2019-01-10 17:35:03'),
+(46, 23, '2019-01-11', '2019-01-11 09:20:26', '2019-01-11 09:20:37'),
+(47, 23, '2019-01-11', '2019-01-11 17:06:55', '2019-01-11 17:06:55'),
+(48, 23, '2019-01-22', '2019-01-22 11:18:10', '2019-01-22 11:18:23'),
+(49, 23, '2019-01-22', '2019-01-22 11:55:27', '2019-01-22 11:55:27'),
+(50, 23, '2019-01-22', '2019-01-22 15:13:46', '2019-01-22 15:13:46'),
+(51, 23, '2019-01-22', '2019-01-22 18:48:08', '2019-01-22 18:48:08'),
+(52, 23, '2019-01-22', '2019-01-22 19:15:39', '2019-01-22 19:24:48'),
+(53, 23, '2019-01-22', '2019-01-22 19:36:29', '2019-01-22 19:36:37'),
+(54, 23, '2019-01-22', '2019-01-22 20:13:04', '2019-01-22 20:14:23'),
+(55, 23, '2019-01-23', '2019-01-23 16:53:58', '2019-01-23 16:54:52'),
+(56, 23, '2019-01-23', '2019-01-23 17:31:37', '2019-01-23 17:31:37'),
+(57, 20, '2019-01-23', '2019-01-23 17:31:46', '2019-01-23 17:35:46'),
+(58, 1, '2019-01-23', '2019-01-23 20:04:22', '2019-01-23 20:04:22'),
+(59, 23, '2019-01-23', '2019-01-23 20:04:31', '2019-01-23 20:04:31');
 
 -- --------------------------------------------------------
 
@@ -614,13 +718,6 @@ ALTER TABLE `conquistas`
 ALTER TABLE `fases`
   ADD PRIMARY KEY (`idFase`),
   ADD KEY `idMissao` (`idMissao`);
-
---
--- Indexes for table `feedbacks`
---
-ALTER TABLE `feedbacks`
-  ADD PRIMARY KEY (`idFeedback`),
-  ADD KEY `idAlunoFase` (`idAlunoFase`);
 
 --
 -- Indexes for table `log`
@@ -706,13 +803,13 @@ ALTER TABLE `turmas`
 -- AUTO_INCREMENT for table `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `idAluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idAluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `alunos_fases`
 --
 ALTER TABLE `alunos_fases`
-  MODIFY `idAlunosFases` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idAlunosFases` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `alunos_medalhas`
@@ -730,25 +827,19 @@ ALTER TABLE `conquistas`
 -- AUTO_INCREMENT for table `fases`
 --
 ALTER TABLE `fases`
-  MODIFY `idFase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `feedbacks`
---
-ALTER TABLE `feedbacks`
-  MODIFY `idFeedback` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idFase` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `idLog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT for table `matriculas`
 --
 ALTER TABLE `matriculas`
-  MODIFY `idMatricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idMatricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `medalhas`
@@ -760,7 +851,7 @@ ALTER TABLE `medalhas`
 -- AUTO_INCREMENT for table `missoes`
 --
 ALTER TABLE `missoes`
-  MODIFY `idMissao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `idMissao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `professores`
@@ -772,19 +863,19 @@ ALTER TABLE `professores`
 -- AUTO_INCREMENT for table `questionario_aprendizagem`
 --
 ALTER TABLE `questionario_aprendizagem`
-  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `questionario_engajamento`
 --
 ALTER TABLE `questionario_engajamento`
-  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `questionario_jogador`
 --
 ALTER TABLE `questionario_jogador`
-  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idQuestionario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `questoes`
@@ -796,7 +887,7 @@ ALTER TABLE `questoes`
 -- AUTO_INCREMENT for table `tempo_acesso`
 --
 ALTER TABLE `tempo_acesso`
-  MODIFY `idAcesso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idAcesso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `turmas`
