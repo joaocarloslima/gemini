@@ -12,7 +12,9 @@ class Missao {
 	public $levelminimo;
 	public $imagem;
 	public $xp;
-	public $listaCompleta ;
+	public $listaCompleta;
+	public $percentualConcluido;
+	public $atividadesParaAvaliar=0;
 
 	public function carregar(){
 		$query = "SELECT missoes.*, turmas.sigla FROM missoes INNER JOIN turmas on turmas.idTurma=missoes.idTurma WHERE idMissao=:id";
@@ -51,6 +53,13 @@ class Missao {
 			$missao->turma = $linha['sigla'];
 			$missao->idTurma = $linha['idTurma'];
 			$missao->imagem = $linha['imagem'];
+			$fase = new Fase();
+			$fase->buscarFasesDaMissao($missao->id);
+			foreach ($fase->listaCompleta as $fase) {
+				$atividade = new Atividade();
+				$atividade->idFase = $fase->id;
+				$missao->atividadesParaAvaliar += count( $atividade->buscarAtividadesNaoAvaliadas() );
+			}
 			array_push($missoes, $missao);
 		}
 		$this->listaCompleta = $missoes;
@@ -76,6 +85,13 @@ class Missao {
 			$missao->idTurma = $linha['idTurma'];
 			$missao->imagem = $linha['imagem'];
 			$missao->xp = $linha['xp'];
+			$fases = new Fase();
+			$fases->buscarFasesDaMissao($missao->id);
+			$fasesConcluidas = 0;
+			foreach ($fases->listaCompleta as $fase) {
+				if ($fase->alunoJaFez($idAluno)) $fasesConcluidas++;
+			}
+			$missao->percentualConcluido = (count($fases->listaCompleta)==0)?0:intval($fasesConcluidas / count($fases->listaCompleta) * 100);
 			array_push($missoes, $missao);
 		}
 		return $missoes;

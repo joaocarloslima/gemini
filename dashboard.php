@@ -155,72 +155,80 @@ $level = 1; //para testar o filtro de missoes antes de implementar o controle de
                   <h4 class="card-title"><a href="#pablo">Missão: <?= $missao->nome ?></a></h4>
                   <div class="card-description">
                     <?php 
-                      if ($missao->levelminimo>$level) {
-                        echo "<h3>Disponível no <strong>Nível $missao->levelminimo</strong></h3>.";
-                      }else{ 
-                        echo $missao->descricao;
-                      }
-                   ?> 
-                 </div>
+                    if ($missao->levelminimo>$level) :
+                      echo "<h3>Disponível no <strong>Nível $missao->levelminimo</strong></h3>.";
+                    else:
+                      ?>
 
-               </div>
-               <div class="card-footer">
-                <?php if ($missao->levelminimo>$level) : ?>
+                      <?= $missao->descricao ?>
+                      
+                      <div class="progress-container">
+                        <div class="progress">
+                          <div class="progress-bar" role="progressbar" aria-valuenow="<?= $missao->percentualConcluido ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $missao->percentualConcluido ?>%;">
+                          </div>
+                        </div>
+                      </div>
+                    <?php endif ?>
+                  </div>
+
+                </div>
+                <div class="card-footer">
+                  <?php if ($missao->levelminimo>$level) : ?>
                     <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Missão indisponível">
                       <i class="fa fa-lock"></i>
                     </button>
-                <?php else : ?>
-                  <div class="">
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Pontos de Experiência">
-                      <i class="fa fa-star"></i> <?= $missao->xp ?>
-                    </button>
+                    <?php else : ?>
+                      <div class="">
+                        <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Pontos de Experiência">
+                          <i class="fa fa-star"></i> <?= $missao->xp ?>
+                        </button>
+                      </div>
+                      <div class="stats">
+                      <a href="missao.php?id=<?= $missao->id ?>" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Acessar a missão">
+                        <i class="fa fa-rocket"></i> acessar 
+                      </a>
+                      </div>
+                    <?php endif ?>
                   </div>
-                  <div class="stats">
-                    <a class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Acessar a missão">
-                      <i class="fa fa-rocket"></i> acessar 
-                    </a>
-                  </div>
-                <?php endif ?>
                 </div>
               </div>
-          </div>
-        <?php endfor ?>
+            <?php endfor ?>
 
-      </div>
-      <div class="row">
-        <a href="missoes.php" class="btn btn-rose">Ver todas as missões</a>
+          </div>
+          <div class="row">
+            <a href="missoes.php" class="btn btn-rose">Ver todas as missões</a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<?php include "rodape.php" ?>
+    <?php include "rodape.php" ?>
 
-<script type="text/javascript">
-  $( document ).ready(function() {
-    dataDailySalesChart = {
-      labels: <?= $tempoDeEstudo->getDias() ?>,
-      series: [
-      <?= $tempoDeEstudo->getTempos() ?>
-      ]
-    };
+    <script type="text/javascript">
+      $( document ).ready(function() {
+        dataDailySalesChart = {
+          labels: <?= $tempoDeEstudo->getDias() ?>,
+          series: [
+          <?= $tempoDeEstudo->getTempos() ?>
+          ]
+        };
 
-    optionsDailySalesChart = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: <?= $tempoDeEstudo->getMaior() + 10 ?>, 
-      chartPadding: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
-      },
-    }
+        optionsDailySalesChart = {
+          lineSmooth: Chartist.Interpolation.cardinal({
+            tension: 0
+          }),
+          low: 0,
+          high: <?= $tempoDeEstudo->getMaior() + 10 ?>, 
+          chartPadding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0
+          },
+        }
 
-    var animationHeaderChart = new Chartist.Bar('#graficoTempoDeEstudo', dataDailySalesChart, optionsDailySalesChart);
-    md.startAnimationForBarChart(animationHeaderChart);
+        var animationHeaderChart = new Chartist.Bar('#graficoTempoDeEstudo', dataDailySalesChart, optionsDailySalesChart);
+        md.startAnimationForBarChart(animationHeaderChart);
 
-  });
-</script>
+      });
+    </script>

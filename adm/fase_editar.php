@@ -1,12 +1,14 @@
 <?php require_once 'global.php';
 session_start();
 $fase = new Fase();
+$fase->id = $_POST["idFase"];
+$fase->carregar(); //carregar para pegar o anexo caso esse não seja alterado
 $fase->nome = $_POST["nome"];
 $fase->descricao = $_POST["descricao"];
 $fase->xp = $_POST["xp"];
-$fase->idMissao = $_POST["idMissao"];
 $fase->tipo = $_POST["tipo"];
 $fase->prazo = $_POST["prazo"];
+$fase->idMissao = $_POST["idMissao"];
 
 //upload do anexo
 if (!empty($_FILES['arquivo']['name'])) {
@@ -18,10 +20,10 @@ if (!empty($_FILES['arquivo']['name'])) {
 }
 
 try {
-	$fase->inserir();
-	$_SESSION["success"] = "<strong>Sucesso </strong> Fase cadastrada";
+	$fase->atualizar();
+	$_SESSION["success"] = "<strong>Sucesso </strong> Fase atualizada";
 	header("Location: fases.php?idmissao=".$fase->idMissao);
 } catch (Exception $e) {
-	$_SESSION["danger"] = "<strong>Erro </strong> Fase não cadastrada";
+	$_SESSION["danger"] = "<strong>Erro </strong> Fase não atualizada cadastrada";
 	Erro::trataErro($e);
 }

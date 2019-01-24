@@ -34,53 +34,66 @@ $level = 1; //para testar o filtro de missoes antes de implementar o controle de
   <div class="content">
     <div class="content">
       <div class="container-fluid">
-          <div class="row">
-            <?php 
-            foreach($missoes as $missao) :
-             ?>            
-             <div class="col-md-4">
-              <div class="card card-product <?= ($missao->levelminimo>$level)?'card-desabilitado':''?>">
-                <div class="card-header card-header-image" data-header-animation="false">
-                  <img class="img" src="adm/<?= $missao->imagem ?>">
-                </div>
-                <div class="card-body">
-                  <h4 class="card-title"><a href="#pablo">Missão: <?= $missao->nome ?></a></h4>
-                  <div class="card-description">
-                    <?php 
-                      if ($missao->levelminimo>$level) {
-                        echo "<h3>Disponível no <strong>Nível $missao->levelminimo</strong></h3>.";
-                      }else{ 
-                        echo $missao->descricao;
-                      }
-                   ?> 
-                 </div>
+        <div class="row">
+          <?php 
+          foreach($missoes as $missao) :
+           ?>            
+           <div class="col-md-4">
+            <div class="card card-product <?= ($missao->levelminimo>$level)?'card-desabilitado':''?>">
+              <div class="card-header card-header-image" data-header-animation="false">
+                <img class="img" src="adm/<?= $missao->imagem ?>">
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"><a href="#pablo">Missão: <?= $missao->nome ?></a></h4>
+                <div class="card-description">
+                  <?php 
+                  if ($missao->levelminimo>$level) :
+                    echo "<h3>Disponível no <strong>Nível $missao->levelminimo</strong></h3>.";
+                  else:
+                  ?>
 
-               </div>
-               <div class="card-footer">
-                <?php if ($missao->levelminimo>$level) : ?>
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Missão indisponível">
-                      <i class="fa fa-lock"></i>
-                    </button>
-                <?php else : ?>
-                  <div class="">
-                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Pontos de Experiência">
-                      <i class="fa fa-star"></i> <?= $missao->xp ?>
-                    </button>
-                  </div>
-                  <div class="stats">
-                    <a class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Acessar a missão">
-                      <i class="fa fa-rocket"></i> acessar 
-                    </a>
+                  <?= $missao->descricao ?>
+                   
+                  <div class="progress-container">
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="<?= $missao->percentualConcluido ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= $missao->percentualConcluido ?>%;">
+                      </div>
+                    </div>
                   </div>
                 <?php endif ?>
                 </div>
-              </div>
-          </div>
-        <?php endforeach ?>
 
+              </div>
+              <div class="card-footer">
+                <?php if ($missao->levelminimo>$level) : ?>
+                  <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Missão indisponível">
+                    <i class="fa fa-lock"></i>
+                  </button>
+                  <?php else : ?>
+                    <div class="">
+                      <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Pontos de Experiência">
+                        <i class="fa fa-star"></i> <?= $missao->xp ?>
+                      </button>
+                    </div>
+                    <div class="stats">
+                      <a href="missao.php?id=<?= $missao->id ?>" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Acessar a missão">
+                        <i class="fa fa-rocket"></i> acessar 
+                      </a>
+                    </div>
+                  <?php endif ?>
+                </div>
+              </div>
+            </div>
+          <?php endforeach ?>
+
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<?php include "rodape.php" ?>
+  <?php include "rodape.php" ?>
+
+  <?php 
+  mostrarAlerta("danger", "top");
+  mostrarAlerta("success", "top");
+  ?>

@@ -34,8 +34,8 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
       <div class="row">
         <div class="col-md-12">
           <ol class="breadcrumb">
-            <li><a href="missoes.php">missões / </a></li>
-            <li> fases</li>
+            <li class="breadcrumb-item"><a href="missoes.php">Missões</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $fases->missao ?></li>
           </ol>
         </div>
       </div>
@@ -56,6 +56,7 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
+                      <th>#</th>
                       <th>Nome</th>
                       <th>Descrição</th>
                       <th>Tipo</th>
@@ -64,27 +65,25 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
                       <th class="text-right"></th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Nome</th>
-                      <th>Descrição</th>
-                      <th>Tipo</th>
-                      <th>Prazo</th>
-                      <th>XP</th>
-                      <th class="text-right"></th>
-                    </tr>
-                  </tfoot>
                   <tbody>
                     <?php foreach ($fases->listaCompleta as $fase) : ?>
                       <tr>
-                        <td><?= $fase->nome ?></td>
+                        <td><?= $fase->id ?></td>
+                        <td>
+                          <?= $fase->nome ?>
+                          <?php if ($fase->atividadesParaAvaliar > 0) : ?>
+                            <span class="badge badge-danger badge-pill tooltiped" data-toggle="tooltip" data-placement="top" title="<?= $fase->atividadesParaAvaliar ?> atividades para avaliar">
+                              <?= $fase->atividadesParaAvaliar ?>
+                            </span>
+                          <?php endif ?>
+                        </td>
                         <td><?= substr($fase->descricao,0,30)."..." ?></td>
                         <td><?= $fase->tipo ?></td>
-                        <td><?= $fase->prazo ?></td>
+                        <td><?= $fase->prazoFormatado ?></td>
                         <td><?= $fase->xp ?></td>
                         <td class="text-right">
-                          <a href="#" class="btn btn-link btn-info btn-just-icon"><i class="fas fa-tasks"></i></a>
-                          <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
+                          <a href="avaliar_fase.php?id=<?= $fase->id?>" class="btn btn-link btn-info btn-just-icon"><i class="fas fa-file-signature"></i></a>
+                          <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">edit</i></a>
                           <a href="#" class="btn btn-link btn-danger btn-just-icon" data-toggle="modal" data-target="#modalexcluir" onclick="trocarId(<?= $fase->id?>)"><i class="material-icons">close</i></a>
                         </td>
                       </tr>
@@ -116,7 +115,8 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="fase_inserir.php" class="form-horizontal">
+        <form method="POST" action="fase_inserir.php" class="form-horizontal" enctype="multipart/form-data" id="form-fase">
+          <input type="hidden" name="idFase" id="idFase">
           <input type="hidden" name="idMissao" value="<?= $_GET["idmissao"] ?>">
           <div class="row">
             <div class="col-md-12">
@@ -146,7 +146,7 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
             <div class="col-md-12">
               <div class="form-group bmd-form-group">
                 <label for="descricao" class="bmd-label-floating">Descrição</label>
-                <textarea class="form-control" id="descricao" name="descricao"></textarea>
+                <textarea class="form-control" id="descricao" name="descricao" rows="10"></textarea>
               </div>
             </div>
           </div>
@@ -172,6 +172,15 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
               </div>   
             </div>
           </div>
+          <div class="row" id="campo-anexo">
+            <div class="col-md-12">
+              <div class="">
+                <input type="file" class="form-file-simple" id="arquivo" name="arquivo" value="anexar">
+              </div>
+              <span id="helper-anexo"></span>
+            </div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-link" data-dismiss="modal">cancelar</button>
@@ -207,12 +216,24 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
 
 <?php include "rodape.php" ?>
 <script>
+  $('.tooltiped').tooltip();
+
   function trocarId($id){
     var campo = document.querySelector("#idfaseexcluir");
     campo.value = $id;
   }
 
+  $('#myModal input[name=tipo').on('change', function() {
+   if ($('input[name=tipo]:checked', '#myModal').val() == "Atividade"){
+    $("#campo-anexo").show();
+  }else{
+    $("#campo-anexo").hide();
+  }
+});
+
   $(document).ready(function() {
+    $("#campo-anexo").hide();
+    
     $('#datatables').DataTable({
       "pagingType": "full_numbers",
       "lengthMenu": [
@@ -239,31 +260,48 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
       }
     });
 
-    var table = $('#datatable').DataTable();
+    var table = $('#datatables').DataTable();
 
-      // Edit record
-      table.on('click', '.edit', function() {
-        $tr = $(this).closest('tr');
-        var data = table.row($tr).data();
-        alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+    table.on('click', '.edit', function() {
+      $tr = $(this).closest('tr');
+      var data = table.row($tr).data();
+      var id = data[0];
+      $.ajax({
+        method: "POST",
+        url: "fase_buscar.php",
+        data: {id : id}
+      })
+      .done(function(msg) {
+        if (msg != "erro"){
+          $("#myModal").find('h3').text("Editar Fase");
+          $("#form-fase").attr("action", "fase_editar.php");
+          var fase = JSON.parse(msg);
+          $("#idFase").val(fase.id);
+          $("#nome").val(fase.nome);
+          $("#xp").val(fase.xp);
+          $("#prazo").val(fase.prazoLocalTime);
+          $("#descricao").val(fase.descricao);
+          var $radioTipo = $('input:radio[name=tipo]');
+          if (fase.tipo == "Atividade"){
+            $radioTipo.filter('[value=Atividade]').prop('checked', true);
+            $("#helper-anexo").text("Anexo atual: [" + fase.anexo + "]");
+            $("#campo-anexo").show();
+          }else{
+            $radioTipo.filter('[value=Questionário]').prop('checked', true);
+            $("#campo-anexo").hide();
+          }
+        }
       });
 
-      // Delete a record
-      table.on('click', '.remove', function(e) {
-        $tr = $(this).closest('tr');
-        table.row($tr).remove().draw();
-        e.preventDefault();
-      });
+      $('#myModal').modal('show');
 
-      //Like record
-      table.on('click', '.like', function() {
-        alert('You clicked on Like button');
-      });
     });
-  </script>
+
+  });
+</script>
 
 
 <?php
-  mostrarAlerta("success", "top");
-  mostrarAlerta("danger", "top");
-  ?>
+mostrarAlerta("success", "top");
+mostrarAlerta("danger", "top");
+?>

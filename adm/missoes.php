@@ -75,7 +75,14 @@ $missoes->buscarTodas();
                         <td>
                           <img class="photo" src="<?= $missao->imagem ?>" />
                         </td>
-                        <td><?= $missao->nome ?></td>
+                        <td>
+                            <?= $missao->nome ?>
+                            <?php if ($missao->atividadesParaAvaliar > 0) : ?>
+                              <span class="badge badge-danger badge-pill tooltiped" data-toggle="tooltip" data-placement="top" title="<?= $missao->atividadesParaAvaliar ?> atividades para avaliar">
+                                <?= $missao->atividadesParaAvaliar ?>
+                              </span>
+                            <?php endif ?>
+                        </td>
                         <td><?= (strlen($missao->descricao)>30)?substr($missao->descricao,0,30)."...":$missao->descricao ?></td>
                         <td class="text-center">
                           <a  href="#" class="btn-liberada" data-id="<?= $missao->id?>">
@@ -238,6 +245,8 @@ $missoes->buscarTodas();
   </div>
 </div>
 <script>
+  $('.tooltiped').tooltip();
+
   function trocarId($id){
     var campo = document.querySelector("#idmissaoexcluir");
     campo.value = $id;

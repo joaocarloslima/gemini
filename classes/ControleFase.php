@@ -5,7 +5,16 @@ class ControleFase {
 	public $idFase;
 	public $idAluno;
 	public $desempenho;
+	public $resposta;
+	public $anexo;
 	public $xp;
+
+	public function gravarRespostaAtividade(){
+		$conexao = Conexao::pegarConexao();
+		$query = "UPDATE alunos_fases SET finalizadoEm=NOW(), resposta='$this->resposta', anexo='$this->anexo' WHERE idAluno=$this->idAluno AND idFase=$this->idFase";
+		if(!$conexao->exec($query)) throw new Exception("Erro ao gravar resposta");
+		else Log::gravarLog($this->idAluno, "concluiu atividade "); 
+	}
 
 	public function concluir(){
 		$conexao = Conexao::pegarConexao();

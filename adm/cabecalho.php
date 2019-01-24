@@ -83,7 +83,7 @@
               <p> Alunos </p>
             </a>
           </li>
-          <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='missoes.php' || basename($_SERVER['PHP_SELF'])=='fases.php')?'active':''; ?>">
+          <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='missoes.php' || basename($_SERVER['PHP_SELF'])=='fases.php' || basename($_SERVER['PHP_SELF'])=='avaliar_fase.php')?'active':''; ?>">
             <a class="nav-link" href="missoes.php">
               <i class="fas fa-rocket"></i>
               <p> Missões </p>
