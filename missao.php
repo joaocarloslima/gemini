@@ -80,24 +80,37 @@ $fases->buscarFasesDaMissao($missao->id);
                       <div class="col-md-6 text-right"><h6><i class="material-icons">calendar_today</i> <?= $fase->prazoFormatado ?></h6></div>
                     </div>
                     <hr>
-                    <?php if  ($fase->alunoJaFez($_SESSION["iduser"])) : ?>
-                      <a class="btn btn-round disabled btn-default" aria-disabled="true">Já Realizado</a>
-                    <?php else : ?>  
+                    <!-- Status: aluno ainda não fez-->
+                    <?php if  (!$fase->alunoJaFez($_SESSION["iduser"])) : ?>
                       <a href="fase_atividade.php?id=<?= $fase->id ?>" class="btn btn-round btn-<?= $corTimeline?>">Realizar</a>
                     <?php endif ?>
-                  </div>
-                </li>
-              <?php endforeach ?>
-            </ul>
+
+                    <!-- Status: aluno já fez, mas professor não corrigiu-->
+                    <?php if  ($fase->alunoJaFez($_SESSION["iduser"]) && !$fase->professorJaCorrigiu($_SESSION["iduser"])) : ?>
+                      <a class="btn btn-round disabled btn-default" aria-disabled="true">Já Realizado</a>
+                    <?php endif ?>
+                    
+                    <!-- Status: aluno já fez, e professor já corrigiu-->
+                    <?php if  ($fase->alunoJaFez($_SESSION["iduser"]) && $fase->professorJaCorrigiu($_SESSION["iduser"])) : ?>
+                      <a class="btn btn-round btn-success text-white" data-toggle="tooltip" data-placement="right" title="<?= $fase->feedback ?>">
+                        Você ganhou <?= $fase->xpObtido ?>
+                        <i class="material-icons">star</i>
+                      </a>
+                    <?php endif ?>
+
+                    </div>
+                  </li>
+                <?php endforeach ?>
+              </ul>
+            </div>
           </div>
-        </div>
-
+          
+       </div>
       </div>
-    </div>
 
-    <?php include "rodape.php" ?>
+      <?php include "rodape.php" ?>
 
-    <?php 
+      <?php 
       mostrarAlerta("danger", "top");
       mostrarAlerta("success", "top");
-    ?>
+      ?>
