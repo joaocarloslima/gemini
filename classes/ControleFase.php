@@ -48,4 +48,22 @@ class ControleFase {
 	    }
 	}
 
+	public function getNotificacoes(){
+		$query = "SELECT alunos_fases.*, fases.nome, fases.idMissao FROM alunos_fases INNER JOIN fases ON fases.idFase=alunos_fases.idFase WHERE idAluno = $this->idAluno AND feedback IS NOT NULL AND feedbackVisualizadoEm IS NULL";
+		$conexao = Conexao::pegarConexao();
+	    $stmt = $conexao->prepare($query);
+	    $stmt->execute();
+	    $notificacoes = array();
+	    while ($linha = $stmt->fetch()){
+	    	$notificacoes[$linha["idMissao"]] = $linha["nome"];
+	    }
+	    return $notificacoes;
+	}
+
+	public function marcarFeedbackComoLido($idFase, $idAluno){
+		$conexao = Conexao::pegarConexao();
+		$query = "UPDATE alunos_fases SET feedbackVisualizadoEm=NOW() WHERE idAluno=$idAluno AND idFase=$idFase";
+		if(!$conexao->exec($query)) throw new Exception("Erro ao marcar feedback como lido");
+	}
+
 }

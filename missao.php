@@ -9,6 +9,7 @@ $missao->carregar();
 $fases = new Fase();
 $fases->buscarFasesDaMissao($missao->id);
 
+$controleFase = new ControleFase();
 ?>
 <link rel="stylesheet" type="text/css" href="adm/assets/css/missoes.css">
 <div class="main-panel">
@@ -92,6 +93,8 @@ $fases->buscarFasesDaMissao($missao->id);
                     
                     <!-- Status: aluno já fez, e professor já corrigiu-->
                     <?php if  ($fase->alunoJaFez($_SESSION["iduser"]) && $fase->professorJaCorrigiu($_SESSION["iduser"])) : ?>
+                    <?php $controleFase->marcarFeedbackComoLido($fase->id, $_SESSION["iduser"]) ?>
+
                       <a class="btn btn-round btn-success text-white" data-toggle="tooltip" data-placement="right" title="<?= $fase->feedback ?>">
                         Você ganhou <?= $fase->xpObtido ?>
                         <i class="material-icons">star</i>

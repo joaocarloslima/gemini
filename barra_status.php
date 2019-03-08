@@ -3,6 +3,7 @@ require_once "global.php";
 
 $controleFase = new ControleFase();
 $controleFase->idAluno = $_SESSION["iduser"];
+$notificacoes = $controleFase->getNotificacoes();
 
 ?>
 
@@ -35,19 +36,21 @@ $controleFase->idAluno = $_SESSION["iduser"];
         </p>
       </a>
     </li>
+    <?php if(count($notificacoes)>0) { ?>
     <li class="nav-item dropdown">
       <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="material-icons">notifications</i>
-        <span class="notification">3</span>
-        <p class="d-lg-none d-md-block">
-          avisos
-        </p>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-        <a class="dropdown-item" href="#">Nova missão liberada</a>
-        <a class="dropdown-item" href="#">Novo feedback na tarefa 3</a>
-        <a class="dropdown-item" href="#">Questionário 3 disponível</a>
-      </div>
+          <span class="notification"><?= count($notificacoes) ?></span>
+          <p class="d-lg-none d-md-block">
+            avisos
+          </p>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <?php foreach ($notificacoes as $idMissao => $nomeFase) : ?>
+            <a class="dropdown-item" href="missao.php?id=<?= $idMissao ?>">O professor corrigiu a fase &nbsp;<strong><?= $nomeFase ?></strong></a>
+          <?php endforeach ?>
+        </div>
     </li>
+    <?php } ?>
   </ul>
 </div>
