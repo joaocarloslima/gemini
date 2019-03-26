@@ -1,8 +1,10 @@
 <?php 
 require_once("global.php");
 include "cabecalho.php";
+$idFase = $_GET["id"];
 
 ?>
+<link rel="stylesheet" type="text/css" href="assets/css/questionario.css">
 <div class="main-panel">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -33,14 +35,26 @@ include "cabecalho.php";
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12" id="containerQuestoes">
-          <input type="text" class="form-control" id="enunciado" placeholder="enunciado da questão" >
-          <ol id="containerAlternativas">
-          <button class="adicionarAlternativa">+ alternativa</button>
+        <div class="col-md-12">
+          <ol id="containerQuestoes">
+            <li class="item-enunciado">
+              <div class="row">
+                <div class="col-md-10">
+                  <input type="text" class="form-control enunciado" id="q1">
+                  <ol class="containerAlternativas">
+                    <button class="btn btn-primary btn-fab btn-fab-mini btn-round adicionarAlternativa">
+                      <i class="material-icons">add</i>
+                    </button>
+                  </ol>
+                </div>
+              </div>
+            </li>
           </ol>
         </div>
         <div class="col-md-12" id="containerBotoes">
-          <button id="adicionarQuestao">+ questão</button>
+          <button class="btn btn-info btn-fab btn-fab-mini btn-round" id="adicionarQuestao">
+            <i class="material-icons">add</i>
+          </button>
         </div>
       </div>
     </div>
@@ -49,26 +63,97 @@ include "cabecalho.php";
   <?php include "rodape.php" ?>
 
   <script type="text/javascript">
-    $(".adicionarAlternativa").click(function(){
-      $(this).closest("#containerAlternativas").append('<li><input type="text" class="form-control" id="alternativa" placeholder="alternativa" ></li>');   
-    });
+    var ultimoId = 2;
 
-    $("#adicionarQuestao").click(function(){
-      $("#containerQuestoes").append('<input type="text" class="form-control" id="enunciado" placeholder="enunciado da questão" ><ol id="containerAlternativas"></ol><button id="adicionarAlternativa">+ alternativa</button>');   
-    });
-
-    var campo = $('#enunciado');
-    $("#enunciado").change(function(){
-      var texto = this.value;
-      $(this).replaceWith(function(){
-        return $('<h2/>', {
-          'id': 'enunciado',
-          text: '1. ' + texto
+    //alterar texto da questão
+    $("#containerQuestoes").delegate(".enunciado", "change", function(){
+      $.ajax({
+        method: "POST",
+        url: "questao_controller.php",
+        data: { 
+          idElemento: $(this).closest("li").find("input").attr("id"),
+          idFase: <?= $idFase ?>, 
+          enunciado: $(this).val(), 
+          acao: "edit" 
+        },
+        success: (function(msg){
+          console.log(msg);
         })
       });
+      
     });
 
+    $("#containerQuestoes").delegate(".adicionarAlternativa", "click", function(){
+      $(this).closest(".adicionarAlternativa").before(
+        '<li class="item-alternativa">' + 
+        '<div class="row">' + 
+        '<div class="col-md-10">' + 
+        '<input type="text" class="form-control campo-alternativa">' + 
+        '</div>' +
+        '<div class="col-md-2">' + 
+        '<button class="btn btn-danger btn-fab btn-fab-mini btn-round removerItem">' + 
+        '<i class="material-icons">close</i>' + 
+        '</button>' +  
+        '</div>' +
+        '</div>' +
+        '</li>'
+        );   
+    });
 
+    //adicionar uma nova questão
+    $("#adicionarQuestao").click(function(){
+      $("#containerQuestoes").append(
+        '<li class="item-enunciado">' + 
+        '<div class="row">' + 
+        '<div class="col-md-10">' + 
+        '<input type="text" class="form-control enunciado" id="q'+ ultimoId + '">'+
+        '<ol class="containerAlternativas">' + 
+        '<button class="btn btn-primary btn-fab btn-fab-mini btn-round adicionarAlternativa">' + 
+        '<i class="material-icons">add</i>' + 
+        '</button>' + 
+        '</ol>' + 
+        '</div>' +
+        '<div class="col-md-2">' + 
+        '<button class="btn btn-danger btn-fab btn-fab-mini btn-round removerItem">' + 
+        '<i class="material-icons">close</i>' + 
+        '</button>' +  
+        '</div>' +
+        '</div>' +
+        '</li>'
+        );
+        $.ajax({
+          method: "POST",
+          url: "questao_controller.php",
+          data: { 
+            idElemento: "q" + ultimoId,
+            idFase: <?= $idFase ?>, 
+            acao: "new" 
+          },
+          success: (function(msg){
+            console.log(msg);
+          })
+        });
+        ultimoId++;
+   
+    });
+
+    $("#containerQuestoes").delegate(".removerItem", "click", function(){
+      $.ajax({
+        method: "POST",
+        url: "questao_controller.php",
+        data: { 
+          idElemento: $(this).closest("li").find("input").attr("id"),  
+          idFase: <?= $idFase ?>, 
+          enunciado:$(this).closest("li").find("input").val(), 
+          acao: "del" 
+        },
+        success: (function(msg){
+          console.log(msg);
+        })
+      });
+
+      $(this).closest("li").remove();
+    });
     
   </script>
 

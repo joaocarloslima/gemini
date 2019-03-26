@@ -1,0 +1,19 @@
+.enunciado{
+	display: inline;
+}
+
+.item-enunciado {
+	font-size: 1.5em;
+}
+
+.item-alternativa {
+	list-style-type: lower-alpha;
+}
+
+.removerItem{
+	opacity: 0.1;
+}
+
+.removerItem:hover{
+	opacity: 1;
+}
