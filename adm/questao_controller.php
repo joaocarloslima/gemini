@@ -6,11 +6,8 @@ else exit();
 if ($acao == "new"){
 	$questao = new Questao();
 	$questao->idFase = $_POST["idFase"];
-	$questao->idElemento = $_POST["idElemento"];
-
 	try {
-		$questao->inserirQuestao();
-		echo "sucesso";
+		echo $questao->inserirQuestao();
 	} catch (Exception $e) {
 		echo "erro";
 	}	
@@ -18,10 +15,8 @@ if ($acao == "new"){
 
 if ($acao == "edit"){
 	$questao = new Questao();
-	$questao->idFase = $_POST["idFase"];
+	$questao->id = $_POST["idQuestao"];
 	$questao->enunciado = $_POST["enunciado"];
-	$questao->idElemento = $_POST["idElemento"];
-
 	try {
 		$questao->editarQuestao();
 		echo "sucesso";
@@ -32,10 +27,7 @@ if ($acao == "edit"){
 
 if ($acao == "del"){
 	$questao = new Questao();
-	$questao->idFase = $_POST["idFase"];
-	$questao->idElemento = $_POST["idElemento"];
-	$questao->enunciado = $_POST["enunciado"];
-
+	$questao->id = $_POST["idQuestao"];
 	try {
 		$questao->apagarQuestao();
 		echo "sucesso";
