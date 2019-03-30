@@ -6,6 +6,11 @@
 	font-size: 1.5em;
 }
 
+input[type=text]{
+	font-size: 1em;
+
+}
+
 .item-alternativa {
 	list-style-type: lower-alpha;
 }
@@ -17,3 +22,20 @@
 .removerItem:hover{
 	opacity: 1;
 }
+
+.adicionarAlternativa{
+	opacity: 0.1;
+}
+
+.adicionarAlternativa:hover{
+	opacity: 1;
+}
+
+#adicionarQuestao{
+	opacity: 0.1;
+}
+
+#adicionarQuestao:hover{
+	opacity: 1;
+}
+

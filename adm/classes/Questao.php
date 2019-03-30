@@ -7,6 +7,7 @@ class Questao
 	public $idFase;
 	public $enunciado;
 	public $idElemento;
+	public $alternativas = array();
 
     public function inserirQuestao()
     {
@@ -36,6 +37,13 @@ class Questao
 	    $stmt = $conexao->prepare($query);
 	    $stmt->bindValue(':idQuestao', $this->id);
 	    $stmt->execute();
+
+		$query = "DELETE FROM alternativas WHERE idQuestao=:idQuestao";
+	    $conexao = Conexao::pegarConexao();
+	    $stmt = $conexao->prepare($query);
+	    $stmt->bindValue(':idQuestao', $this->id);
+	    $stmt->execute();
+
 	}
 
     public static function listarQuestoes($idFase)
@@ -52,6 +60,22 @@ class Questao
 			$questao->idFase = $linha['idFase'];
 			$questao->enunciado = $linha['enunciado'];
 			$questao->idElemento = $linha['idElemento'];
+
+			$queryAlt = "SELECT * FROM alternativas WHERE idQuestao=:idQuestao";
+			$stmtAlt = $conexao->prepare($queryAlt);
+			$stmtAlt->bindValue(':idQuestao', $questao->id);
+			$stmtAlt->execute();
+			$alternativas = array();
+			while ($linhaAlt = $stmtAlt->fetch()) {
+				$alternativa = new Alternativa();
+				$alternativa->id = $linhaAlt["idAlternativa"];
+				$alternativa->idQuestao = $linhaAlt["idQuestao"];
+				$alternativa->texto = $linhaAlt["texto"];
+				$alternativa->correta = $linhaAlt["correta"];
+				array_push($alternativas, $alternativa);
+			}
+			$questao->alternativas = $alternativas;
+
 			array_push($questoes, $questao);
 		}
 		return $questoes;

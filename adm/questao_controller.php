@@ -27,7 +27,7 @@ if ($acao == "edit"){
 
 if ($acao == "del"){
 	$questao = new Questao();
-	$questao->id = $_POST["idQuestao"];
+	$questao->id = $_POST["id"];
 	try {
 		$questao->apagarQuestao();
 		echo "sucesso";
