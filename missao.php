@@ -82,8 +82,10 @@ $controleFase = new ControleFase();
                     </div>
                     <hr>
                     <!-- Status: aluno ainda não fez-->
-                    <?php if  (!$fase->alunoJaFez($_SESSION["iduser"])) : ?>
-                      <a href="fase_atividade.php?id=<?= $fase->id ?>" class="btn btn-round btn-<?= $corTimeline?>">Realizar</a>
+                    <?php if  (!$fase->alunoJaFez($_SESSION["iduser"])) : 
+                      $link = ($fase->tipo == "Atividade")? "fase_atividade.php" : "fase_questionario.php";
+                    ?>
+                      <a href="<?= $link?>?id=<?= $fase->id ?>" class="btn btn-round btn-<?= $corTimeline?>">Realizar</a>
                     <?php endif ?>
 
                     <!-- Status: aluno já fez, mas professor não corrigiu-->
