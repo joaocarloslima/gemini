@@ -83,7 +83,14 @@
               <p> Dashboard </p>
             </a>
           </li>
-          <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='missoes.php' || basename($_SERVER['PHP_SELF'])=='missao.php' || basename($_SERVER['PHP_SELF'])=='fase_atividade.php')?'active':''; ?>">
+          <li class="nav-item <?php echo (
+              basename($_SERVER['PHP_SELF'])=='missoes.php' || 
+              basename($_SERVER['PHP_SELF'])=='missao.php'  || 
+              basename($_SERVER['PHP_SELF'])=='fase_atividade.php' ||
+              basename($_SERVER['PHP_SELF'])=='fase_questionario.php'
+            )?'active':''; 
+
+            ?>">
             <a class="nav-link" href="missoes.php">
               <i class="fas fa-rocket"></i>
               <p> Missões </p>
