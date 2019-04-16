@@ -5,13 +5,17 @@ $controleFase = new ControleFase();
 $controleFase->idAluno = $_SESSION["iduser"];
 $notificacoes = $controleFase->getNotificacoes();
 
+$aluno = new AlunoPlayer();
+$aluno->id = $_SESSION["iduser"];
+$aluno->carregar();
+
 ?>
 
 <div class="collapse navbar-collapse justify-content-end">
   <ul class="navbar-nav">
     <li class="nav-item">
       <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Pontos de Experiência (XP)">
-        <span class="score"><?= $controleFase->getXPDoAluno(); ?></span>
+        <span class="score"><?= $aluno->xp; ?></span>
         <i class="fas fa-star"></i>
         <p class="d-lg-none d-md-block">
           XP
@@ -19,8 +23,8 @@ $notificacoes = $controleFase->getNotificacoes();
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Nível (10XP para nível 5)">
-        <span class="score">4</span>
+      <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Nível (<?= $aluno->faltaParaProximoNivel ?>XP para nível <?= $aluno->nivel+1; ?>)">
+        <span class="score"><?= $aluno->nivel; ?></span>
         <i class="material-icons">signal_cellular_alt</i>
         <p class="d-lg-none d-md-block">
           Level

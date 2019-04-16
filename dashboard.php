@@ -4,7 +4,11 @@ include "cabecalho.php";
 $tempoDeEstudo = new TempoDeEstudo($_SESSION["iduser"]);
 $missao = new Missao();
 $missoes = $missao->buscarMissoesDoAluno($_SESSION["iduser"]);
-$level = 1; //para testar o filtro de missoes antes de implementar o controle de levels
+
+$aluno = new AlunoPlayer();
+$aluno->id = $_SESSION["iduser"];
+$aluno->carregar();
+$level = $aluno->nivel;
 
 ?>
 <link rel="stylesheet" type="text/css" href="adm/assets/css/missoes.css">
@@ -55,7 +59,7 @@ $level = 1; //para testar o filtro de missoes antes de implementar o controle de
               <div class="card-body">
                 <h4 class="card-title">Pontos de Experiência</h4>
                 <p class="card-category">
-                  <span class="text-success"><i class="fa fa-long-arrow-up"></i> 15 pontos </span> para o próximo nível</p>
+                  <span class="text-success"><i class="fa fa-long-arrow-up"></i> <?= $aluno->faltaParaProximoNivel?> pontos </span> para o próximo nível</p>
                 </div>
               </div>
             </div>
@@ -79,11 +83,11 @@ $level = 1; //para testar o filtro de missoes antes de implementar o controle de
                     <i class="fas fa-star"></i>
                   </div>
                   <p class="card-category">Pontos de Exp.</p>
-                  <h3 class="card-title"><?= $controleFase->getXPDoAluno(); ?></h3>
+                  <h3 class="card-title"><?= $aluno->xp; ?></h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">search</i><a href="#">Ver missões</a>
+                    <i class="material-icons">search</i><a href="missoes.php">Ver missões</a>
                   </div>
                 </div>
               </div>
@@ -128,11 +132,11 @@ $level = 1; //para testar o filtro de missoes antes de implementar o controle de
                     <i class="material-icons">signal_cellular_alt</i>
                   </div>
                   <p class="card-category">Nível</p>
-                  <h3 class="card-title">4</h3>
+                  <h3 class="card-title"><?= $aluno->nivel ?></h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">trending_up</i> 15 XP para nível 5
+                    <i class="material-icons">trending_up</i> <?= $aluno->faltaParaProximoNivel?> XP para nível <?= $aluno->nivel + 1?>
                   </div>
                 </div>
               </div>

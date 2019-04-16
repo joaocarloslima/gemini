@@ -36,17 +36,6 @@ class ControleFase {
 		}
 	}
 
-	public function getXPDoAluno (){
-		$query = "SELECT SUM(xp) as total FROM alunos_fases WHERE idAluno = $this->idAluno";
-		$conexao = Conexao::pegarConexao();
-	    $stmt = $conexao->prepare($query);
-	    $stmt->execute();
-	    if ($linha = $stmt->fetch()){
-	    	return $linha["total"];
-	    }else{
-	    	return 0;
-	    }
-	}
 
 	public function getNotificacoes(){
 		$query = "SELECT alunos_fases.*, fases.nome, fases.idMissao FROM alunos_fases INNER JOIN fases ON fases.idFase=alunos_fases.idFase WHERE idAluno = $this->idAluno AND feedback IS NOT NULL AND feedbackVisualizadoEm IS NULL";
@@ -65,5 +54,6 @@ class ControleFase {
 		$query = "UPDATE alunos_fases SET feedbackVisualizadoEm=NOW() WHERE idAluno=$idAluno AND idFase=$idFase";
 		if(!$conexao->exec($query)) throw new Exception("Erro ao marcar feedback como lido");
 	}
+
 
 }

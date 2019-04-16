@@ -26,51 +26,7 @@ $alunos->buscarTodos();
         <span class="navbar-toggler-icon icon-bar"></span>
         <span class="navbar-toggler-icon icon-bar"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span>74</span>
-              <i class="fas fa-star"></i>
-              <p class="d-lg-none d-md-block">
-                XP
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span>4</span>
-              <i class="material-icons">signal_cellular_alt</i>
-              <p class="d-lg-none d-md-block">
-                Level
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pablo">
-              <span>12</span>
-              <i class="fa fa-medal"></i>
-              <p class="d-lg-none d-md-block">
-                Medalha
-              </p>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">notifications</i>
-              <span class="notification">3</span>
-              <p class="d-lg-none d-md-block">
-                avisos
-              </p>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Nova missão liberada</a>
-              <a class="dropdown-item" href="#">Novo feedback na tarefa 3</a>
-              <a class="dropdown-item" href="#">Questionário 3 disponível</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+      
     </div>
   </nav>
   <!-- End Navbar -->
@@ -86,9 +42,6 @@ $alunos->buscarTodos();
               <h4 class="card-title">Alunos Cadastrados</h4>
             </div>
             <div class="card-body">
-              <div class="toolbar">
-                <!--        Here you can write extra buttons/actions for the toolbar              -->
-              </div>
               <div class="material-datatables">
                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
@@ -105,20 +58,6 @@ $alunos->buscarTodos();
                       <th class="text-right"></th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th></th>
-                      <th>Nome</th>
-                      <th>Turma</th>
-                      <th>XP</th>
-                      <th>Nível</th>
-                      <th>Medalhas</th>
-                      <th>Engajamento</th>
-                      <th>Jogador</th>
-                      <th>Aprendizagem</th>
-                      <th class="text-right"></th>
-                    </tr>
-                  </tfoot>
                   <tbody>
                     <?php foreach ($alunos->lista as $aluno) : ?>
                       <tr>
@@ -127,8 +66,8 @@ $alunos->buscarTodos();
                         </td>
                         <td><?= $aluno->nome ?></td>
                         <td><?= $aluno->turma ?></td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td><?= $aluno->xp ?></td>
+                        <td><?= $aluno->nivel ?></td>
                         <td>0</td>
                         <td class="text-center"><?= $aluno->engajamento ?></td>
                         <td><?= $aluno->perfilJogador ?></td>

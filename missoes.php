@@ -3,8 +3,11 @@ include "cabecalho.php";
 
 $missao = new Missao();
 $missoes = $missao->buscarMissoesDoAluno($_SESSION["iduser"]);
-$level = 1; //para testar o filtro de missoes antes de implementar o controle de levels
 
+$aluno = new AlunoPlayer();
+$aluno->id = $_SESSION["iduser"];
+$aluno->carregar();
+$level = $aluno->nivel;
 ?>
 <link rel="stylesheet" type="text/css" href="adm/assets/css/missoes.css">
 <div class="main-panel">
