@@ -7,6 +7,7 @@ class Alternativa
 	public $idQuestao;
 	public $texto;
 	public $correta;
+	public $selecionada;
 
     public function inserirAlternativa()
     {
