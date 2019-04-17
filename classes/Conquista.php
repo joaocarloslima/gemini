@@ -36,4 +36,10 @@ class Conquista {
 		}
 		return $conquistas;
 	}
+
+	public function inserirParaAluno(){
+		$conexao = Conexao::pegarConexao();
+		$query = "INSERT INTO alunos_conquistas (idConquista, idAluno, obtidaEm) VALUES ($this->id, $this->idAluno, NOW() )";
+		if(!$conexao->exec($query)) throw new Exception("Erro ao adicionar competencia para aluno");
+	}
 }
