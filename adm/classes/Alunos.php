@@ -6,7 +6,7 @@ class Alunos {
 	public $lista;
 	
 	//buscar todos os alunos
-	public function buscarTodos(){ 
+	public function buscarTodos($ordenarPorXP=0){ 
 		$query = "SELECT alunos.*, matriculas.*, turmas.* FROM alunos 
 		INNER JOIN matriculas on matriculas.idAluno=alunos.idAluno 
 		INNER JOIN turmas on turmas.idTurma=matriculas.idTurma";
@@ -23,6 +23,7 @@ class Alunos {
 			array_push($alunos, $aluno);
 		}
 		$this->lista = $alunos;
+		if ($ordenarPorXP) usort($this->lista, function($a, $b) {return ($a->xp < $b->xp); });
 	}
 
 }

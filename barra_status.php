@@ -33,7 +33,7 @@ $aluno->carregar();
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Conquistas">
-        <span class="score">12</span>
+        <span class="score"><?= $aluno->conquistas ?></span>
         <i class="material-icons">beenhere</i>
         <p class="d-lg-none d-md-block">
           Conquistas

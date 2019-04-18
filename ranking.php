@@ -1,5 +1,8 @@
-<?php include "cabecalho.php" ?>
-
+<?php 
+include "cabecalho.php";
+$alunos = new Alunos();
+$alunos->buscarTodos(1);
+?>
 <div class="main-panel">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -40,157 +43,45 @@
                 <div class="table-responsive">
                   <table class="table table-striped table-hover">
                     <thead class=" text-primary">
-                      <tr><th>
-                        #
-                      </th>
-                      <th>
-
-                      </th>
-                      <th>
-                        Nome
-                      </th>
-                      <th>
-                        XP
-                      </th>
-                      <th>
-                        Level
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        1
-                      </td>
-                      <td>
-                        <div class="photo">
-                          <img src="assets/img/default-avatar.png" />
-                        </div>
-                      </td>
-                      <td>
-                        Fernanda
-                      </td>
-                      <td>
-                        50
-                      </td>
-                      <td>
-                        4
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        2
-                      </td>
-                      <td>
-                        <div class="photo">
-                          <img src="assets/img/default-avatar.png" />
-                        </div>
-                      </td>
-                      <td>
-                        Fábio
-                      </td>
-                      <td>
-                        48
-                      </td>
-                      <td>
-                        4
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        3
-                      </td>
-                      <td>
-                        <div class="photo">
-                          <img src="assets/img/faces/card-profile1-square.jpg" />
-                        </div>
-                      </td>
-                      <td>
-                        Cristiana
-                      </td>
-                      <td>
-                        40
-                      </td>
-                      <td>
-                        3
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        4
-                      </td>
-                      <td>
-                        <div class="photo">
-                          <img src="assets/img/default-avatar.png" />
-                        </div>
-                      </td>
-                      <td>
-                        Pedro
-                      </td>
-                      <td>
-                        35
-                      </td>
-                      <td>
-                        3
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        5
-                      </td>
-                      <td>
-                        <div class="photo">
-                          <img src="assets/img/faces/card-profile2-square.jpg" />
-                        </div>
-                      </td>
-                      <td>
-                        Natália
-                      </td>
-                      <td>
-                        31
-                      </td>
-                      <td>
-                        2
-                      </td>
-                    </tr>
-                    <tr class="table-info">
-                      <td>
-                        6
-                      </td>
-                      <td>
-                        <div class="photo">
-                          <img src="assets/img/faces/card-profile2-square.jpg" />
-                        </div>
-                      </td>
-                      <td>
-                        Tarik
-                      </td>
-                      <td>
-                        25
-                      </td>
-                      <td>
-                        2
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      <tr>
+                        <th>#</th>
+                        <th></th>
+                        <th>Nome</th>
+                        <th>XP</th>
+                        <th>Level</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php 
+                      $posicao = 1;
+                      foreach ($alunos->lista as $aluno) :  ?>
+                        <tr <?= ($aluno->id==$_SESSION['iduser'])?"class='table-info'":"" ?>>
+                          <td><?= $posicao++ ?></td>
+                          <td><div class="photo"><img src="<?= $aluno->foto ?>" /></div></td>
+                          <td><?= $aluno->nome ?></td>
+                          <td><?= $aluno->xp ?></td>
+                          <td><?= $aluno->nivel ?></td>
+                        </tr>
+                      <?php endforeach ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-chart">
-            <div class="card-header card-header-info" data-header-animation="false">
-              <div class="ct-chart" id="completedTasksChart"></div>
-            </div>
-            <div class="card-body">
-              <h4 class="card-title">Posição no Ranking</h4>
-              <p class="card-category">Últimos 30 dias</p>
+          <div class="col-md-4">
+            <div class="card card-chart">
+              <div class="card-header card-header-info" data-header-animation="false">
+                <div class="ct-chart" id="completedTasksChart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Posição no Ranking</h4>
+                <p class="card-category">Últimos 30 dias</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<?php include "rodape.php" ?>
+  <?php include "rodape.php" ?>
