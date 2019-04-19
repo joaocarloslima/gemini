@@ -65,16 +65,27 @@ $controleFase = new ControleFase();
         <div class="col-md-6">
           <ul class="timeline timeline-simple">
             <?php foreach ($fases->listaCompleta as $fase) : ?>
-              <?php $corTimeline = ($fase->tipo=="Atividade")?"info":"danger"; ?>
+              <?php $corTimeline = "primary"; ?>
+              <?php
+                $alunoJaFez = $fase->alunoJaFez($_SESSION["iduser"]);
+                $professorJaCorrigiu = $fase->professorJaCorrigiu($_SESSION["iduser"]);
+                //Status 0: aluno ainda não fez
+                if  (!$alunoJaFez) $status = 0;
+                //Status 1: aluno fez, mas professor ainda não corrigiu
+                if  ($alunoJaFez && !$professorJaCorrigiu) $status=1;
+                //Status 2: aluno fez e professor corrigiu
+                if  ($alunoJaFez && $professorJaCorrigiu) $status=2;
+              ?>
               <li class="timeline-inverted">
-                <div class="timeline-badge <?= $corTimeline ?>">
-                  <i class="material-icons"><?php echo ($fase->tipo=="Atividade")?"build":"help"; ?></i>
+                <div class="timeline-badge <?= ($alunoJaFez)?'success':'danger' ?>">
+                  <i class="material-icons"><?php echo ($fase->tipo=="Atividade")?"build":"check_circle_outline"; ?></i>
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <span class="badge badge-pill badge-<?= $corTimeline ?>"><?= $fase->nome ?></span>
+                    <span class="badge badge-pill badge-<?= $corTimeline ?>"><?= $fase->tipo ?></span>
                   </div>
                   <div class="timeline-body">
+                    <h3><strong><?= $fase->nome ?></strong></h4>
                     <p><?= $fase->descricao ?></p>
                     <div class="row">
                       <div class="col-md-6"><h6><i class="material-icons">star</i> <?= $fase->xp ?></h6></div>
@@ -82,24 +93,24 @@ $controleFase = new ControleFase();
                     </div>
                     <hr>
                     <!-- Status: aluno ainda não fez-->
-                    <?php if  (!$fase->alunoJaFez($_SESSION["iduser"])) : 
-                      $link = ($fase->tipo == "Atividade")? "fase_atividade.php" : "fase_questionario.php";
-                    ?>
+                    <?php if  (!$alunoJaFez): $link = ($fase->tipo=="Atividade")?"fase_atividade.php":"fase_questionario.php"; ?>
                       <a href="<?= $link?>?id=<?= $fase->id ?>" class="btn btn-round btn-<?= $corTimeline?>">Realizar</a>
                     <?php endif ?>
 
                     <!-- Status: aluno já fez, mas professor não corrigiu-->
-                    <?php if  ($fase->alunoJaFez($_SESSION["iduser"]) && !$fase->professorJaCorrigiu($_SESSION["iduser"])) : ?>
-                      <a class="btn btn-round disabled btn-default" aria-disabled="true">Já Realizado</a>
+                    <?php if  ($alunoJaFez && !$professorJaCorrigiu) : ?>
+                      <h6 class="text-right"><i class="ti-time"><i class="material-icons">access_time</i> fase realizada, aguardando correção...</i></h6>
                     <?php endif ?>
                     
                     <!-- Status: aluno já fez, e professor já corrigiu-->
-                    <?php if  ($fase->alunoJaFez($_SESSION["iduser"]) && $fase->professorJaCorrigiu($_SESSION["iduser"])) : ?>
+                    <?php if  ($alunoJaFez && $professorJaCorrigiu) : ?>
                     <?php $controleFase->marcarFeedbackComoLido($fase->id, $_SESSION["iduser"]) ?>
-
-                      <a class="btn btn-round btn-success text-white" data-toggle="tooltip" data-placement="right" title="<?= $fase->feedback ?>">
-                        Você ganhou <?= $fase->xpObtido ?>
-                        <i class="material-icons">star</i>
+                    <h6 class="text-right"><i class="ti-time"><i class="material-icons text-warning">star</i> você ganhou <?= $fase->xpObtido ?> XP.</i>
+                      <?php if ($fase->tipo == "Atividade"): ?>
+                        <button class="btn btn-round btn-success btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="<?= $fase->feedback ?>">
+                          <i class="material-icons">comment</i>
+                        </button>
+                      <?php endif ?></h6>
                       </a>
                     <?php endif ?>
 

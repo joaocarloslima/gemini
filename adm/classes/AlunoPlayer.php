@@ -13,6 +13,7 @@ class AlunoPlayer {
 	public $engajamento;
 	public $xp;
 	public $nivel;
+	public $conquistas;
 	public $faltaParaProximoNivel;
 
 	public function carregar(){
@@ -36,6 +37,7 @@ class AlunoPlayer {
 		$this->engajamento = $linha['engajamento'];
 		$this->xp = $this->getXPDoAluno();
 		$this->nivel = $this->getNivel();
+		$this->conquistas = $this->getQtdeConquistas();
 		$this->faltaParaProximoNivel = $this->getFaltaParaProximoNivel();
 	}
 
@@ -74,6 +76,24 @@ class AlunoPlayer {
 		if ($nivel==7) return 5000 - $xp;
 
 	}
+
+	public function getQtdeConquistas (){
+		$query = "SELECT COUNT(*) as total FROM alunos_conquistas WHERE idAluno = $this->id";
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+		$stmt->execute();
+		if ($linha = $stmt->fetch()){
+			return $linha["total"];
+		}else{
+			return 0;
+		}
+	}
+
+	public function cmp($a, $b){
+		return $a->xp > $b->xp;
+	}
+
+
 
 
 }
