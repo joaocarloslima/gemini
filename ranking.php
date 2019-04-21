@@ -2,6 +2,9 @@
 include "cabecalho.php";
 $alunos = new Alunos();
 $alunos->buscarTodos(1);
+
+$ranking = new Ranking($_SESSION["iduser"]);
+
 ?>
 <div class="main-panel">
   <!-- Navbar -->
@@ -14,7 +17,7 @@ $alunos->buscarTodos(1);
             <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
           </button>
         </div>
-        <a class="navbar-brand" href="#pablo">Ranking</a>
+        <a class="navbar-brand" href="#">Ranking</a>
       </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
         <span class="sr-only">Toggle navigation</span>
@@ -31,7 +34,7 @@ $alunos->buscarTodos(1);
     <div class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-7">
             <div class="card">
               <div class="card-header card-header-icon card-header-rose">
                 <div class="card-icon">
@@ -69,14 +72,14 @@ $alunos->buscarTodos(1);
               </div>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="card card-chart">
               <div class="card-header card-header-info" data-header-animation="false">
-                <div class="ct-chart" id="completedTasksChart"></div>
+                <div class="ct-chart" id="graficoRanking"></div>
               </div>
               <div class="card-body">
                 <h4 class="card-title">Posição no Ranking</h4>
-                <p class="card-category">Últimos 30 dias</p>
+                <p class="card-category">Últimos 15 dias</p>
               </div>
             </div>
           </div>
@@ -85,3 +88,47 @@ $alunos->buscarTodos(1);
     </div>
   </div>
   <?php include "rodape.php" ?>
+
+  <script type="text/javascript">
+   $( document ).ready(function() {
+    dias = {
+      labels: <?= $ranking->getDias() ?>,
+      series: [
+      <?= $ranking->getPosicoes() ?>
+      ]
+    };
+
+    posicoes = {
+      lineSmooth: Chartist.Interpolation.cardinal({
+        tension: 0
+      }),
+      high: 0,
+        low: <?= $ranking->getMaior()*-1.1 ?>, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+        axisY: {
+          showLabel: false,
+          offset: 10,
+          labelInterpolationFnc: function(value) {
+            return -value;
+          }
+        },
+      }
+
+      var grafico = new Chartist.Line('#graficoRanking', dias, posicoes).on('data', function(context) {
+        context.data.series = context.data.series.map(function(series) {
+          return series.map(function(value) {
+            return -value;
+          });
+        });
+      });
+      // start animation for the Completed Tasks Chart - Line Chart
+      md.startAnimationForLineChart(grafico);
+
+    });
+
+  </script>

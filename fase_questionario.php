@@ -191,7 +191,7 @@ $controleFase->iniciar();
         if (msg!="erro"){
           swal({
             title: "Parabéns",
-            html: '<i class="fas fa-star"></i> Você ganhou ' + (msg*<?= $fase->xp?>) + ' XP ' +
+            html: '<i class="fas fa-star"></i> Você ganhou ' + parseInt(msg*<?= $fase->xp?>) + ' XP ' +
             'por completar essa atividade.<br>',
             buttonsStyling: false,
             confirmButtonClass: "btn btn-success",

@@ -11,7 +11,7 @@ class TempoDeEstudo {
 	}
 	
 	public function getDados($idAluno){
-		$query = "SELECT  DATE_FORMAT(data, '%d/%m') as dia, SUM(timestampdiff(MINUTE, dataLogin, dataLogout)) as tempo FROM `tempo_acesso` WHERE idAluno=$idAluno GROUP BY data ORDER BY data LIMIT 7";
+		$query = "SELECT  DATE_FORMAT(data, '%d') as dia, SUM(timestampdiff(MINUTE, dataLogin, dataLogout)) as tempo FROM `tempo_acesso` WHERE idAluno=$idAluno GROUP BY data ORDER BY data DESC LIMIT 7";
 		$conexao = Conexao::pegarConexao();
 	    $stmt = $conexao->prepare($query);
 	    $stmt->execute();

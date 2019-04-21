@@ -31,6 +31,7 @@ $controleFase->desempenho = $desempenho;
 
 try {
 	$controleFase->concluir();
+	ControleFase::atualizarRanking();
 	echo $desempenho;
 } catch (Exception $e) {
 	Erro::trataErro($e);

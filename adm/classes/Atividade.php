@@ -81,6 +81,7 @@ class Atividade {
 		$conexao = Conexao::pegarConexao();
 		$query = "UPDATE alunos_fases SET xp=(SELECT XP FROM fases WHERE idFase=$this->idFase)*$this->desempenho, feedback='$this->feedback' WHERE idAluno=$this->idAluno AND idFase=$this->idFase";
 		if(!$conexao->exec($query)) throw new Exception("Erro ao salvar feedback");
+		ControleFase::atualizarRanking();
 	}
 
 	//calcela o feedback do professor na atividade
@@ -88,6 +89,7 @@ class Atividade {
 		$conexao = Conexao::pegarConexao();
 		$query = "UPDATE alunos_fases SET xp=NULL, feedback=NULL, feedbackVisualizadoEm=NULL WHERE idAluno=$this->idAluno AND idFase=$this->idFase";
 		if(!$conexao->exec($query)) throw new Exception("Erro ao cancelar feedback");
+		ControleFase::atualizarRanking();
 	}
 
 }
