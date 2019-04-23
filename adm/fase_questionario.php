@@ -7,6 +7,7 @@ $fase = new Fase();
 $fase->id = $idFase;
 $fase->carregar();
 
+
 $questoes = Questao::listarQuestoes($idFase);
 
 ?>

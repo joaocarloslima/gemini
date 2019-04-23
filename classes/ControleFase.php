@@ -70,4 +70,15 @@ public static function atualizarRanking(){
 	}
 }
 
+public function carregar(){
+	$query = "SELECT alunos_fases.* FROM alunos_fases WHERE idAluno = $this->idAluno AND idFase=$this->idFase";
+	$conexao = Conexao::pegarConexao();
+	$stmt = $conexao->prepare($query);
+	$stmt->execute();
+	$linha = $stmt->fetch();
+	$this->xp = $linha["xp"];
+	
+}
+
+
 }

@@ -86,7 +86,7 @@ public function buscarFasesDaMissao($idMissao){
 		$fase->anexo = $linha['anexo'];
 		$atividade = new Atividade();
 		$atividade->idFase = $fase->id;
-		$fase->atividadesParaAvaliar += count( $atividade->buscarAtividadesNaoAvaliadas() );
+		if ($fase->tipo=="Atividade") $fase->atividadesParaAvaliar += count( $atividade->buscarAtividadesNaoAvaliadas() );
 		array_push($fases, $fase);
 		$this->idMissao = $linha['idMissao'];
 		$this->missao = $linha['missao'];
