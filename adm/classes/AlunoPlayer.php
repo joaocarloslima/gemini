@@ -46,11 +46,11 @@ class AlunoPlayer {
 		$conexao = Conexao::pegarConexao();
 		$stmt = $conexao->prepare($query);
 		$stmt->execute();
-		if ($linha = $stmt->fetch()){
-			return $linha["total"];
-		}else{
-			return 0;
+		$xp = 0;
+		if ( $linha = $stmt->fetch() ){
+			$xp = ($linha["total"]=="")?0:$linha["total"];
 		}
+		return $xp;
 	}
 
 	public function getNivel(){

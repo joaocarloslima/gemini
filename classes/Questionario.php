@@ -16,13 +16,22 @@ class Questionario {
 	}
 
 	public function listarQuestoes()
-    {
-	    $query = "SELECT * FROM questoes WHERE idFase=:idFase";
-	    $conexao = Conexao::pegarConexao();
-	    $stmt = $conexao->prepare($query);
-	    $stmt->bindValue(':idFase', $this->idFase);
-	    $stmt->execute();
- 		$questoes = array();
+	{
+		$conexao = Conexao::pegarConexao();
+
+		//verificar se é a primeira vez do aluno, se for insere as respostas das alternativas
+		$q = "SELECT * FROM alunos_fases WHERE idAluno=:idAluno AND idFase=:idFase";
+		$s = $conexao->prepare($q);
+		$s->bindValue(':idFase', $this->idFase);
+		$s->bindValue(':idAluno', $this->idAluno);
+		$s->execute();
+		if ($s->fetchColumn() < 1) $this->iniciarQuestionario();
+
+		$query = "SELECT * FROM questoes WHERE idFase=:idFase";
+		$stmt = $conexao->prepare($query);
+		$stmt->bindValue(':idFase', $this->idFase);
+		$stmt->execute();
+		$questoes = array();
 		while ($linha = $stmt->fetch()){
 			$questao = new Questao();
 			$questao->id = $linha['idQuestao'];
@@ -49,7 +58,30 @@ class Questionario {
 
 			array_push($questoes, $questao);
 		}
+
 		return $questoes;
 	}
 
+	private function iniciarQuestionario(){
+		$conexao = Conexao::pegarConexao();
+		$query = "SELECT * FROM questoes WHERE idFase=:idFase";
+		$stmt = $conexao->prepare($query);
+		$stmt->bindValue(':idFase', $this->idFase);
+		$stmt->execute();
+		while ($questao = $stmt->fetch()){
+			$idQuestao = $questao["idQuestao"];
+			$queryAlt = "SELECT * FROM alternativas WHERE idQuestao=:idQuestao";
+			$stmtAlt = $conexao->prepare($queryAlt);
+			$stmtAlt->bindValue(':idQuestao', $idQuestao);
+			$stmtAlt->execute();
+			while ($alternativa = $stmtAlt->fetch()) {
+				$idAlternativa = $alternativa["idAlternativa"];
+				$queryItem = "INSERT INTO alunos_respostas (idAluno, idAlternativa, selecionada) VALUES (:idAluno,:idAlternativa,0)";
+				$stmtItem = $conexao->prepare($queryItem);
+				$stmtItem->bindValue(':idAluno', $this->idAluno);
+				$stmtItem->bindValue(':idAlternativa', $idAlternativa);
+				$stmtItem->execute();
+			}
+		}
+	}
 }

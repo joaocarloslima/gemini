@@ -7,7 +7,7 @@ class ControleFase {
 	public $desempenho;
 	public $resposta;
 	public $anexo;
-	public $xp;
+	public $xp=0;
 
 	public function gravarRespostaAtividade(){
 		$conexao = Conexao::pegarConexao();
@@ -63,6 +63,7 @@ public static function atualizarRanking(){
 	$posicao=1;
 	$conexao = Conexao::pegarConexao();
 	foreach ($alunos->lista as $aluno) {
+		if (!isset($aluno->xp)) $aluno->xp=0;
 		$query = "INSERT INTO ranking (idAluno, posicao, data, xp) VALUES ($aluno->id, $posicao, NOW(), $aluno->xp) ON DUPLICATE KEY UPDATE posicao=$posicao, xp=$aluno->xp";
 		$conexao->exec($query);
 		$posicao++;
