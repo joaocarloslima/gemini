@@ -128,7 +128,7 @@
                       <div class="checkbox-radios">
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="turma" value="2" checked=""> 1D - Química
+                            <input class="form-check-input" type="radio" name="turma" value="1" checked=""> 1D - A
                             <span class="circle">
                               <span class="check"></span>
                             </span>
@@ -136,7 +136,23 @@
                         </div>
                         <div class="form-check form-check-inline">
                           <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="turma" value="1"> 1C - Adm
+                            <input class="form-check-input" type="radio" name="turma" value="2" checked=""> 1D - B
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="turma" value="3"> 1C - A
+                            <span class="circle">
+                              <span class="check"></span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" name="turma" value="4"> 1C - B
                             <span class="circle">
                               <span class="check"></span>
                             </span>
