@@ -6,7 +6,6 @@ class Aluno {
 	public $nome;
 	public $email;
 	public $senha;
-	public $idTurma;
 	public $foto;
 	
 	public function inserir(){

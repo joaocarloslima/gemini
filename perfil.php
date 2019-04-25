@@ -5,6 +5,7 @@ require_once 'global.php';
 $aluno = new Aluno();
 $aluno->id = $_SESSION['iduser'];
 $aluno->carregar();
+$email = $aluno->email;
 
 $engajamento = new Engajamento();
 $engajamento->idAluno = $aluno->id;
@@ -153,7 +154,7 @@ $perfilaprendizagemstr = $perfilaprendizagem->perfil();
                         <div class="col-md-12">
                           <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">Email</label>
-                            <input type="email" class="form-control" value="<?php echo $aluno->email?>" required="on" name="email">
+                            <input type="email" class="form-control" value="<?php echo $email ?>" required="on" name="email">
                           </div>
                         </div>
                       </div>

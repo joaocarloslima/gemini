@@ -14,6 +14,7 @@ $aluno->foto = $arquivo;
 try {
 	$aluno->trocarFoto();
     $_SESSION["success"] = "<strong>Sucesso.</strong> Dados alterados.";
+    //var_dump($aluno);
 	header("Location: perfil.php");
 } catch (Exception $e) {
 	Erro::trataErro($e);

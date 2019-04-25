@@ -107,6 +107,24 @@ try{
   <script type="text/javascript">
     var btnEnviar = document.querySelector("#btnEnviar");
     var form = document.querySelector("form");
+
+    $("#btnEnviar").addClass("disabled");
+
+    var quantidade = 0, grupos = {};
+
+    $('input[type="radio"]').each(function() {
+      if (grupos[this.name] === undefined) {
+        console.log(this.name);
+        quantidade++;
+        grupos[this.name] = 1;
+      }
+    })
+    .click(function() {
+      if($('input[type="radio"]:checked').length >= quantidade){
+        $("#btnEnviar").removeClass("disabled");
+      };
+    });
+
     btnEnviar.addEventListener("click", function(e){
       e.preventDefault();
       $.ajax({
@@ -141,7 +159,7 @@ try{
   function gerarStars ($indice){
     echo "<div class='cont'>";
     echo "  <div class='stars'>";
-    echo "    <input class='star star-5' id='star-5-$indice' type='radio' name='r$indice' value='5' required/>";
+    echo "    <input class='star star-5' id='star-5-$indice' type='radio' name='r$indice' value='5' />";
     echo "    <label class='star star-5' for='star-5-$indice'></label>";
     echo "    <input class='star star-4' id='star-4-$indice' type='radio' name='r$indice' value='4' />";
     echo "    <label class='star star-4' for='star-4-$indice'></label>";

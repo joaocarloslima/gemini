@@ -7,6 +7,7 @@ class AlunoPlayer {
 	public $foto;
 	public $email;
 	public $senha;
+	public $idTurma;
 	public $turma;
 	public $perfilAprendizagem;
 	public $perfilJogador;

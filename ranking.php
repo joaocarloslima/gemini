@@ -3,7 +3,12 @@ include "cabecalho.php";
 $alunos = new Alunos();
 $alunos->buscarTodos(1);
 
-$ranking = new Ranking($_SESSION["iduser"]);
+$a = new AlunoPlayer();
+$a->id = $_SESSION["iduser"];
+$a->carregar();
+
+
+$ranking = new Ranking($a->id);
 
 ?>
 <div class="main-panel">
@@ -57,7 +62,15 @@ $ranking = new Ranking($_SESSION["iduser"]);
                     <tbody>
                       <?php 
                       $posicao = 1;
-                      foreach ($alunos->lista as $aluno) :  ?>
+                      foreach ($alunos->lista as $aluno) : 
+                        //mostar apenas alunos da mesma turma do usuário
+                        if ($aluno->idTurma != $a->idTurma) continue;
+                        //mostrar apenas o top5 e o aluno logado
+                        if ($posicao > 5 && $aluno->id!=$a->id) {
+                          $posicao++;
+                          continue;
+                        }
+                       ?>
                         <tr <?= ($aluno->id==$_SESSION['iduser'])?"class='table-info'":"" ?>>
                           <td><?= $posicao++ ?></td>
                           <td><div class="photo"><img src="<?= $aluno->foto ?>" /></div></td>

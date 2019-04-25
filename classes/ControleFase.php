@@ -57,9 +57,12 @@ public function marcarFeedbackComoLido($idFase, $idAluno){
 	if(!$conexao->exec($query)) throw new Exception("Erro ao marcar feedback como lido");
 }
 
-public static function atualizarRanking(){
+public static function atualizarRanking($idAluno){
+	$a = new AlunoPlayer();
+	$a->id = $idAluno;
+	$a->carregar();
 	$alunos = new Alunos();
-	$alunos->buscarTodos(1);
+	$alunos->buscarTodos(1, $a->idTurma);
 	$posicao=1;
 	$conexao = Conexao::pegarConexao();
 	foreach ($alunos->lista as $aluno) {

@@ -23,7 +23,7 @@ foreach ($questoes as $questao) {
 	}
 }
 $acertos = ($acertos<0)?0:$acertos;
-$desempenho = $acertos/$qtde_alternativas;
+$desempenho = intval($acertos/$qtde_alternativas);
 
 
 //salvar e retornar desempenho
@@ -31,7 +31,7 @@ $controleFase->desempenho = $desempenho;
 
 try {
 	$controleFase->concluir();
-	ControleFase::atualizarRanking();
+	ControleFase::atualizarRanking($controleFase->idAluno);
 	echo $desempenho;
 } catch (Exception $e) {
 	Erro::trataErro($e);

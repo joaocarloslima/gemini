@@ -7,7 +7,7 @@ $aluno->senha = $_POST["senha"];
 
 try {
 	$aluno->inserir();
-	ControleFase::atualizarRanking();
+	ControleFase::atualizarRanking($_POST["turma"]);
 	session_start();
 	$_SESSION["logadogemini"]=1;
 	$_SESSION["iduser"]=$aluno->id;

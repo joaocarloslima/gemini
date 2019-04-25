@@ -8,12 +8,12 @@ $aluno->idTurma = $_POST["turma"];
 
 try {
 	$aluno->inserir();
-	ControleFase::atualizarRanking();
 	session_start();
 	$_SESSION["logadogemini"]=1;
 	$_SESSION["iduser"]=$aluno->id;
 	$primeiro_nome = explode(" ", $aluno->nome);
 	$_SESSION["user"]=$primeiro_nome[0];
+	ControleFase::atualizarRanking($aluno->id);
 	header("Location: dashboard.php");
 } catch (Exception $e) {
 	Erro::trataErro($e);
