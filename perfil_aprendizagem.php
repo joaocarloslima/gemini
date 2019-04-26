@@ -102,7 +102,7 @@ $perguntas = [
 
 shuffle($perguntas);
 
-$controleFase = new controleFase();
+$controleFase = new ControleFase();
 $controleFase->idFase = 1;
 $controleFase->idAluno = $_SESSION["iduser"];
 try{

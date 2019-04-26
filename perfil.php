@@ -10,11 +10,11 @@ $email = $aluno->email;
 $engajamento = new Engajamento();
 $engajamento->idAluno = $aluno->id;
 
-$perfiljogador = new perfiljogador();
+$perfiljogador = new PerfilJogador();
 $perfiljogador->idAluno = $aluno->id;
 $perfiljogadorstr = $perfiljogador->perfil();
 
-$perfilaprendizagem = new perfilAprendizagem();
+$perfilaprendizagem = new PerfilAprendizagem();
 $perfilaprendizagem->idAluno = $aluno->id;
 $perfilaprendizagemstr = $perfilaprendizagem->perfil();
 
