@@ -16,12 +16,10 @@ $missao->imagem = $arquivo;
 
 try {
 	$missao->inserir();
-	
-	
 	$_SESSION["success"] = "<strong>Sucesso </strong> Missão cadastrada";
 
 	header("Location: missoes.php");
 } catch (Exception $e) {
-	$_SESSION["danger"] = "<strong>Erro </strong> Missão não cadastrada";
+	$_SESSION["danger"] = "<strong>Erro </strong> Missão não cadastrada". $e->getMessage();
 	Erro::trataErro($e);
 }

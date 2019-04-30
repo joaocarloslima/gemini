@@ -56,7 +56,7 @@ $controleFase = new ControleFase();
               <h4 class="card-title">João Carlos Lima</h4>
               <div class="card-avatar">
                 <a>
-                  <img class="img" src="assets/img/faces/card-profile1-square.jpg">
+                  <img class="img" src="assets/img/professor.jpg">
                 </a>
               </div>
             </div>

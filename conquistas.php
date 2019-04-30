@@ -42,7 +42,7 @@ $conquistas = $conquista->buscarTodas();
 
 
         <?php foreach ($conquistas as $c) : ?>
-          <div class="col-lg-4 cards">
+          <div class="col-md-4 cards">
             <div class="card card-pricing card-raised">
               <div class="card-body">
                 <h4 class="card-category"><?= $c->nome ?></h4>

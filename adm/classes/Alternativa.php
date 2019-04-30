@@ -22,12 +22,11 @@ class Alternativa
 
     public function editarAlternativa()
     {
-	    $query = "UPDATE alternativas SET texto=:texto, correta=:correta WHERE idAlternativa=:idAlternativa";
+	    $query = "UPDATE alternativas SET texto=:texto WHERE idAlternativa=:idAlternativa";
 	    $conexao = Conexao::pegarConexao();
 	    $stmt = $conexao->prepare($query);
 	    $stmt->bindValue(':idAlternativa', $this->id);
 	    $stmt->bindValue(':texto', $this->texto);
-	    $stmt->bindValue(':correta', $this->correta);
 	    $stmt->execute();
 	}
 

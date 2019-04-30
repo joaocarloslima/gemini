@@ -47,7 +47,7 @@ $level = $aluno->nivel;
                 <img class="img" src="adm/<?= $missao->imagem ?>">
               </div>
               <div class="card-body">
-                <h4 class="card-title"><a href="#pablo">Missão: <?= $missao->nome ?></a></h4>
+                <h4 class="card-title"><a href="missao.php?id=<?= $missao->id ?>">Missão: <?= $missao->nome ?></a></h4>
                 <div class="card-description">
                   <?php 
                   if ($missao->levelminimo>$level) :

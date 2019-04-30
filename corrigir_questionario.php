@@ -23,8 +23,7 @@ foreach ($questoes as $questao) {
 	}
 }
 $acertos = ($acertos<0)?0:$acertos;
-$desempenho = intval($acertos/$qtde_alternativas);
-
+$desempenho = $acertos/$qtde_alternativas;
 
 //salvar e retornar desempenho
 $controleFase->desempenho = $desempenho;

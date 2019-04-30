@@ -29,7 +29,7 @@ class ControleFase {
 		$conexao = Conexao::pegarConexao();
 		//inserir apenas se não existir
 		$query = "INSERT INTO alunos_fases (iniciadoEm, idAluno, idFase) 
-		VALUES (NOW(), $this->idAluno, $this->idFase) ON DUPLICATE KEY iniciadoEm=iniciadoEm";
+		VALUES (NOW(), $this->idAluno, $this->idFase) ON DUPLICATE KEY UPDATE iniciadoEm=iniciadoEm";
 	if($conexao->exec($query)){
 		Log::gravarLog($this->idAluno, "iniciou fase "); 
 	}
