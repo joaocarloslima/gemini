@@ -40,7 +40,7 @@ $conquistas = $conquista->buscarTodas();
     <div class="container-fluid">
       <div class="row"> 
         <?php foreach ($alunos->lista as $aluno) : ?>
-          <div class="col-sm">
+          <div class="col-md-4">
            <div class="card card-profile">
             <div class="card-avatar">
               <a href="#pablo">
@@ -48,8 +48,21 @@ $conquistas = $conquista->buscarTodas();
               </a>
             </div>
             <div class="card-body">
+              <h4 class="card-title"><strong><?= $aluno->nome?></strong></h4>
+              <?php  
+                $conquista->idAluno = $aluno->id;
+                $conquistas = $conquista->buscarTodas();
+              ?>
+              <?php foreach ($conquistas as $c) : ?>
+              <div class="progress-container">
+                <span class="progress-badge"><?= utf8_encode($c->descricao) ?></span>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-<?= $c->cor ?>" role="progressbar" aria-valuenow="<?= $c->obtidas?>" aria-valuemin="0" aria-valuemax="100" style="width: <?= ($c->obtidas/($c->totalDePassos)*100) ?>%">
+                  </div>
+                </div>
+              </div>
+              <?php endforeach ?>
               <button class="btn btn-rose btn-round btn-avaliar" data-toggle="modal" data-target="#myModal" data-id="<?= $aluno->id?>" >avaliar</button>
-              <h4 class="card-title"><?= $aluno->nome?></h4>
             </div>
           </div>
         </div>
@@ -70,14 +83,14 @@ $conquistas = $conquista->buscarTodas();
       </div>
       <div class="modal-body">
         <div class="row">
-        <?php foreach ($conquistas as $c) : ?>
-          <div class="col-lg-6">
-          <button class="btn btn-<?= $c->cor ?> btn-lg btn-competencia" style="margin-bottom:4px;white-space: normal;" data-id="<?= $c->id ?>">
-            <i class="material-icons" ><?= $c->imagem?></i>
-            <?= utf8_encode($c->descricao) ?>
-          </button>
-          </div>
-        <?php endforeach ?>
+          <?php foreach ($conquistas as $c) : ?>
+            <div class="col-lg-6">
+              <button class="btn btn-<?= $c->cor ?> btn-lg btn-competencia" style="margin-bottom:4px;white-space: normal;" data-id="<?= $c->id ?>">
+                <i class="material-icons" ><?= $c->imagem?></i>
+                <?= utf8_encode($c->descricao) ?>
+              </button>
+            </div>
+          <?php endforeach ?>
         </div>
       </div>
     </div>
@@ -86,19 +99,19 @@ $conquistas = $conquista->buscarTodas();
 <?php include "rodape.php" ?>
 
 <?php 
-  mostrarAlerta("danger", "top");
-  mostrarAlerta("success", "top");
+mostrarAlerta("danger", "top");
+mostrarAlerta("success", "top");
 ?>
 
 <script type="text/javascript">
 
-$(".btn-avaliar").on("click", function(){
-  $('#idAluno').val( $(this).attr('data-id') )
-});
+  $(".btn-avaliar").on("click", function(){
+    $('#idAluno').val( $(this).attr('data-id') )
+  });
 
-$(".btn-competencia").on("click", function(){
-  $("#idCompetencia").val( $(this).attr('data-id') );
-  $('#form').submit();
-});
+  $(".btn-competencia").on("click", function(){
+    $("#idCompetencia").val( $(this).attr('data-id') );
+    $('#form').submit();
+  });
 
 </script>
