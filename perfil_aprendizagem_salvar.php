@@ -22,10 +22,10 @@ $perfil->q16 = $_POST["r16"];
 
 try {
 	$perfil->inserir();
+	ControleFase::atualizarRanking($_SESSION["iduser"]);
     $_SESSION["success"] = "<strong>Questionário respondido com sucesso.</strong> Obrigado pelas informações";
 	header("Location: perfil.php");
 } catch (Exception $e) {
 	Erro::trataErro($e);
     $_SESSION["danger"] = "<strong>Opa!</strong> Não foi possível salvar as respostas. Informe o professor sobre o problema.";
-
 }

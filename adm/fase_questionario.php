@@ -121,7 +121,6 @@ $questoes = Questao::listarQuestoes($idFase);
         acao: "swapCorreta" 
       },
       success: (function(msg){
-        console.log(msg);
         if (botao.hasClass("btn-warning")){
           botao.removeClass("btn-warning");
           botao.addClass("btn-success");

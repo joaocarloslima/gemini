@@ -28,7 +28,7 @@ $perguntas = [
   "24. Eu gosto de compartilhar conteúdos com meus amigos e seguidores"
 ];
 
-$controleFase = new controleFase();
+$controleFase = new ControleFase();
 $controleFase->idFase = 2;
 $controleFase->idAluno = $_SESSION["iduser"];
 try{

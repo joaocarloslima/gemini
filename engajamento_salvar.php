@@ -15,6 +15,7 @@ $engajamento->q9 = $_POST["resposta9"];
 
 try {
 	$engajamento->inserir();
+	ControleFase::atualizarRanking($_SESSION["iduser"]);
     $_SESSION["success"] = "<strong>Questionário respondido com sucesso.</strong> Obrigado pelas informações";
 	header("Location: perfil.php");
 } catch (Exception $e) {

@@ -1,7 +1,7 @@
 <?php include 'cabecalho.php'; ?>
 
 <?php 
-$controleFase = new controleFase();
+$controleFase = new ControleFase();
 $controleFase->idFase = 3;
 $controleFase->idAluno = $_SESSION["iduser"];
 try{

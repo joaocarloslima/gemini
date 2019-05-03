@@ -30,6 +30,7 @@ $perfil->q24 = $_POST["r24"];
 
 try {
 	$perfil->inserir();
+	ControleFase::atualizarRanking($_SESSION["iduser"]);
     $_SESSION["success"] = "<strong>Questionário respondido com sucesso.</strong> Obrigado pelas informações";
 	header("Location: perfil.php");
 } catch (Exception $e) {
