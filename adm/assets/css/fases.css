@@ -1,0 +1,8 @@
+.fase-desabilitada {
+  background-color: rgba(245, 245, 245, 1);
+  opacity: .4;
+}
+
+.pendente {
+	background-color: #888;
+}

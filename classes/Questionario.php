@@ -76,7 +76,7 @@ class Questionario {
 			$stmtAlt->execute();
 			while ($alternativa = $stmtAlt->fetch()) {
 				$idAlternativa = $alternativa["idAlternativa"];
-				$queryItem = "INSERT INTO alunos_respostas (idAluno, idAlternativa, selecionada) VALUES (:idAluno,:idAlternativa,0)";
+				$queryItem = "INSERT INTO alunos_respostas (idAluno, idAlternativa, selecionada) VALUES (:idAluno,:idAlternativa,0) ON DUPLICATE KEY UPDATE idAluno=idAluno";
 				$stmtItem = $conexao->prepare($queryItem);
 				$stmtItem->bindValue(':idAluno', $this->idAluno);
 				$stmtItem->bindValue(':idAlternativa', $idAlternativa);

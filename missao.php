@@ -11,7 +11,7 @@ $fases->buscarFasesDaMissao($missao->id);
 
 $controleFase = new ControleFase();
 ?>
-<link rel="stylesheet" type="text/css" href="adm/assets/css/missoes.css">
+<link rel="stylesheet" type="text/css" href="adm/assets/css/fases.css">
 <div class="main-panel">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -68,6 +68,9 @@ $controleFase = new ControleFase();
               <?php $corTimeline = "primary"; ?>
               <?php
                 $alunoJaFez = $fase->alunoJaFez($_SESSION["iduser"]);
+                $prazo = strtotime($fase->prazo);
+                $hoje = strtotime(date('Y-m-d H:i:s'));
+                $prazoEsgotado = ($prazo <= $hoje);
                 $professorJaCorrigiu = $fase->professorJaCorrigiu($_SESSION["iduser"]);
                 //Status 0: aluno ainda não fez
                 if  (!$alunoJaFez) $status = 0;
@@ -77,10 +80,10 @@ $controleFase = new ControleFase();
                 if  ($alunoJaFez && $professorJaCorrigiu) $status=2;
               ?>
               <li class="timeline-inverted">
-                <div class="timeline-badge <?= ($alunoJaFez)?'success':'danger' ?>">
+                <div class="timeline-badge <?= ($alunoJaFez)?'success':'pendente' ?>">
                   <i class="material-icons"><?php echo ($fase->tipo=="Atividade")?"build":"check_circle_outline"; ?></i>
                 </div>
-                <div class="timeline-panel">
+                <div class="timeline-panel <?= (!$alunoJaFez && $prazoEsgotado)?'fase-desabilitada':''; ?> ">
                   <div class="timeline-heading">
                     <span class="badge badge-pill badge-<?= $corTimeline ?>"><?= $fase->tipo ?></span>
                   </div>
@@ -93,9 +96,16 @@ $controleFase = new ControleFase();
                     </div>
                     <hr>
                     <!-- Status: aluno ainda não fez-->
-                    <?php if  (!$alunoJaFez): $link = ($fase->tipo=="Atividade")?"fase_atividade.php":"fase_questionario.php"; ?>
+                    <?php 
+                      if  (!$alunoJaFez){
+                        if ($prazoEsgotado) {
+                      ?>
+                         <h6 class="text-right"><i class="ti-time"><i class="material-icons">timer_off</i>prazo esgotado</i>
+                      <?php  }else{ 
+                          $link = ($fase->tipo=="Atividade")?"fase_atividade.php":"fase_questionario.php"; 
+                      ?>
                       <a href="<?= $link?>?id=<?= $fase->id ?>" class="btn btn-round btn-<?= $corTimeline?>">Realizar</a>
-                    <?php endif ?>
+                    <?php } }?>
 
                     <!-- Status: aluno já fez, mas professor não corrigiu-->
                     <?php if  ($alunoJaFez && !$professorJaCorrigiu) : ?>
@@ -110,7 +120,12 @@ $controleFase = new ControleFase();
                         <button class="btn btn-round btn-success btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="<?= $fase->feedback ?>">
                           <i class="material-icons">comment</i>
                         </button>
-                      <?php endif ?></h6>
+                      <?php elseif ($prazoEsgotado) : ?>
+                        <a href="fase_questionario_correcao.php?id=<?= $fase->id?>" class="btn btn-round btn-success btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="ver correção">
+                          <i class="material-icons text-white">rate_review</i>
+                        </a>
+                      <?php endif ?>
+                    </h6>
                       </a>
                     <?php endif ?>
 
