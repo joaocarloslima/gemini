@@ -67,7 +67,7 @@ class Missao {
 
 	//buscar as missoes de um aluno pelo idAluno
 	public function buscarMissoesDoAluno($idAluno){ 
-		$query = "SELECT missoes.*, (SELECT sum(fases.xp) from fases where fases.idMissao=missoes.idMissao) as xp, turmas.sigla FROM missoes INNER JOIN turmas on turmas.idTurma=missoes.idTurma WHERE liberada=1 ORDER BY levelMinimo";
+		$query = "SELECT alunos.idAluno, missoes.*, (SELECT sum(fases.xp) from fases where fases.idMissao=missoes.idMissao) as xp, turmas.sigla FROM missoes INNER JOIN turmas on turmas.idTurma=missoes.idTurma INNER JOIN matriculas ON matriculas.idTUrma=missoes.idTurma INNER JOIN alunos ON alunos.idAluno=matriculas.idAluno WHERE liberada=1 AND alunos.idAluno=$idAluno ORDER BY levelMinimo";
 		$conexao = Conexao::pegarConexao();
 		$stmt = $conexao->prepare($query);
 		$stmt->execute();
