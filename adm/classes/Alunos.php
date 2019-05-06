@@ -27,5 +27,13 @@ class Alunos {
 		if ($ordenarPorXP) usort($this->lista, function($a, $b) {return ($a->xp < $b->xp); });
 	}
 
+	public function excluir(){
+		$query = "DELETE FROM alunos WHERE idAluno=:id";
+		$conexao = Conexao::pegarConexao();
+		$stmt = $conexao->prepare($query);
+		$stmt->bindValue(':id', $this->id);
+		if(!$stmt->execute()) throw new Exception("Erro ao excluir alunos");
+	}
+
 }
 

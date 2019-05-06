@@ -75,11 +75,10 @@ $alunos->buscarTodos();
                         <td class="text-right">
                           <a href="#" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">favorite</i></a>
                           <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
-                          <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a>
+                          <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#modalexcluir" onclick="trocarId(<?= $aluno->id?>)"><i class="material-icons">close</i></a>
                         </td>
                       </tr>
                     <?php endforeach ?>
-
                   </tbody>
                 </table>
               </div>
@@ -94,8 +93,41 @@ $alunos->buscarTodos();
     </div>
   </div>
 </div>
+
+<div class="modal fade modal-mini modal-primary" id="modalexcluir" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-small">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja apagar esse aluno? Todas as informações referente a ele serão perdidas. Essa ação não pode ser desfeita.</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-link" data-dismiss="modal">Deixa pra lá</button>
+        <form action="aluno_excluir.php" method="POST">
+          <input type="hidden" name="id" id="idAlunoExcluir">
+          <button type="submit" class="btn btn-danger">Apagar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php include "rodape.php" ?>
+
+<?php
+mostrarAlerta("success", "top");
+mostrarAlerta("danger", "top");
+?>
+
 <script>
+
+   function trocarId($id){
+    var campo = document.querySelector("#idAlunoExcluir");
+    campo.value = $id;
+  }
+
   $(document).ready(function() {
     $('#datatables').DataTable({
       "pagingType": "full_numbers",
@@ -145,3 +177,4 @@ $alunos->buscarTodos();
       });
     });
   </script>
+
