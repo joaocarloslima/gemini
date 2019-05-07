@@ -56,9 +56,11 @@ class Missao {
 			$fase = new Fase();
 			$fase->buscarFasesDaMissao($missao->id);
 			foreach ($fase->listaCompleta as $fase) {
-				$atividade = new Atividade();
-				$atividade->idFase = $fase->id;
-				$missao->atividadesParaAvaliar += count( $atividade->buscarAtividadesNaoAvaliadas() );
+				if ($fase->tipo == "Atividade"){
+					$atividade = new Atividade();
+					$atividade->idFase = $fase->id;
+					$missao->atividadesParaAvaliar += count( $atividade->buscarAtividadesNaoAvaliadas() );
+				}
 			}
 			array_push($missoes, $missao);
 		}
