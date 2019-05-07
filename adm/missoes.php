@@ -46,9 +46,10 @@ $missoes->buscarTodas();
                 <button class="btn btn-info" data-toggle="modal" data-target="#myModal"><i class="fas fa-plus left"></i> nova missão</button>
               </div>
               <div class="material-datatables">
-                <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                <table id="datatable" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                   <thead>
                     <tr>
+                      <th>#</th>
                       <th></th>
                       <th>Nome</th>
                       <th>Descrição</th>
@@ -58,30 +59,20 @@ $missoes->buscarTodas();
                       <th class="text-right"></th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th></th>
-                      <th>Nome</th>
-                      <th>Descrição</th>
-                      <th>liberada</th>
-                      <th>Level</th>
-                      <th>Turma</th>
-                      <th class="text-right"></th>
-                    </tr>
-                  </tfoot>
                   <tbody>
                     <?php foreach ($missoes->listaCompleta as $missao) : ?>
                       <tr>
+                        <td><?= $missao->id?></td>
                         <td>
                           <img class="photo" src="<?= $missao->imagem ?>" />
                         </td>
                         <td>
-                            <?= $missao->nome ?>
-                            <?php if ($missao->atividadesParaAvaliar > 0) : ?>
-                              <span class="badge badge-danger badge-pill tooltiped" data-toggle="tooltip" data-placement="top" title="<?= $missao->atividadesParaAvaliar ?> atividades para avaliar">
-                                <?= $missao->atividadesParaAvaliar ?>
-                              </span>
-                            <?php endif ?>
+                          <?= $missao->nome ?>
+                          <?php if ($missao->atividadesParaAvaliar > 0) : ?>
+                            <span class="badge badge-danger badge-pill tooltiped" data-toggle="tooltip" data-placement="top" title="<?= $missao->atividadesParaAvaliar ?> atividades para avaliar">
+                              <?= $missao->atividadesParaAvaliar ?>
+                            </span>
+                          <?php endif ?>
                         </td>
                         <td><?= (strlen($missao->descricao)>30)?substr($missao->descricao,0,30)."...":$missao->descricao ?></td>
                         <td class="text-center">
@@ -93,7 +84,9 @@ $missoes->buscarTodas();
                         <td class="text-center"><?= $missao->turma ?></td>
                         <td class="text-right">
                           <a href="fases.php?idmissao=<?= $missao->id ?>" class="btn btn-link btn-info btn-just-icon"><i class="fas fa-tasks"></i></a>
-                          <a href="missao_duplicar.php?idmissao=<?= $missao->id?>" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">library_add</i></a>
+                          <a href="missao_duplicar.php?idmissao=<?= $missao->id?>" class="btn btn-link btn-success btn-just-icon edit"><i class="material-icons">library_add</i></a>
+                          <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">edit</i></a>
+
                           <button class="btn btn-link btn-danger btn-just-icon" data-toggle="modal" data-target="#modalexcluir" onclick="trocarId(<?= $missao->id?>)">
                             <i class="material-icons">close</i>
                           </button>
@@ -130,7 +123,9 @@ $missoes->buscarTodas();
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="missao_inserir.php" class="form-horizontal" enctype="multipart/form-data">
+        <form method="POST" action="missao_inserir.php" class="form-horizontal" enctype="multipart/form-data" id="form-missao">
+          <input type="hidden" name="idMissao" value="" id="idMissao">
+          <input type="hidden" name="acao" value="" id="acao">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group bmd-form-group">
@@ -276,7 +271,7 @@ $missoes->buscarTodas();
       [10, 25, 50, "todos"]
       ],
       "columnDefs": [
-      { "orderable": false, "targets": [0,3,6] }
+      { "orderable": false, "targets": [0,1,3,7] }
       ],
       language: {
         search: "_INPUT_",
@@ -297,25 +292,35 @@ $missoes->buscarTodas();
 
     var table = $('#datatable').DataTable();
 
-      // Edit record
-      table.on('click', '.edit', function() {
-        $tr = $(this).closest('tr');
-        var data = table.row($tr).data();
-        alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+    table.on('click', '.edit', function() {
+      $tr = $(this).closest('tr');
+      var data = table.row($tr).data();
+      var id = data[0];
+      $.ajax({
+        method: "POST",
+        url: "missao_buscar.php",
+        data: {id : id}
+      })
+      .done(function(msg) {
+        if (msg != "erro"){
+          $("#myModal").find('h3').text("Editar Missão");
+          $("#form-missao").attr("action", "missao_atualizar.php");
+          var missao = JSON.parse(msg);
+          $("#idMissao").val(missao.id);
+          $("#acao").val("editar");
+          $("#nome").val(missao.nome);
+          $("#levelminimo").val(missao.levelminimo);
+          $("#descricao").val(missao.descricao);
+          var $radioTurma = $('input:radio[name=turma]');
+          $radioTurma.filter('[value='+missao.idTurma+']').prop('checked', true);
+        }
       });
 
-      // Delete a record
-      table.on('click', '.remove', function(e) {
-        $tr = $(this).closest('tr');
-        table.row($tr).remove().draw();
-        e.preventDefault();
-      });
+      $('#myModal').modal('show');
 
-      //Like record
-      table.on('click', '.like', function() {
-        alert('You clicked on Like button');
-      });
     });
+
+  });
 
     //tratamento dos botoes de libaracao que mudam o status via ajax
     var botoesLiberar = document.querySelectorAll(".btn-liberada");

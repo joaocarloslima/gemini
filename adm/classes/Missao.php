@@ -120,6 +120,19 @@ public function apagar(){
 	//TO-DO apagar as fase, questoes e alternativas que fazem parte desta missao
 }
 
+public function editar(){
+	$query = "UPDATE missoes SET nome=:nome, descricao=:descricao, levelMinimo=:levelMinimo, idTurma=:idTurma WHERE idMissao=:id";
+	$conexao = Conexao::pegarConexao();
+	$stmt = $conexao->prepare($query);
+	$stmt->bindValue(':id', $this->id);
+	$stmt->bindValue(':nome', $this->nome);
+	$stmt->bindValue(':descricao', $this->descricao);
+	$stmt->bindValue(':levelMinimo', $this->levelminimo);
+	$stmt->bindValue(':idTurma', $this->idTurma);
+	if(!$stmt->execute()) throw new Exception("Erro ao editar missao");
+}
+
+
 public function trocarLiberada(){
 	$query = "UPDATE missoes SET liberada = NOT liberada WHERE idMissao=:id";
 	$conexao = Conexao::pegarConexao();
