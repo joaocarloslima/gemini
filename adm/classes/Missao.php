@@ -117,6 +117,7 @@ public function apagar(){
 	$stmt = $conexao->prepare($query);
 	$stmt->bindValue(':id', $this->id);
 	if(!$stmt->execute()) throw new Exception("Erro ao apagar missao");
+	//TO-DO apagar as fase, questoes e alternativas que fazem parte desta missao
 }
 
 public function trocarLiberada(){
@@ -140,7 +141,7 @@ public function duplicar(){
 		try{
 			$fase->duplicar($this->id);
 		}catch(Exception $e){
-			throw new Exception("Erro ao duplicar fase da missao");
+			throw new Exception("Erro ao duplicar fase da missao. ".$e->getMessage());
 		}
 	}
 }
