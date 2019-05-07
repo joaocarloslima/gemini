@@ -48,22 +48,11 @@ class Alternativa
 	    $stmt->execute();
 	}
 
-    public static function listarQuestoes($idFase)
-    {
-	    $query = "SELECT * FROM questoes WHERE idFase=:idFase";
-	    $conexao = Conexao::pegarConexao();
-	    $stmt = $conexao->prepare($query);
-	    $stmt->bindValue(':idFase', $idFase);
-	    $stmt->execute();
- 		$questoes = array();
-		while ($linha = $stmt->fetch()){
-			$questao = new Questao();
-			$questao->id = $linha['idQuestao'];
-			$questao->idFase = $linha['idFase'];
-			$questao->enunciado = $linha['enunciado'];
-			$questao->idElemento = $linha['idElemento'];
-			array_push($questoes, $questao);
-		}
-		return $questoes;
+	public function duplicar($idNovaQuestao){
+		$this->idQuestao = $idNovaQuestao;
+		$this->inserirAlternativa();
+		$this->editarAlternativa();
+		if ($this->correta) $this->swapCorreta();
 	}
+
 }

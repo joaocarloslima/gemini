@@ -10,7 +10,7 @@ if (isset($_GET["idmissao"])){
 		$missao->duplicar();
 	    $_SESSION["success"] = "<strong>Sucesso.</strong> Missão duplicada.";
 	} catch (Exception $e) {
-	    $_SESSION["danger"] = "<strong>Eita.</strong> Falha ao duplicar.";
+	    $_SESSION["danger"] = "<strong>Eita.</strong> Falha ao duplicar.". $e->getMessage();
 	}
 	header("Location: missoes.php");
 

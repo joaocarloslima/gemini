@@ -95,10 +95,22 @@ public function buscarFasesDaMissao($idMissao){
 }
 
 public function duplicar($idMissao){
-	//duplicar a fase
-	$this->idMissao = $idMissao;
-	$idNovaFase = $this->inserir();
-	//copiar as questoes e as medalhas
+	try{
+		//duplicar a fase
+		$idFaseOriginal = $this->id;
+		$this->idMissao = $idMissao;
+		$this->inserir();
+		//copiar as questoes
+		if ($this->tipo == "Questionário"){
+			$questoes = Questao::listarQuestoes($idFaseOriginal);
+			foreach ($questoes as $questao) {
+				$questao->duplicar($this->id);
+			}
+		}
+	}catch(Exception $e){
+		throw new Exception("Erro ao duplicar questao da fase".$e->getMessage());
+	}
+
 }
 
 public function apagar(){
@@ -118,10 +130,10 @@ public function setPrazo($prazo){
 public function alunoJaFez($idAluno){
 	$query = "SELECT * FROM alunos_fases WHERE idAluno=:idAluno AND idFase=:idFase";
 	$conexao = Conexao::pegarConexao();
-    $stmt = $conexao->prepare($query);
-    $stmt->bindValue(":idAluno", $idAluno);
-    $stmt->bindValue(":idFase", $this->id);
-    $stmt->execute();
+	$stmt = $conexao->prepare($query);
+	$stmt->bindValue(":idAluno", $idAluno);
+	$stmt->bindValue(":idFase", $this->id);
+	$stmt->execute();
 	$linha = $stmt->fetch(PDO::FETCH_ASSOC);
 	return !is_null($linha["finalizadoEm"]);
 }
@@ -129,18 +141,18 @@ public function alunoJaFez($idAluno){
 public function professorJaCorrigiu($idAluno){
 	$query = "SELECT * FROM alunos_fases WHERE idAluno=:idAluno AND idFase=:idFase AND xp IS NOT NULL";
 	$conexao = Conexao::pegarConexao();
-    $stmt = $conexao->prepare($query);
-    $stmt->bindValue(":idAluno", $idAluno);
-    $stmt->bindValue(":idFase", $this->id);
-    $stmt->execute();
-    if ($stmt->rowCount() > 0){
+	$stmt = $conexao->prepare($query);
+	$stmt->bindValue(":idAluno", $idAluno);
+	$stmt->bindValue(":idFase", $this->id);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0){
 		$linha = $stmt->fetch(PDO::FETCH_ASSOC);
-    	$this->xpObtido = $linha["xp"];
-    	$this->feedback = $linha["feedback"];
-    	return true;
-    }else{
-    	return false;
-    } 
+		$this->xpObtido = $linha["xp"];
+		$this->feedback = $linha["feedback"];
+		return true;
+	}else{
+		return false;
+	} 
 }
 
 }
