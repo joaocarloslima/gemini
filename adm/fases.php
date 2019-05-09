@@ -84,6 +84,8 @@ $fases->buscarFasesDaMissao($_GET["idmissao"]);
                         <td class="text-right">
                           <?php if ($fase->tipo == "Questionário") :?>
                             <a href="fase_questionario.php?id=<?= $fase->id?>" class="btn btn-link btn-success btn-just-icon"><i class="fas fa-question"></i></a>
+                          <?php elseif ($fase->anexo) : ?>
+                            <a href="<?php echo $fase->anexo ?>" target="_blank"><i class="material-icons">attach_file</i></a>
                           <?php endif ?>
                           <a href="avaliar_fase.php?id=<?= $fase->id?>" class="btn btn-link btn-info btn-just-icon"><i class="fas fa-file-signature"></i></a>
                           <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">edit</i></a>
