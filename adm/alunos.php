@@ -73,9 +73,8 @@ $alunos->buscarTodos();
                         <td><?= $aluno->perfilJogador ?></td>
                         <td><?= $aluno->perfilAprendizagem ?></td>
                         <td class="text-right">
-                          <a href="#" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">favorite</i></a>
-                          <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
-                          <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#modalexcluir" onclick="trocarId(<?= $aluno->id?>)"><i class="material-icons">close</i></a>
+                          <a href="#" class="btn btn-link btn-warning btn-just-icon edit" data-toggle="modal" data-target=".modal-senha" onclick="trocarId(<?= $aluno->id?>, '#idAlunoSenhas')"><i class="material-icons">lock</i></a>
+                          <a href="#" class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#modalexcluir" onclick="trocarId(<?= $aluno->id?>, '#idAlunoExcluir')"><i class="material-icons">close</i></a>
                         </td>
                       </tr>
                     <?php endforeach ?>
@@ -114,6 +113,36 @@ $alunos->buscarTodos();
   </div>
 </div>
 
+<div class="modal fade modal-senha" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+     <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-body">
+          <form class="form" method="POST" action="alunos_alterar_senha.php">
+            <input type="hidden" name="id" id="idAlunoSenhas">
+            <p class="description text-center">Digite a nova senha</p>
+            <div class="card-body">
+              <div class="form-group bmd-form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="material-icons">lock_outline</i></div>
+                  </div>
+                  <input type="password" class="form-control" name="senha">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center">
+            <button class="btn btn-primary btn-link btn-wd btn-lg">salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <?php include "rodape.php" ?>
 
 <?php
@@ -123,39 +152,39 @@ mostrarAlerta("danger", "top");
 
 <script>
 
-   function trocarId($id){
-    var campo = document.querySelector("#idAlunoExcluir");
-    campo.value = $id;
-  }
+ function trocarId(id, elemento ){
+  var campo = document.querySelector(elemento);
+  campo.value = id;
+}
 
-  $(document).ready(function() {
-    $('#datatables').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-      [10, 25, 50, -1],
-      [10, 25, 50, "todos"]
-      ],
-      "columnDefs": [
-        { "orderable": false, "targets": [0,8] }
-      ],
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "buscar...",
-        "lengthMenu": "Mostrar _MENU_ registros por página",
-        "zeroRecords": "Nenhum registro encontrado",
-        "info": "Mostrando página _PAGE_ de _PAGES_",
-        "infoEmpty": "Nenhum registro",
-        "infoFiltered": "(filtrado de _MAX_ registros)",
-        "paginate": {
-          "next": "próxima",
-          "last": "última",
-          "first": "primeira",
-          "previous": "anterior"
-        }
+$(document).ready(function() {
+  $('#datatables').DataTable({
+    "pagingType": "full_numbers",
+    "lengthMenu": [
+    [10, 25, 50, -1],
+    [10, 25, 50, "todos"]
+    ],
+    "columnDefs": [
+    { "orderable": false, "targets": [0,8] }
+    ],
+    language: {
+      search: "_INPUT_",
+      searchPlaceholder: "buscar...",
+      "lengthMenu": "Mostrar _MENU_ registros por página",
+      "zeroRecords": "Nenhum registro encontrado",
+      "info": "Mostrando página _PAGE_ de _PAGES_",
+      "infoEmpty": "Nenhum registro",
+      "infoFiltered": "(filtrado de _MAX_ registros)",
+      "paginate": {
+        "next": "próxima",
+        "last": "última",
+        "first": "primeira",
+        "previous": "anterior"
       }
-    });
+    }
+  });
 
-    var table = $('#datatable').DataTable();
+  var table = $('#datatable').DataTable();
 
       // Edit record
       table.on('click', '.edit', function() {

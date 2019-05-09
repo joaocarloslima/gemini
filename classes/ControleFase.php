@@ -54,6 +54,12 @@ public function marcarFeedbackComoLido($idFase, $idAluno){
 	if(!$conexao->exec($query)) throw new Exception("Erro ao marcar feedback como lido");
 }
 
+public function cancelarEnvio(){
+	$conexao = Conexao::pegarConexao();
+	$query = "UPDATE alunos_fases SET finalizadoEm=NULL WHERE idAluno=$this->idAluno AND idFase=$this->idFase";
+	if(!$conexao->exec($query)) throw new Exception("Erro ao cancelar envio");
+}
+
 public static function atualizarRanking($idAluno){
 	$a = new AlunoPlayer();
 	$a->id = $idAluno;

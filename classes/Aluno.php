@@ -48,6 +48,16 @@ class Aluno {
 		}
 	}
 
+	//trocar senha do aluno pelo painel do professor
+	public function alterarSenha(){
+		$query = "UPDATE alunos SET senha=md5('$this->senha') WHERE idAluno=:id";
+		$conexao = Conexao::pegarConexao();
+	    $stmt = $conexao->prepare($query);
+	    $stmt->bindValue(':id', $this->id);
+
+		if(!$stmt->execute()) throw new Exception("Erro ao alterar dados");
+	}
+
 	//trocar referencia para a foto do aluno
 	public function trocarFoto(){
 		$query = "UPDATE alunos SET foto=:foto WHERE idAluno=:id";

@@ -123,6 +123,7 @@ $atividadesJaAvaliadas = $atividade->buscarAtividadesJaAvaliadas();
                                     <button type="submit" class="btn btn-primary"><i class="material-icons">check</i>Salvar Feedback</button>
                                   </form>
                                 </div>
+                                <a href="fase_cancelar_envio.php?idFase=<?= $fase->id ?>&idAluno=<?= $atividade->idAluno ?>" class="btn btn-danger"><i class="material-icons">arrow_back</i>Cancelar envio</a>
                                 <?php if ($atividade->anexo != "") : ?>
                                   <a href="../<?= $atividade->anexo ?>" target="_blank" class="btn btn-info"><i class="material-icons">attach_file</i>Anexo enviado</a>
                                 <?php endif ?>
