@@ -16,6 +16,7 @@ class Fase {
 	public $listaCompleta;
 	public $atividadesParaAvaliar = 0;
 	public $xpObtido = 0;
+	public $anexoEnviado;
 	public $feedback = "";
 
 	public function inserir(){
@@ -149,6 +150,7 @@ public function professorJaCorrigiu($idAluno){
 		$linha = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->xpObtido = $linha["xp"];
 		$this->feedback = $linha["feedback"];
+		$this->anexoEnviado = $linha["anexo"];
 		return true;
 	}else{
 		return false;

@@ -120,6 +120,11 @@ $controleFase = new ControleFase();
                         <button class="btn btn-round btn-success btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="<?= $fase->feedback ?>">
                           <i class="material-icons">comment</i>
                         </button>
+                        <?php if ($fase->anexoEnviado != ""): ?>
+                          <a href="<?= $fase->anexoEnviado ?>" target="_blank" class="btn btn-round btn-info btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="bottom" title="ver atividade entregue">
+                          <i class="material-icons text-white">attach_file</i>
+                          </a>
+                        <?php endif ?>
                       <?php elseif ($prazoEsgotado) : ?>
                         <a href="fase_questionario_correcao.php?id=<?= $fase->id?>" class="btn btn-round btn-success btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="ver correção">
                           <i class="material-icons text-white">rate_review</i>
