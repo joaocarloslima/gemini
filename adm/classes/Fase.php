@@ -157,4 +157,16 @@ public function professorJaCorrigiu($idAluno){
 	} 
 }
 
+public function alunoTemPermissao($idAluno){
+	$prazo = strtotime($this->prazo);
+    $hoje = strtotime(date('Y-m-d H:i:s'));
+    if ($prazo <= $hoje) return false;
+    $missao = new Missao();
+    $missao->id = $this->idMissao;
+    $missao->carregar();
+    if (!$missao->alunoTemPermissao($idAluno)) return false;
+	if ($this->alunoJaFez($idAluno)) return false;
+	return true;
+}
+
 }

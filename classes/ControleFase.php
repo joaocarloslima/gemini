@@ -86,5 +86,9 @@ public function carregar(){
 	
 }
 
+	public function alunoTemPermissao(){
+		
+	}
+
 
 }

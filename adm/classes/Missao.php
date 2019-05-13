@@ -161,4 +161,14 @@ public function duplicar(){
 	}
 }
 
+public function alunoTemPermissao($idAluno){
+	if (!$this->liberada) return false;
+	$aluno = new AlunoPlayer();
+	$aluno->id = $idAluno;
+	$aluno->carregar();
+	if ($this->levelminimo > $aluno->nivel) return false;
+	if ($this->idTurma != $aluno->idTurma) return false;
+	return true;
+}
+
 }

@@ -4,7 +4,6 @@ include "cabecalho.php";
 $fase = new Fase();
 $fase->id = $_GET["id"];
 $fase->carregar();
-//IMPORTANTE: TO-DO VERIFICAR SE O ALUNO TEM PERMISSAO PARA ACESSAR ESSA MISSAO VIA GET
 
 $controleFase = new ControleFase();
 $controleFase->idAluno = $_SESSION["iduser"];
@@ -47,6 +46,12 @@ $controleFase->iniciar();
   <div class="content">
     <div class="container-fluid">
       <div class="row">
+        <?php if (!$fase->alunoTemPermissao($_SESSION["iduser"])) :?>
+          <div class="alert alert-warning" role="alert">
+            Você não tem permissão para acessar essa fase no momento.
+          </div>
+        <?php exit; endif ?>
+
         <div class="col-md-8">
           <div class="card">
             <div class="card-header card-header-info">
