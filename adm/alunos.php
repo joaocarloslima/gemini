@@ -51,7 +51,6 @@ $alunos->buscarTodos();
                       <th>Turma</th>
                       <th>XP</th>
                       <th>Nível</th>
-                      <th>Medalhas</th>
                       <th>Engajamento</th>
                       <th>Jogador</th>
                       <th>Aprendizagem</th>
@@ -68,7 +67,6 @@ $alunos->buscarTodos();
                         <td><?= $aluno->turma ?></td>
                         <td><?= $aluno->xp ?></td>
                         <td><?= $aluno->nivel ?></td>
-                        <td>0</td>
                         <td class="text-center"><?= $aluno->engajamento ?></td>
                         <td><?= $aluno->perfilJogador ?></td>
                         <td><?= $aluno->perfilAprendizagem ?></td>
