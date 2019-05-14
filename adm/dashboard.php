@@ -126,7 +126,7 @@ function tabelaRanking($idTurma){
   foreach ($alunos->lista as $aluno) {
     $tabela .= "<tr>";
     $tabela .= "<td>" . $posicao++ . "</td>";
-    $tabela .= "<td><div class='photo'><img src='$aluno->foto'/></div></td>";
+    $tabela .= "<td><div class='photo'><img src='../$aluno->foto'/></div></td>";
     $tabela .= "<td>$aluno->nome</td>";
     $tabela .= "<td>$aluno->xp</td>";
     $tabela .= "<td>$aluno->nivel</td>";
