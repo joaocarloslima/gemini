@@ -7,9 +7,8 @@ $conquista->idAluno = $_POST["idAluno"];
 
 try {
 	$conquista->inserirParaAluno();
-	$_SESSION["success"] = "<strong>Sucesso. </strong> Competência Adicionada";
-	header("Location: conquistas.php");
+	echo "ok";
 } catch (Exception $e) {
+	echo "erro";
 	Erro::trataErro($e);
-	$_SESSION["danger"] = "<strong>Opa!</strong> Erro ao salvar competências.";
 }

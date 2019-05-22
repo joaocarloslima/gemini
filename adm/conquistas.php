@@ -34,10 +34,6 @@ $conquistas = $conquista->buscarTodas();
   </nav>
   <!-- End Navbar -->
   <div class="content">
-    <form id="form" action="conquistas_controller.php" method="POST">
-      <input type="hidden" name="idAluno" id="idAluno" value="0">
-      <input type="hidden" name="idCompetencia" id="idCompetencia" value="0">
-    </form>
     <div class="container-fluid">
       <div class="row"> 
         <div class="card card-nav-tabs card-plain">
@@ -136,14 +132,26 @@ $conquistas = $conquista->buscarTodas();
   ?>
 
   <script type="text/javascript">
+    var idAlunoAvaliado = 0;
 
     $(".btn-avaliar").on("click", function(){
-      $('#idAluno').val( $(this).attr('data-id') )
+      idAlunoAvaliado = $(this).attr('data-id');
     });
 
     $(".btn-competencia").on("click", function(){
-      $("#idCompetencia").val( $(this).attr('data-id') );
-      $('#form').submit();
+      let idConquista = $(this).attr('data-id');
+      $.ajax({
+        method: "POST",
+        url: "conquistas_controller.php",
+        data: {idCompetencia : idConquista, idAluno: idAlunoAvaliado}
+      })
+      .done(function(msg) {
+        if (msg === "ok"){
+          gemini.showNotification('Competência registrada', 'success', 'top', 'center', 'notifications');
+        }else{
+          gemini.showNotification('Erro ao registrar competência', 'danger', 'top', 'center', 'error');
+      }
+      });
     });
 
   </script>
