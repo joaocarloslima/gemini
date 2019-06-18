@@ -30,6 +30,7 @@ class AlunoPlayer {
 
 		$this->id = $linha['idAluno'];
 		$this->nome = $linha['nome'];
+		$this->email = $linha['email'];
 		$this->foto = $linha['foto'];
 		$this->idTurma = $linha['idTurma'];
 		$this->turma = $linha['sigla'];

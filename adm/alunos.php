@@ -48,6 +48,7 @@ $alunos->buscarTodos();
                     <tr>
                       <th></th>
                       <th>Nome</th>
+                      <th>E-mail</th>
                       <th>Turma</th>
                       <th>XP</th>
                       <th>Nível</th>
@@ -64,6 +65,7 @@ $alunos->buscarTodos();
                           <img class="photo" src="../<?= $aluno->foto?>" />
                         </td>
                         <td><?= $aluno->nome ?></td>
+                        <td><?= $aluno->email ?></td>
                         <td><?= $aluno->turma ?></td>
                         <td><?= $aluno->xp ?></td>
                         <td><?= $aluno->nivel ?></td>
