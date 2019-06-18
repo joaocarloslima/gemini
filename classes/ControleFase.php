@@ -83,12 +83,36 @@ public function carregar(){
 	$stmt->execute();
 	$linha = $stmt->fetch();
 	$this->xp = $linha["xp"];
-	
 }
 
-	public function alunoTemPermissao(){
-		
+public function getTimeline(){
+	$query = "SELECT alunos_fases.*, alunos_fases.xp as xpObtido, alunos_fases.anexo as anexoEnviado, fases.nome as nomeFase, fases.idMissao, missoes.nome as nomeMissao, fases.descricao, fases.tipo FROM alunos_fases INNER JOIN fases ON fases.idFase=alunos_fases.idFase INNER JOIN missoes ON missoes.idMissao=fases.idMissao WHERE idAluno = $this->idAluno ORDER BY finalizadoEm";
+	$conexao = Conexao::pegarConexao();
+	$stmt = $conexao->prepare($query);
+	$stmt->execute();
+	$fases = array();
+	while ($linha = $stmt->fetch()){
+		$fase = new Fase();
+		$fase->id = $linha["idFase"];
+		$fase->nome = $linha["nomeFase"];
+		$fase->descricao =  $linha["descricao"];
+		$fase->tipo = $linha["tipo"];
+		$fase->idMissao = $linha["idMissao"];
+		$fase->missao = $linha["nomeMissao"];
+		$fase->xp = $linha["xp"];
+		$fase->anexo = $linha["anexo"];
+		$fase->xpObtido = $linha["xpObtido"];
+		$fase->anexoEnviado = $linha["anexoEnviado"];
+		$fase->feedback = $linha["feedback"];
+		$fase->finalizadoEm = $linha["finalizadoEm"];
+		array_push($fases, $fase);
 	}
+	return $fases;
+}
+
+public function alunoTemPermissao(){
+		
+}
 
 
 }

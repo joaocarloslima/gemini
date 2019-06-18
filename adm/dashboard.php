@@ -118,7 +118,7 @@ function tabelaRanking($idTurma){
   $alunos = new Alunos();
   $tabela = "";
   $tabela .= "<table class='table table-striped table-hover'>";
-  $tabela .= "<thead class='text-primary'><tr><th>#</th><th></th><th>Nome</th><th>XP</th><th>Level</th></tr></thead>";
+  $tabela .= "<thead class='text-primary'><tr><th>#</th><th></th><th>Nome</th><th>XP</th><th>Level</th><th></th></tr></thead>";
   $tabela .= "<tbody>";
 
   $alunos->buscarTodos(1, $idTurma);
@@ -130,6 +130,7 @@ function tabelaRanking($idTurma){
     $tabela .= "<td>$aluno->nome</td>";
     $tabela .= "<td>$aluno->xp</td>";
     $tabela .= "<td>$aluno->nivel</td>";
+    $tabela .= "<td><a class='btn btn-link btn-just-icon' href='alunos_timeline.php?id=$aluno->id'><i class='material-icons'>timeline</i></a></td>";
     $tabela .= "</tr>";
   }
   $tabela .= "</tbody>";
