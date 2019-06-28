@@ -96,12 +96,6 @@
               <p> Missões </p>
             </a>
           </li>
-          <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='conquistas.php')?'active':''; ?>">
-            <a class="nav-link" href="conquistas.php">
-              <i class="material-icons">beenhere</i>
-              <p> Conquistas </p>
-            </a>
-          </li>
           <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='ranking.php')?'active':''; ?>">
             <a class="nav-link" href="ranking.php">
               <i class="material-icons">poll</i>
