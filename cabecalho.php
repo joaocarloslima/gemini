@@ -1,11 +1,12 @@
 <?php 
-  include "verificar_login.php";
-  include "mostrar_alerta.php";
-  require_once "global.php";
+include "verificar_login.php";
+include "mostrar_alerta.php";
+require_once "global.php";
 
-  $aluno = new Aluno();
-  $aluno->id = $_SESSION["iduser"];
-  $aluno->carregar();
+$aluno = new Aluno();
+$aluno->id = $_SESSION["iduser"];
+$aluno->carregar();
+$_SESSION["idTurma"] = $aluno->idTurma;
 
 ?>
 <!DOCTYPE html>
@@ -24,9 +25,9 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
-    <!-- CSS Files -->
+  <!-- CSS Files -->
   <link href="assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
 </head>
@@ -84,24 +85,30 @@
             </a>
           </li>
           <li class="nav-item <?php echo (
-              basename($_SERVER['PHP_SELF'])=='missoes.php' || 
-              basename($_SERVER['PHP_SELF'])=='missao.php'  || 
-              basename($_SERVER['PHP_SELF'])=='fase_atividade.php' ||
-              basename($_SERVER['PHP_SELF'])=='fase_questionario.php'
-            )?'active':''; 
+          basename($_SERVER['PHP_SELF'])=='missoes.php' || 
+          basename($_SERVER['PHP_SELF'])=='missao.php'  || 
+          basename($_SERVER['PHP_SELF'])=='fase_atividade.php' ||
+          basename($_SERVER['PHP_SELF'])=='fase_questionario.php'
+          )?'active':''; 
 
-            ?>">
-            <a class="nav-link" href="missoes.php">
-              <i class="fas fa-rocket"></i>
-              <p> Missões </p>
-            </a>
-          </li>
-          <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='ranking.php')?'active':''; ?>">
-            <a class="nav-link" href="ranking.php">
-              <i class="material-icons">poll</i>
-              <p> Ranking </p>
-            </a>
-          </li>
-        </ul>
-      </div>
+          ?>">
+          <a class="nav-link" href="missoes.php">
+            <i class="fas fa-rocket"></i>
+            <p> Missões </p>
+          </a>
+        </li>
+        <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='ranking.php')?'active':''; ?>">
+          <a class="nav-link" href="ranking.php">
+            <i class="material-icons">poll</i>
+            <p> Ranking </p>
+          </a>
+        </li>
+        <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='avisos.php')?'active':''; ?>">
+          <a class="nav-link" href="avisos.php">
+            <i class="material-icons">notifications_active</i>
+            <p> Avisos </p>
+          </a>
+        </li>
+      </ul>
     </div>
+  </div>

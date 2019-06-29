@@ -7,6 +7,7 @@ class Aluno {
 	public $email;
 	public $senha;
 	public $foto;
+	public $idTurma;
 	
 	public function inserir(){
 		$erro = false;
@@ -73,7 +74,7 @@ class Aluno {
 
 	//carregar os dados do aluno através do id
 	public function carregar(){ 
-	    $query = "SELECT nome, email, senha, foto FROM alunos WHERE idAluno = :id";
+	    $query = "SELECT nome, email, senha, foto, matriculas.idTurma FROM alunos INNER JOIN matriculas ON matriculas.idAluno=Alunos.idAluno WHERE alunos.idAluno = :id";
 	    $conexao = Conexao::pegarConexao();
 	    $stmt = $conexao->prepare($query);
 	    $stmt->bindValue(':id', $this->id);
@@ -83,6 +84,7 @@ class Aluno {
 	    $this->email = $linha['email'];
 	    $this->senha = $linha['senha'];
 	    $this->foto = $linha['foto'];
+	    $this->idTurma = $linha['idTurma'];
 	}
 
 	//carrega os dados através do email e senha

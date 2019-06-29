@@ -107,6 +107,12 @@
               <p> Ranking </p>
             </a>
           </li>
+          <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF'])=='avisos.php')?'active':''; ?>">
+            <a class="nav-link" href="avisos.php">
+              <i class="material-icons">notifications_active</i>
+              <p> Avisos </p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
