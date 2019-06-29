@@ -74,7 +74,7 @@ class Aluno {
 
 	//carregar os dados do aluno através do id
 	public function carregar(){ 
-	    $query = "SELECT nome, email, senha, foto, matriculas.idTurma FROM alunos INNER JOIN matriculas ON matriculas.idAluno=Alunos.idAluno WHERE alunos.idAluno = :id";
+	    $query = "SELECT nome, email, senha, foto, matriculas.idTurma FROM alunos INNER JOIN matriculas ON matriculas.idAluno=alunos.idAluno WHERE alunos.idAluno = :id";
 	    $conexao = Conexao::pegarConexao();
 	    $stmt = $conexao->prepare($query);
 	    $stmt->bindValue(':id', $this->id);
