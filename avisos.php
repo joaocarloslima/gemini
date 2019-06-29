@@ -30,26 +30,31 @@ $avisos = $aviso->buscarAvisosDoAluno($_SESSION["iduser"], $_SESSION["idTurma"])
   </nav>
   <!-- End Navbar -->
   <div class="content">
+    <?php if(count($avisos)<1): ?>
+      <div class="alert alert-warning" role="alert">
+        Não temos avisos no momento ; )
+      </div>
+    <?php endif ?>
     <?php foreach ($avisos as $aviso) : ?>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-icon card-header-rose">
-            <div class="card-text">
-              <h4 class="card-title"><?= $aviso->titulo ?></h4>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-icon card-header-rose">
+              <div class="card-text">
+                <h4 class="card-title"><?= $aviso->titulo ?></h4>
+              </div>
             </div>
-          </div>
-          <div class="card-body"><?= $aviso->texto ?></div>
-          <hr>
-          <div class="card-footer">
-            <div class="stats">
+            <div class="card-body"><?= $aviso->texto ?></div>
+            <hr>
+            <div class="card-footer">
+              <div class="stats">
                 <i class="material-icons">access_time</i> postado em <?= $aviso->data?>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     <?php endforeach ?>
   </div>
 
-    <?php include "rodape.php" ?>
+  <?php include "rodape.php" ?>
