@@ -44,7 +44,7 @@ class Log
     }
 
     public static function getUltimosLogs(){
-		$query = "SELECT log.*, alunos.* FROM log INNER JOIN alunos ON alunos.idAluno=log.idAluno ORDER BY data DESC LIMIT 6";
+		$query = "SELECT log.*, alunos.* FROM log INNER JOIN alunos ON alunos.idAluno=log.idAluno ORDER BY data DESC LIMIT 20";
 		$conexao = Conexao::pegarConexao();
 	    $stmt = $conexao->prepare($query);
     	$logs = array();
