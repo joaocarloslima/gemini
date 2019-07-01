@@ -14,6 +14,6 @@ try {
 	header("Location: dashboard.php");
 } catch (Exception $e) {
 	Erro::trataErro($e);
-    $_SESSION["danger"] = "<strong>E-mail ou senha inválido.</strong> Tente novamente ou entre em contato com o professor";
+    $_SESSION["danger"] = "<strong>E-mail ou senha inválido.</strong> Tente novamente ou entre em contato com o professor. ". $e->getMessage();
 	header("Location: login.php");
 }
