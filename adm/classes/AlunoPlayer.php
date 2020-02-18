@@ -57,25 +57,25 @@ class AlunoPlayer {
 
 	public function getNivel(){
 		$xp = $this->xp;
-		if ($xp < 100) return 1;
-		if ($xp < 200) return 2;
-		if ($xp < 500) return 3;
-		if ($xp < 1000) return 4;
-		if ($xp < 2000) return 5;
-		if ($xp < 3000) return 6;
-		if ($xp < 5000) return 7;
+		if ($xp < 200) return 1;
+		if ($xp < 400) return 2;
+		if ($xp < 600) return 3;
+		if ($xp < 800) return 4;
+		if ($xp < 1000) return 5;
+		if ($xp < 2000) return 6;
+		if ($xp < 3000) return 7;
 	}
 
 	public function getFaltaParaProximoNivel(){
 		$nivel = $this->nivel;
 		$xp = $this->xp;
-		if ($nivel==1) return 100 - $xp;
-		if ($nivel==2) return 200 - $xp;
-		if ($nivel==3) return 500 - $xp;
-		if ($nivel==4) return 1000 - $xp;
-		if ($nivel==5) return 2000 - $xp;
-		if ($nivel==6) return 3000 - $xp;
-		if ($nivel==7) return 5000 - $xp;
+		if ($nivel==1) return 200 - $xp;
+		if ($nivel==2) return 400 - $xp;
+		if ($nivel==3) return 600 - $xp;
+		if ($nivel==4) return 800 - $xp;
+		if ($nivel==5) return 1000 - $xp;
+		if ($nivel==6) return 2000 - $xp;
+		if ($nivel==7) return 3000 - $xp;
 
 	}
 
