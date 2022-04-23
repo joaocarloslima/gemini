@@ -52,11 +52,13 @@ try{
               <h4 class="card-title">Escala de Engajamento Escolar</h4>
             </div>
             <div class="card-body">
-            	<h4>Responda cada questão com sinceridade, indicando qual é o seu sentimento em relação à essa disciplina.</h4>
+            	<h4>Enquanto estudante você faz determinadas taefas, como, por exemplo, assistir as aulas, ir à biblioteca, fazer trabalhos em grupo, estudar, etc. 
+                Os itens a seguir se referem a sentimentos, crenças e comportamentos relacionados com a sua experiência como estudante.
+                Por favor, responda a cada um dos itens de acordo com a escola respostas, cujos valores variam de 0 (se nunca teve esse sentimento ou crença) a 6 (se tem esse sentimento ou crença sempre).</h4>
               <form action="engajamento_salvar.php" method="POST">
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>1. Na aula, eu me sinto cheio(a) de energia</strong></h5>
+                  	<h5><strong>1. As minhas tarefas como estudante me fazem sentir cheio(a) de energia</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r1" name="resposta1">
                     <input type="text" class="input-engajamento" id="q1" disabled="">
                     <div class="form-group bmd-form-group">
@@ -66,7 +68,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>2. Na aula eu me sinto forte e cheio(a) de vida</strong></h5>
+                  	<h5><strong>2. Creio que a escola tem significado</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r2" name="resposta2">
                     <input type="text" class="input-engajamento" id="q2" disabled="">
                     <div class="form-group bmd-form-group">
@@ -76,7 +78,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>3. Eu me sinto entusiasmado(a) com a aula</strong></h5>
+                  	<h5><strong>3. O tempo passa voando quando estou realizando minhas tarefas como estudante</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r3" name="resposta3">
                     <input type="text" class="input-engajamento" id="q3" disabled="">
                     <div class="form-group bmd-form-group">
@@ -86,7 +88,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>4. As aulas me inspiram a ser melhor</strong></h5>
+                  	<h5><strong>4. Me sinto com força e energia quando estou estudando ou quando vou às aulas</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r4" name="resposta4">
                     <input type="text" class="input-engajamento" id="q4" disabled="">
                     <div class="form-group bmd-form-group">
@@ -96,7 +98,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>5. Quando acordo, me sinto bem sabendo que tem aula</strong></h5>
+                  	<h5><strong>5. Estou entusiasmado(a) com a escola</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r5" name="resposta5">
                     <input type="text" class="input-engajamento" id="q5" disabled="">
                     <div class="form-group bmd-form-group">
@@ -106,7 +108,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>6. O tempo passa voando quando estou na aula</strong></h5>
+                  	<h5><strong>6. Esqueço tudo o que se passa ao meu redor quando estou concentrado(a) nos meus estudos</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r6" name="resposta6">
                     <input type="text" class="input-engajamento" id="q6" disabled="">
                     <div class="form-group bmd-form-group">
@@ -116,7 +118,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>7. Me sinto feliz quando a aula é puxada</strong></h5>
+                  	<h5><strong>7. Os meus estudos me inspiram coisas novas</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r7" name="resposta7">
                     <input type="text" class="input-engajamento" id="q7" disabled="">
                     <div class="form-group bmd-form-group">
@@ -126,7 +128,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>8. Me orgulho das atividades que faço</strong></h5>
+                  	<h5><strong>8. Quando me levanto de manhã tenho vontade de ir para as aulas ou estudar</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r8" name="resposta8">
                     <input type="text" class="input-engajamento" id="q8" disabled="">
                     <div class="form-group bmd-form-group">
@@ -136,7 +138,7 @@ try{
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                  	<h5><strong>9. Me empolgo quando estou estudando</strong></h5>
+                  	<h5><strong>9. Me sinto feliz quando estou fazendo tarefas relacionadas com os meus estudos</strong></h5>
                     <input type="hidden" class="input-engajamento-resposta" id="r9" name="resposta9">
                     <input type="text" class="input-engajamento" id="q9" disabled="">
                     <div class="form-group bmd-form-group">
@@ -144,6 +146,86 @@ try{
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>10. Estou orgulhoso(a) por estar na escola</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r10" name="resposta10">
+                    <input type="text" class="input-engajamento" id="q10" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>11. Estou envolvido(a) nos meus estudos</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r11" name="resposta11">
+                    <input type="text" class="input-engajamento" id="q11" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>  
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>12. As minhas tarefas como estudante não me cansam</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r12" name="resposta12">
+                    <input type="text" class="input-engajamento" id="q12" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>                              
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>13. A escola é um desafio para mim</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r13" name="resposta13">
+                    <input type="text" class="input-engajamento" id="q13" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>                
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>14. "Me deixo levar" quando realizo as minhas tarefas como estudante</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r14" name="resposta14">
+                    <input type="text" class="input-engajamento" id="q14" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>     
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>15. Sou uma pessoa com força para enfrentar minhas tarefas como estudante</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r15" name="resposta15">
+                    <input type="text" class="input-engajamento" id="q15" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>          
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>16. Tenho dificuldade de me desligar dos meus estudos</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r16" name="resposta16">
+                    <input type="text" class="input-engajamento" id="q16" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>                                 
+                <div class="row">
+                  <div class="col-md-12">
+                  	<h5><strong>17. Quando estou realizando minhas tarefas escolares não paro, mesmo que não me sinta bem</strong></h5>
+                    <input type="hidden" class="input-engajamento-resposta" id="r17" name="resposta17">
+                    <input type="text" class="input-engajamento" id="q17" disabled="">
+                    <div class="form-group bmd-form-group">
+                      <div class="slider"></div>
+                    </div>
+                  </div>
+                </div>                
                 <button id="btnEnviar" class="btn btn-success btn-fill">Enviar Resposta</button>
               </form>
             </div>
